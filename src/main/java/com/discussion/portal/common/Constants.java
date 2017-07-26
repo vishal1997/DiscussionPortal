@@ -21,4 +21,8 @@ public class Constants {
 		public static final String USER = "akgupt";
 		public static final String PWD = "akgupt";
 	}
+	
+	public class StatusCode {
+		public static final String SUCCESS = "success";
+	}
 }

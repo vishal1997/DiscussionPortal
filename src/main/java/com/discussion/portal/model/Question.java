@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

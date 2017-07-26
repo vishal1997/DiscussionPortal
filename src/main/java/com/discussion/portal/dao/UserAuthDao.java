@@ -1,14 +1,11 @@
 package com.discussion.portal.dao;
 
-import com.discussion.portal.mongodb.model.DbUser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface UserAuthDao {
 
-	public String authUser(String username, String password);
+	public String createUser() throws JsonProcessingException;
 	
-	public DbUser getUserByUsername(String username);
-	
-	public String createUser(String username, String password);
-	
-	public String comparePassword(String Password);
+	public String updateUserQuestion(String questionId, String userId);
+
 }

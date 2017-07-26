@@ -18,6 +18,7 @@ public class DbQuestion {
 
 	@Id
 	private String questionId;
+	
 	private String question;
 	
 	private List<Answer> answers;

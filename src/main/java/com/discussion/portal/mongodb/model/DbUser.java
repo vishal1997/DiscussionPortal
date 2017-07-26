@@ -1,5 +1,8 @@
 package com.discussion.portal.mongodb.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -16,6 +19,14 @@ public class DbUser {
 	
 	private int password;
 	
-	private String dummyData;
+	private List<String> questionId;
 	
+	public void addQuestionId(String questionId) {
+		
+		if(this.questionId == null) {
+			this.questionId = new ArrayList<String>();
+		}
+	
+		this.questionId.add(questionId);
+	}
 }

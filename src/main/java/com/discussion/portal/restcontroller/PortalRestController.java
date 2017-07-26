@@ -1,6 +1,9 @@
 package com.discussion.portal.restcontroller;
 
 import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.utils.UserUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @RestController
 @EnableWebMvc
@@ -21,6 +27,12 @@ public class PortalRestController {
 	@Autowired
 	private DiscussionPortalManager portalManager;
 	
+	@Autowired
+	private UserUtils userUtils;
+	
+	@Autowired
+	private DiscussionUserAuthDao authDao;
+	
 	/**
 	 * 
 	 * @param question
@@ -28,20 +40,37 @@ public class PortalRestController {
 	 */
 	
 	@RequestMapping("/user")
-	public Principal user(Principal principal) {
-		return principal;
+	public Map<String, String> getUser() {
+		
+		Map <String, String> userIdMap = new HashMap<String, String>();
+		userIdMap.put("userId", userUtils.getCurrentUser());
+		return userIdMap;
 	}
 	
-	@RequestMapping(value="question", method=RequestMethod.PUT) 
-	public String addQuestion(Question question) {
+	@RequestMapping("/create")
+	public Map<String, String> createUser() throws JsonProcessingException {
+		
+		Map <String, String> auth = new HashMap<String, String>();
+		auth.put("status", authDao.createUser());
+		return auth;
+	}
+	
+	@RequestMapping(value="question", method=RequestMethod.GET) 
+	public String addQuestion(Question ques) {
+		
+		Question question = new Question();
+		question.setAnswers(null);
+		question.setCreationDate(new Date());
+		question.setQuestion("question answer 8");
 		
 		try {
 			return portalManager.addQuestion(question);
 		} catch (Exception e) {
 			throw e;
-		}
-		
+		}	
 	}
+	
+	
 	
 	/**
 	 * 
