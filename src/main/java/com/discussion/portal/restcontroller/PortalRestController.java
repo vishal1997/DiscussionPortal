@@ -1,5 +1,7 @@
 package com.discussion.portal.restcontroller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,12 @@ public class PortalRestController {
 	 * @param question
 	 * @return
 	 */
+	
+	@RequestMapping("/user")
+	public Principal user(Principal principal) {
+		return principal;
+	}
+	
 	@RequestMapping(value="question", method=RequestMethod.PUT) 
 	public String addQuestion(Question question) {
 		
