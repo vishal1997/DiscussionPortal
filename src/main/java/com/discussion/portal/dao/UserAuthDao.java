@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface UserAuthDao {
 
-	public String createUser() throws JsonProcessingException;
+	public String createUser(String userId) throws JsonProcessingException;
 	
 	public String updateUserQuestion(String questionId, String userId);
 

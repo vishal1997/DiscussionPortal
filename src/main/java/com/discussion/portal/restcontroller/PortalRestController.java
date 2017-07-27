@@ -1,8 +1,8 @@
 package com.discussion.portal.restcontroller;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +51,7 @@ public class PortalRestController {
 	public Map<String, String> createUser() throws JsonProcessingException {
 		
 		Map <String, String> auth = new HashMap<String, String>();
-		auth.put("status", authDao.createUser());
+		auth.put("status", authDao.createUser(userUtils.getCurrentUser()));
 		return auth;
 	}
 	
@@ -61,15 +61,21 @@ public class PortalRestController {
 		Question question = new Question();
 		question.setAnswers(null);
 		question.setCreationDate(new Date());
-		question.setQuestion("question answer 8");
+		question.setQuestion("question answer 12");
 		
 		try {
-			return portalManager.addQuestion(question);
+			return portalManager.addQuestion(question,userUtils.getCurrentUser());
 		} catch (Exception e) {
 			throw e;
 		}	
 	}
 	
+	
+	@RequestMapping(value="/allquestions", method = RequestMethod.GET)
+	public List<Question> getQuestionsByUserId() {
+		
+		return portalManager.getQuestionsByUserId(userUtils.getCurrentUser());
+	}
 	
 	
 	/**

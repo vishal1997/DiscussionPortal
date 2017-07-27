@@ -29,4 +29,8 @@ public class DbUser {
 	
 		this.questionId.add(questionId);
 	}
+	
+	public List<String> getQuestionId() {
+		return this.questionId;
+	}
 }

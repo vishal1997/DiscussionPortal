@@ -1,5 +1,7 @@
 package com.discussion.portal.manager.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,13 +24,18 @@ public class DiscussionPortalManager implements PortalManager {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String addQuestion(Question question) {
-		return portalHelper.addQuestion(question);
+	public String addQuestion(Question question, String userId) {
+		return portalHelper.addQuestion(question, userId);
 	}
 	
 	@Override
 	public Question viewQuestion(String questionId) {
 		return portalHelper.viewQuestion(questionId);
+	}
+
+	@Override
+	public List<Question> getQuestionsByUserId(String userId) {
+		return portalHelper.getQuestionsByUserId(userId);
 	}
 
 }
