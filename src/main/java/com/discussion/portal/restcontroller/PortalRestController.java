@@ -61,7 +61,7 @@ public class PortalRestController {
 		Question question = new Question();
 		question.setAnswers(null);
 		question.setCreationDate(new Date());
-		question.setQuestion("question answer 12");
+		question.setQuestion("question answer 13");
 		
 		try {
 			return portalManager.addQuestion(question,userUtils.getCurrentUser());
@@ -71,7 +71,7 @@ public class PortalRestController {
 	}
 	
 	
-	@RequestMapping(value="/allquestions", method = RequestMethod.GET)
+	@RequestMapping(value="/questions", method = RequestMethod.GET)
 	public List<Question> getQuestionsByUserId() {
 		
 		return portalManager.getQuestionsByUserId(userUtils.getCurrentUser());

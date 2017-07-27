@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
@@ -35,15 +34,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String addQuestion(Question question, String userId) {
-		DbQuestion dbQuestion = questionUtils.convertToDbQuestion(question, userId);
-
-		String status = portalDao.insertQuestion(dbQuestion);
-		
-		if(status == StatusCode.SUCCESS) {
-			return userAuthDao.updateUserQuestion(dbQuestion.getQuestionId(), userId);
-		}
-		return "Some error occured while saving the question.";
+	public String addQuestion(DbQuestion dbQuestion, String userId) {
+		return portalDao.insertQuestion(dbQuestion);
 	}
 
 	@Override
@@ -61,5 +53,15 @@ public class DiscussionPortalHelper implements PortalHelper {
 		questionIds.stream().forEach((questionId)->questions.add(viewQuestion(questionId)));
 		
 		return questions;
+	}
+	
+	@Override
+	public DbQuestion covertToDbQuestion(Question question, String userId) {
+		return questionUtils.convertToDbQuestion(question, userId);
+	}
+	
+	@Override
+	public String addUserQuestion(String questionId, String userId) {
+		return userAuthDao.updateUserQuestion(questionId, userId);
 	}
 }

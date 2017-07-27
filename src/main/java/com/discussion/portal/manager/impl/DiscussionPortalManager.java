@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.manager.PortalManager;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.mongodb.model.DbQuestion;
 
 /**
  * 
@@ -25,7 +27,12 @@ public class DiscussionPortalManager implements PortalManager {
 	 */
 	@Override
 	public String addQuestion(Question question, String userId) {
-		return portalHelper.addQuestion(question, userId);
+		DbQuestion dbQuestion = portalHelper.covertToDbQuestion(question, userId);
+		String status = portalHelper.addQuestion(dbQuestion, userId);
+		if(status == StatusCode.SUCCESS) {
+			return portalHelper.addUserQuestion(dbQuestion.getQuestionId(), userId);
+		}
+		return "Some error occured while saving the question.";
 	}
 	
 	@Override
