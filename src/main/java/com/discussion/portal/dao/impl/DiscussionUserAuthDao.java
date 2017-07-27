@@ -1,8 +1,10 @@
 package com.discussion.portal.dao.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.common.Constants.StatusCode;
@@ -44,8 +46,6 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 		
 		DbUser user = getUserByUserId(userId);
 		
-		System.out.println(user.getUsername());
-		
 		user.addQuestionId(questionId);
 		userRepository.save(user);
 		
@@ -53,16 +53,26 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 	}
 
 	public DbUser getUserByUserId(String userId) {
+		
 		return userRepository.findOne(userId);
+		
+/*		List<DbUser> dbUsers = userRepository.findByUsername(userId);
+		DbUser dbUser = null;
+		if(dbUsers!= null && dbUsers.size()!=0) {
+			dbUser = dbUsers.get(0);
+		}
+		
+		return dbUser;*/
 	}
 	
 	public String addAnswerToMap(Answer answer) {
 		
 		DbUser user = getUserByUserId(answer.getAnsweredBy());
 		Map<String, String> userAnswerMap = user.getUserAnswerMap();
-		
-		if(userAnswerMap.containsKey(answer.getQuestionId())) {
-			return StatusCode.DUPLICATE;
+		if(userAnswerMap != null) {
+			if(userAnswerMap.containsKey(answer.getQuestionId())) {
+				return StatusCode.DUPLICATE;
+			}
 		}
 		
 		user.addAnswerToMap(answer.getQuestionId(), answer.getAnswerId());
