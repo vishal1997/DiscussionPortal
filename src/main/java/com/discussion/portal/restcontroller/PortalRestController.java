@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +19,8 @@ import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.model.User;
+import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.utils.UserUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -59,7 +64,7 @@ public class PortalRestController {
 	public String addQuestion(Question ques) {
 		
 		Question question = new Question();
-		question.setAnswers(null);
+		question.setAnswersMap(null);
 		question.setCreationDate(new Date());
 		question.setQuestion("question answer 13");
 		
@@ -104,5 +109,22 @@ public class PortalRestController {
 							 @PathVariable("answerId") final String answerId) {
 		
 		return new Answer();
+	}
+	
+	@RequestMapping(value="/userSession", method = RequestMethod.GET)
+	public String addUserToSession(HttpSession session) {
+		return portalManager.addUserToSession(userUtils.getCurrentUser(), session);
+	}
+	
+	@RequestMapping(value="/userTest", method = RequestMethod.GET)
+	public User getUser1(HttpSession session) {
+		
+		return (User) session.getAttribute("user");
+	}
+	
+	@RequestMapping(value="/{questionId}/answer", method = RequestMethod.GET) 
+	public String addAnswer(@PathVariable("questionId") final String questionId/*, @RequestBody String ans*/) {
+		String answer = "This is my answer. Do you have any query? Please let me know!!!!! !!!";
+		return portalManager.addAnswer(questionId, userUtils.getCurrentUser(), answer);
 	}
 }

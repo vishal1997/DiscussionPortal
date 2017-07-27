@@ -3,6 +3,7 @@ package com.discussion.portal.manager;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
 
 /**
@@ -29,4 +30,7 @@ public interface PortalManager {
 	
 	
 	public List<Question> getQuestionsByUserId(String userId);
+	
+	
+	public String addAnswer(String questionId, String userId, String answer);
 }

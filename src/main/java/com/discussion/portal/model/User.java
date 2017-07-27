@@ -1,5 +1,8 @@
 package com.discussion.portal.model;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
@@ -15,5 +18,7 @@ public class User {
 	private String username;
 	private int year;
 	private String branch;
+	private List<String> questionId;
+	private Map<String, String> userAnswerMap;
 	
 }

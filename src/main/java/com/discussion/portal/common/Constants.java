@@ -24,5 +24,6 @@ public class Constants {
 	
 	public class StatusCode {
 		public static final String SUCCESS = "success";
+		public static final String DUPLICATE = "duplicate";
 	}
 }

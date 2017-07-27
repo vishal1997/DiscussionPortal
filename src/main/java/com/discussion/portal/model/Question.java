@@ -2,6 +2,7 @@ package com.discussion.portal.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -20,10 +21,11 @@ public class Question {
 
 	private String questionId;
 	private String question;
-	private List<Answer> answers;
+	//private List<Answer> answers;
 	private String owner;
 	private Date creationDate;
 	private List<String> tags;
 	private List<Integer> year;
+	private Map<String, Answer> answersMap;
 	
 }

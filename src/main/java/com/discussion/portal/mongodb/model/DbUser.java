@@ -1,7 +1,9 @@
 package com.discussion.portal.mongodb.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,6 +23,12 @@ public class DbUser {
 	
 	private List<String> questionId;
 	
+	/**
+	 * Key: QuestionId
+	 * Value: AnswerId
+	 */
+	private Map<String, String> userAnswerMap;
+	
 	public void addQuestionId(String questionId) {
 		
 		if(this.questionId == null) {
@@ -28,6 +36,14 @@ public class DbUser {
 		}
 	
 		this.questionId.add(questionId);
+	}
+	
+	public void addAnswerToMap(String questionId, String answerId) {
+		if(this.userAnswerMap == null) {
+			userAnswerMap = new HashMap<String, String>();
+		}
+		
+		userAnswerMap.put(questionId, answerId);
 	}
 	
 	public List<String> getQuestionId() {
