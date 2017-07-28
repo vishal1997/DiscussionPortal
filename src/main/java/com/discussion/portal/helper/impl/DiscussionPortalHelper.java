@@ -14,8 +14,10 @@ import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.utils.AnswerUtils;
 import com.discussion.portal.utils.QuestionUtils;
 import com.discussion.portal.utils.UserUtils;
 
@@ -39,6 +41,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 	@Autowired
 	private UserUtils userUtils;
 	
+	@Autowired
+	private AnswerUtils answerUtils;
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -48,8 +53,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public Question viewQuestion(String questionId) {
-		DbQuestion dbQuestion = portalDao.findQuestion(questionId);
+	public Question getQuestionById(String questionId) {
+		DbQuestion dbQuestion = portalDao.getQuestionById(questionId);
 		return questionUtils.convertToQuestion(dbQuestion);
 	}	
 
@@ -59,7 +64,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		List<String> questionIds = portalDao.getQuestionIdsByUserId(userId);
 		List<Question> questions = new ArrayList<Question>();
 		
-		questionIds.stream().forEach((questionId)->questions.add(viewQuestion(questionId)));
+		questionIds.stream().forEach((questionId)->questions.add(getQuestionById(questionId)));
 		
 		return questions;
 	}
@@ -75,10 +80,14 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public String addAnswer(Answer answer) {
+	public String addAnswer(DbAnswer answer) {
 		return portalDao.addAnswer(answer);
 	}
 
+	public String addAnswerToQuestionMap(Answer answer) {
+		return portalDao.addAnswerToQuestionMap(answer);
+	}
+	
 	public String addAnswerToMap(Answer answer) {
 		return userAuthDao.addAnswerToMap(answer);
 	}
@@ -97,10 +106,21 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 	}
 	
+	public DbAnswer convertToDbAnswer(Answer answer) {
+		return answerUtils.convertAnswerToDbAnswer(answer);
+	}
+	
 	public String addUserToSession(String userId, HttpSession session) {
 		DbUser dbUser = userAuthDao.getUserByUserId(userId);
 		session.setAttribute("user", userUtils.convertDbUserToUser(dbUser));
 		session.setAttribute("dbUser", dbUser);
 		return "Successfully added user to session with attribute user";
+	}
+
+	@Override
+	public Answer getAnswerById(String answerId) {
+		
+		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		return answerUtils.convertDbAnswerToAnswer(dbAnswer);
 	}
 }

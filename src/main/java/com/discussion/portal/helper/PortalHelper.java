@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 
@@ -23,7 +24,7 @@ public interface PortalHelper {
 	 */
 	public String addQuestion(DbQuestion question, String userId);
 	
-	public Question viewQuestion(String question);
+	public Question getQuestionById(String questionId);
 	
 	public List<Question> getQuestionsByUserId(String userId);
 	
@@ -31,8 +32,10 @@ public interface PortalHelper {
 	
 	public String addUserQuestion(String questionId, String userId);
 	
-	public String addAnswer(Answer answer);
+	public String addAnswer(DbAnswer answer);
 	
 	public String addUserToSession(String userId, HttpSession session);
+	
+	public Answer getAnswerById(String answerId);
 	
 }

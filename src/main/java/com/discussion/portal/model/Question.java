@@ -26,6 +26,6 @@ public class Question {
 	private Date creationDate;
 	private List<String> tags;
 	private List<Integer> year;
-	private Map<String, Answer> answersMap;
+	private Map<String, String> answersMap;
 	
 }

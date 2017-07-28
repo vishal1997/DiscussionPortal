@@ -66,7 +66,7 @@ public class PortalRestController {
 		Question question = new Question();
 		question.setAnswersMap(null);
 		question.setCreationDate(new Date());
-		question.setQuestion("question answer 13");
+		question.setQuestion("question answer 20");
 		
 		try {
 			return portalManager.addQuestion(question,userUtils.getCurrentUser());
@@ -90,9 +90,9 @@ public class PortalRestController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="answers/{questionId}", method = RequestMethod.GET) 
-	public Question viewQuestion(@PathVariable("questionId") final String questionId) throws Exception {
+	public Question getQuestionById(@PathVariable("questionId") final String questionId) throws Exception {
 		try {
-			return portalManager.viewQuestion(questionId);
+			return portalManager.getQuestionById(questionId);
 		} catch (Exception e) {
 			throw e;
 		}
@@ -104,12 +104,14 @@ public class PortalRestController {
 	 * @param answerId
 	 * @return
 	 */
+	/*
 	@RequestMapping(value="{username}/answer/{answerId}", method = RequestMethod.GET)
 	public Answer viewAnswer(@PathVariable("username") final String username, 
 							 @PathVariable("answerId") final String answerId) {
 		
 		return new Answer();
 	}
+	*/
 	
 	@RequestMapping(value="/userSession", method = RequestMethod.GET)
 	public String addUserToSession(HttpSession session) {
@@ -124,7 +126,14 @@ public class PortalRestController {
 	
 	@RequestMapping(value="/{questionId}/answer", method = RequestMethod.GET) 
 	public String addAnswer(@PathVariable("questionId") final String questionId/*, @RequestBody String ans*/) {
-		String answer = "This is my answer. Do you have any query? Please let me know!!!!! !!!";
+		String answer = "This is my answer. Do you have any query? Please let me know!!!!! !!! !!!";
 		return portalManager.addAnswer(questionId, userUtils.getCurrentUser(), answer);
 	}
+	
+	@RequestMapping(value = "/answer/{answerId}", method = RequestMethod.GET)
+	public Answer getAnswerById(@PathVariable("answerId") final String answerId) {
+		return portalManager.getAnswerById(answerId);
+	}
+	
+	
 }

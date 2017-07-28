@@ -14,6 +14,7 @@ import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.manager.PortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 
@@ -42,8 +43,8 @@ public class DiscussionPortalManager implements PortalManager {
 	}
 	
 	@Override
-	public Question viewQuestion(String questionId) {
-		return portalHelper.viewQuestion(questionId);
+	public Question getQuestionById(String questionId) {
+		return portalHelper.getQuestionById(questionId);
 	}
 
 	@Override
@@ -59,7 +60,10 @@ public class DiscussionPortalManager implements PortalManager {
 		String status = portalHelper.addAnswerToMap(answerObj);
 		
 		if(StringUtils.equals(status, StatusCode.SUCCESS)) {
-			return portalHelper.addAnswer(answerObj);
+			if(StringUtils.equals(portalHelper.addAnswerToQuestionMap(answerObj), StatusCode.SUCCESS)) {
+				DbAnswer dbAnswer = portalHelper.convertToDbAnswer(answerObj);
+				status = portalHelper.addAnswer(dbAnswer);
+			}
 		}
 		
 		return status;
@@ -67,5 +71,11 @@ public class DiscussionPortalManager implements PortalManager {
 
 	public String addUserToSession(String userId, HttpSession session) {
 		return portalHelper.addUserToSession(userId, session);
+	}
+
+	@Override
+	public Answer getAnswerById(String answerId) {
+		
+		return portalHelper.getAnswerById(answerId);
 	}
 }

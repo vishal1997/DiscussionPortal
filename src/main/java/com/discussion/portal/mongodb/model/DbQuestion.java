@@ -28,7 +28,7 @@ public class DbQuestion {
 	
 	//private List<Answer> answers;
 	
-	private Map<String, Answer> answersMap;
+	private Map<String, String> answersMap;
 	
 	private String owner;
 	private Date creationDate;
@@ -44,8 +44,8 @@ public class DbQuestion {
 	
 	public void addAnswerMap(Answer answer) {
 		if(answersMap == null) {
-			answersMap = new HashMap<String, Answer>();
+			answersMap = new HashMap<String, String>();
 		}
-		answersMap.put(answer.getAnsweredBy(), answer);
+		answersMap.put(answer.getAnsweredBy(), answer.getAnswerId());
 	}
 }

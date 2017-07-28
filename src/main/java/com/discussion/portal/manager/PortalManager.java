@@ -26,11 +26,13 @@ public interface PortalManager {
 	 * @return
 	 * @throws UnsupportedEncodingException 
 	 */
-	public Question viewQuestion(String questionId) throws UnsupportedEncodingException;
+	public Question getQuestionById(String questionId) throws UnsupportedEncodingException;
 	
 	
 	public List<Question> getQuestionsByUserId(String userId);
 	
 	
 	public String addAnswer(String questionId, String userId, String answer);
+	
+	public Answer getAnswerById(String answerId);
 }
