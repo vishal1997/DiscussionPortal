@@ -27,7 +27,13 @@ public class AnswerUtils {
 	}
 	
 	public Answer convertDbAnswerToAnswer(DbAnswer dbAnswer) {
+
 		Answer answer = new Answer();
+		
+		if(dbAnswer == null) {
+			return answer;
+		}
+		
 		answer.setAnswer(dbAnswer.getAnswer());
 		answer.setAnsweredBy(dbAnswer.getUserId());
 		answer.setDate(dbAnswer.getDate());

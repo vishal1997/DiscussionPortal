@@ -2,7 +2,9 @@ package com.discussion.portal.helper.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +16,7 @@ import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
@@ -111,8 +114,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 	
 	public String addUserToSession(String userId, HttpSession session) {
-		DbUser dbUser = userAuthDao.getUserByUserId(userId);
-		session.setAttribute("user", userUtils.convertDbUserToUser(dbUser));
+		DbUser dbUser = getUserByUserId(userId);
+		session.setAttribute("user", convertDbUserToUser(dbUser));
 		session.setAttribute("dbUser", dbUser);
 		return "Successfully added user to session with attribute user";
 	}
@@ -122,5 +125,27 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
 		return answerUtils.convertDbAnswerToAnswer(dbAnswer);
+	}
+	
+	public List<Answer> getAnswerByUserId(String userId) {
+		Map<String, String> questionAnswerMap = getUserByUserId(userId).getUserAnswerMap();
+		return getAnswersByMap(questionAnswerMap);
+		
+	}
+	
+	public List<Answer> getAnswersByMap(Map<String,String> questionAnswerMap) {
+		List<Answer> answers = new ArrayList<Answer>();
+		for(String key : questionAnswerMap.keySet()) {
+			answers.add(getAnswerById(questionAnswerMap.get(key)));
+		}
+		return answers;
+	}
+	
+	public DbUser getUserByUserId(String userId) {
+		return userAuthDao.getUserByUserId(userId);
+	}
+	
+	public User convertDbUserToUser(DbUser dbUser) {
+		return userUtils.convertDbUserToUser(dbUser);
 	}
 }

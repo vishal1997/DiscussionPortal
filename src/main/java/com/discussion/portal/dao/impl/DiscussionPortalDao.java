@@ -1,5 +1,6 @@
 package com.discussion.portal.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,9 @@ public class DiscussionPortalDao implements PortalDao {
 	
 	@Autowired
 	private AnswerRepository ansRepo;
+	
+	@Autowired
+	private DiscussionUserAuthDao userDao;
 	
 	@Override
 	public String insertQuestion(DbQuestion question) {
@@ -95,6 +99,12 @@ public class DiscussionPortalDao implements PortalDao {
 		} catch (Exception e) {
 			throw new RuntimeException("Error while finding the answer", e);
 		}
+	}
+
+	@Override
+	public List<Answer> getAnswerByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

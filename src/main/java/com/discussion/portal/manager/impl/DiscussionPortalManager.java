@@ -14,6 +14,7 @@ import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.manager.PortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
@@ -77,5 +78,10 @@ public class DiscussionPortalManager implements PortalManager {
 	public Answer getAnswerById(String answerId) {
 		
 		return portalHelper.getAnswerById(answerId);
+	}
+
+	@Override
+	public List<Answer> getAnswerByUserId(String userId) {
+		return portalHelper.getAnswerByUserId(userId);
 	}
 }

@@ -35,4 +35,6 @@ public interface PortalManager {
 	public String addAnswer(String questionId, String userId, String answer);
 	
 	public Answer getAnswerById(String answerId);
+	
+	public List<Answer> getAnswerByUserId (String userId);
 }

@@ -17,4 +17,6 @@ public interface PortalDao {
 	
 	public DbAnswer getAnswerById(String answerId);
 	
+	public List<Answer> getAnswerByUserId(String userId);
+	
 }

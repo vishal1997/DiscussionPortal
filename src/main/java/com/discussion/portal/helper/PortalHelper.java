@@ -1,6 +1,8 @@
 package com.discussion.portal.helper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,5 +39,7 @@ public interface PortalHelper {
 	public String addUserToSession(String userId, HttpSession session);
 	
 	public Answer getAnswerById(String answerId);
+	
+	public List<Answer> getAnswerByUserId(String questionAnswerMap);
 	
 }

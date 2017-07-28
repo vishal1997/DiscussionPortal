@@ -83,6 +83,12 @@ public class PortalRestController {
 	}
 	
 	
+	@RequestMapping(value="/{userId}/questions", method = RequestMethod.GET)
+	public List<Question> getQuestionsByOtherUserId(@PathVariable("userId") final String userId) {
+		
+		return portalManager.getQuestionsByUserId(userId);
+	}
+	
 	/**
 	 * 
 	 * @param questionId
@@ -135,5 +141,14 @@ public class PortalRestController {
 		return portalManager.getAnswerById(answerId);
 	}
 	
+	@RequestMapping(value = "/myanswers", method = RequestMethod.GET) 
+	public List<Answer> getAnswerByUserId() {
+		return portalManager.getAnswerByUserId(userUtils.getCurrentUser());
+	}
+	
+	@RequestMapping(value = "/{userId}/answers", method = RequestMethod.GET) 
+	public List<Answer> getAnswerByOtherUserId(@PathVariable("userId") final String userId) {
+		return portalManager.getAnswerByUserId(userId);
+	}
 	
 }
