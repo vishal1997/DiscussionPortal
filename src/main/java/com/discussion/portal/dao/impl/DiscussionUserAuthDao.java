@@ -3,15 +3,19 @@ package com.discussion.portal.dao.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.UserAuthDao;
+import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.mongodb.repository.UserRepository;
+import com.discussion.portal.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,6 +24,7 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 
 	@Autowired
 	private UserRepository userRepository;
+	static Logger log = LoggerFactory.getLogger(DiscussionUserAuthDao.class);
 	
 	@Override
 	public String createUser(String userId) throws JsonProcessingException {
@@ -71,11 +76,13 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 		Map<String, String> userAnswerMap = user.getUserAnswerMap();
 		if(userAnswerMap != null) {
 			if(userAnswerMap.containsKey(answer.getQuestionId())) {
+				log.error("\nUser has already answered this question\n" + Json.toJson(answer));
 				return StatusCode.DUPLICATE;
 			}
 		}
 		
 		user.addAnswerToMap(answer.getQuestionId(), answer.getAnswerId());
+		log.info("\nTrying to Update user Database with answerId:" + answer.getAnswerId());
 		userRepository.save(user);
 		
 		return StatusCode.SUCCESS;

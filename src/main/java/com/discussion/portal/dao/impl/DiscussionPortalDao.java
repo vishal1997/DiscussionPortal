@@ -83,9 +83,11 @@ public class DiscussionPortalDao implements PortalDao {
 		
 		try {
 			ansRepo.insert(answer);
+			log.info("\nAnswer successfully added to DB\n" + Json.toJson(answer));
 			return StatusCode.SUCCESS;
 			
 		} catch (Exception e) {
+			log.error("\nUnable to add answer to DB\n" + Json.toJson(e));
 			return "{\"status\":\"fail\"}";
 		}
 	}
@@ -93,13 +95,15 @@ public class DiscussionPortalDao implements PortalDao {
 	public String addAnswerToQuestionMap(Answer answer) {
 		
 		try {
-			
+			log.info("\nTrying to find Question by QuestionId " + answer.getAnswerId());
 			DbQuestion question = quesRepo.findOne(answer.getQuestionId());
 			question.addAnswerMap(answer);
+			log.info("\nTrying to update question with new answer\n" + Json.toJson(question));
 			quesRepo.save(question);
 			return StatusCode.SUCCESS;
 			
 		} catch (Exception e) {
+			log.error("Exception occured" + Json.toJson(e));
 			return "{\"status\":\"fail\"}";
 		}
 	}

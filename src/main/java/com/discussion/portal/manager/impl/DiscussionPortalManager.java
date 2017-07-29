@@ -39,8 +39,6 @@ public class DiscussionPortalManager implements PortalManager {
 	 */
 	@Override
 	public String addQuestion(Question question, String userId) {
-	
-		log.info("Entered Discussion Portal manager class");
 		
 		DbQuestion dbQuestion = portalHelper.covertToDbQuestion(question, userId);
 		String status = portalHelper.addQuestion(dbQuestion, userId);
@@ -76,6 +74,9 @@ public class DiscussionPortalManager implements PortalManager {
 		
 		if(StringUtils.equals(status, StatusCode.SUCCESS)) {
 			if(StringUtils.equals(portalHelper.addAnswerToQuestionMap(answerObj), StatusCode.SUCCESS)) {
+				
+				log.info("Adding Answer to Question Map successfull");
+				
 				DbAnswer dbAnswer = portalHelper.convertToDbAnswer(answerObj);
 				status = portalHelper.addAnswer(dbAnswer);
 			}

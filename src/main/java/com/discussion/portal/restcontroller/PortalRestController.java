@@ -139,9 +139,14 @@ public class PortalRestController {
 		return (User) session.getAttribute("user");
 	}
 	
-	@RequestMapping(value="/{questionId}/answer", method = RequestMethod.PUT) 
-	public String addAnswer(@PathVariable("questionId") final String questionId, @RequestBody String answer) {
-		return portalManager.addAnswer(questionId, userUtils.getCurrentUser(), answer);
+	@RequestMapping(value="/{questionId}/answer", method = RequestMethod.POST) 
+	public Map<String, String> addAnswer(@PathVariable("questionId") final String questionId, @RequestBody String answer) {
+		log.info("\nSuccessfully entered addAnswer() with answer: " + answer + "and questionId: " + questionId);
+		
+		Map<String, String> answerMap = new HashMap<String, String>();
+		answerMap.put("status",portalManager.addAnswer(questionId, userUtils.getCurrentUser(), answer));
+		log.info("\nThe response is:\n" + Json.toJson(answerMap));
+		return answerMap;
 	}
 	
 	@RequestMapping(value = "/answer/{answerId}", method = RequestMethod.GET)

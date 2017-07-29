@@ -24,6 +24,7 @@ import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.utils.AnswerUtils;
+import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.QuestionUtils;
 import com.discussion.portal.utils.UserUtils;
 
@@ -109,6 +110,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 		answerObj.setAnswerId(userId + "'s-answer-to-" + questionId);
 		answerObj.setQuestionId(questionId);
 		answerObj.setDate(new Date());
+		
+		log.info("\nThe answer object generated:\n" + Json.toJson(answerObj));
 		
 		return answerObj;
 		
