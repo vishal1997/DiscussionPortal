@@ -26,4 +26,8 @@ public class Constants {
 		public static final String SUCCESS = "success";
 		public static final String DUPLICATE = "duplicate";
 	}
+	
+	public class MongoDbSignature {
+		public static final String DUPLICATE_CODE = "error code 11000";
+	}
 }

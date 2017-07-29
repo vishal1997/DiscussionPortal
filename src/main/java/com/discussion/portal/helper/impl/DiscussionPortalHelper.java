@@ -8,12 +8,15 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
+import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
@@ -50,6 +53,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 	/**
 	 * {@inheritDoc}
 	 */
+	static Logger log = LoggerFactory.getLogger(DiscussionPortalHelper.class);
+	
 	@Override
 	public String addQuestion(DbQuestion dbQuestion, String userId) {
 		return portalDao.insertQuestion(dbQuestion);

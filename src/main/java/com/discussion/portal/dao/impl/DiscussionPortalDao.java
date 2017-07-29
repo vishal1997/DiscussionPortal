@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.discussion.portal.common.Constants.MongoDbSignature;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.PortalDao;
+import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -16,6 +20,8 @@ import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.mongodb.repository.AnswerRepository;
 import com.discussion.portal.mongodb.repository.QuestionsRepository;
 import com.discussion.portal.mongodb.repository.UserRepository;
+import com.discussion.portal.utils.Json;
+import com.mongodb.DuplicateKeyException;
 
 @Component
 public class DiscussionPortalDao implements PortalDao {
@@ -32,14 +38,21 @@ public class DiscussionPortalDao implements PortalDao {
 	@Autowired
 	private DiscussionUserAuthDao userDao;
 	
+	static Logger log = LoggerFactory.getLogger(DiscussionPortalDao.class);
+	
 	@Override
 	public String insertQuestion(DbQuestion question) {
 
 		try {
+			log.info("\nTrying to insert Question with question details:\n" + Json.toJson(question));
 			quesRepo.insert(question);
 			
 		} catch (Exception e) {
-			throw e;
+			log.error("\nException Occured\n" + Json.toJson(e));
+			if(e.getCause().getMessage().contains(MongoDbSignature.DUPLICATE_CODE)) {
+				return StatusCode.DUPLICATE;
+			}
+			throw new RuntimeException("Some error occured while saving the question", e);
 		}
 		return StatusCode.SUCCESS;
 		

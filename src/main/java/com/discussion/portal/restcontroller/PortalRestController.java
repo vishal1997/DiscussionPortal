@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,8 @@ import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.utils.Json;
+import com.discussion.portal.utils.QuestionUtils;
 import com.discussion.portal.utils.UserUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -37,6 +41,8 @@ public class PortalRestController {
 	
 	@Autowired
 	private DiscussionUserAuthDao authDao;
+	
+	static Logger log = LoggerFactory.getLogger(PortalRestController.class);
 	
 	/**
 	 * 
@@ -60,18 +66,21 @@ public class PortalRestController {
 		return auth;
 	}
 	
-	@RequestMapping(value="question", method=RequestMethod.GET) 
-	public String addQuestion(Question ques) {
-		
-		Question question = new Question();
-		question.setAnswersMap(null);
-		question.setCreationDate(new Date());
-		question.setQuestion("question answer 20");
+	@RequestMapping(value="question", method=RequestMethod.POST) 
+	public Map<String, String> addQuestion(@RequestBody Question question) {
 		
 		try {
-			return portalManager.addQuestion(question,userUtils.getCurrentUser());
+			log.info("\nSuccessfully entered addQuestion() with question \n" + Json.toJson(question));
+			
+			Map<String, String> questionMap = new HashMap<String, String>();
+			questionMap.put("status", portalManager.addQuestion(question,userUtils.getCurrentUser()));
+			
+			log.info("\nSending response of add question: \n" + Json.toJson(questionMap));
+			
+			return questionMap;
 		} catch (Exception e) {
-			throw e;
+			log.error("\nSome error occured while adding question\n" + Json.toJson(e) );
+			return null;
 		}	
 	}
 	
@@ -130,9 +139,8 @@ public class PortalRestController {
 		return (User) session.getAttribute("user");
 	}
 	
-	@RequestMapping(value="/{questionId}/answer", method = RequestMethod.GET) 
-	public String addAnswer(@PathVariable("questionId") final String questionId/*, @RequestBody String ans*/) {
-		String answer = "This is my answer. Do you have any query? Please let me know!!!!! !!! !!!";
+	@RequestMapping(value="/{questionId}/answer", method = RequestMethod.PUT) 
+	public String addAnswer(@PathVariable("questionId") final String questionId, @RequestBody String answer) {
 		return portalManager.addAnswer(questionId, userUtils.getCurrentUser(), answer);
 	}
 	
