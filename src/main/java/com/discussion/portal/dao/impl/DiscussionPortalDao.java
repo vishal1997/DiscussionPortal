@@ -60,8 +60,9 @@ public class DiscussionPortalDao implements PortalDao {
 
 	@Override
 	public DbQuestion getQuestionById(String questionId) {
+		String _questionId = questionId.toLowerCase();
 		try {
-			return quesRepo.findOne(questionId);
+			return quesRepo.findOne(_questionId);
 		} catch (Exception e) {
 			throw new RuntimeException("Error while finding the question", e);
 		}

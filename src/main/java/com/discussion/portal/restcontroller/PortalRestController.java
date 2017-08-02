@@ -159,7 +159,9 @@ public class PortalRestController {
 	
 	@RequestMapping(value = "/myanswers", method = RequestMethod.GET) 
 	public List<Answer> getAnswerByUserId() {
-		return portalManager.getAnswerByUserId(userUtils.getCurrentUser());
+		List<Answer> answers = portalManager.getAnswerByUserId(userUtils.getCurrentUser());
+		log.info("\nResponse for getAnswerByUserId\n" + Json.toJson(answers));
+		return answers;
 	}
 	
 	@RequestMapping(value = "/{userId}/answers", method = RequestMethod.GET) 

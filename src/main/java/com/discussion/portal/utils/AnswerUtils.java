@@ -45,6 +45,7 @@ public class AnswerUtils {
 		answer.setAnswerId(dbAnswer.getAnswerId());
 		answer.setQuestionId(dbAnswer.getQuestionId());
 		answer.setQuestion(portalDao.getQuestionById(dbAnswer.getQuestionId()).getQuestion());
+		log.info("\nAnswer Generated:\n" + Json.toJson(answer));
 		return answer;
 	}
 }

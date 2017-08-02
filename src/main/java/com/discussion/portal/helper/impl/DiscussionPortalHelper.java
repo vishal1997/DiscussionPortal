@@ -114,9 +114,11 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		Answer answerObj = new Answer();
 		
+		String _userId = userId.toLowerCase();
+		
 		answerObj.setAnswer(answer);
 		answerObj.setAnsweredBy(userId);
-		answerObj.setAnswerId(userId + "'s-answer-to-" + questionId);
+		answerObj.setAnswerId(_userId + "'s-answer-to-" + questionId);
 		answerObj.setQuestionId(questionId);
 		answerObj.setDate(new Date());
 		
@@ -139,22 +141,21 @@ public class DiscussionPortalHelper implements PortalHelper {
 
 	@Override
 	public Answer getAnswerById(String answerId) {
-		
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
 		return answerUtils.convertDbAnswerToAnswer(dbAnswer);
 	}
 	
 	public List<Answer> getAnswerByUserId(String userId) {
 		Map<String, String> questionAnswerMap = getUserByUserId(userId).getUserAnswerMap();
+		log.info("\nThe Answer map for the user:" + userId + "\n" + Json.toJson(userId));
 		return getAnswersByMap(questionAnswerMap);
-		
 	}
 	
 	public List<Answer> getAnswersByMap(Map<String,String> questionAnswerMap) {
 		List<Answer> answers = new ArrayList<Answer>();
-		for(String key : questionAnswerMap.keySet()) {
-			answers.add(getAnswerById(questionAnswerMap.get(key)));
-		}
+		log.info("\nStarted fetching answers from answer Map");
+		questionAnswerMap.keySet().stream().forEach((key)->answers.add(getAnswerById(questionAnswerMap.get(key))));
+		log.info("\nFetched answers \n" + Json.toJson(answers));
 		return answers;
 	}
 	
