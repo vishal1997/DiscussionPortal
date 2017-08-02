@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
@@ -61,10 +62,18 @@ public class DiscussionPortalHelper implements PortalHelper {
 		return portalDao.insertQuestion(dbQuestion);
 	}
 
+	/**
+	 * @deprecated
+	 */
 	@Override
 	public Question getQuestionById(String questionId) {
 		DbQuestion dbQuestion = portalDao.getQuestionById(questionId);
 		return questionUtils.convertToQuestion(dbQuestion);
+	}	
+	
+	public QuestionResponse getAllAnswers(String questionId) {
+		DbQuestion dbQuestion = portalDao.getQuestionById(questionId);
+		return questionUtils.convertToQuestionResponse(dbQuestion);
 	}	
 
 	@Override

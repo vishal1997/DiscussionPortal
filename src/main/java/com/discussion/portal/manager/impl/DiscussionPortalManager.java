@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.PortalDao;
 import com.discussion.portal.helper.impl.DiscussionPortalHelper;
@@ -55,10 +56,19 @@ public class DiscussionPortalManager implements PortalManager {
 		return "Some error occured";
 	}
 	
+	/**
+	 * @deprecated 
+	 * Use getAllAnswers
+	 * 
+	 */
 	@Override
 	public Question getQuestionById(String questionId) {
 		return portalHelper.getQuestionById(questionId);
 	}
+	
+	public QuestionResponse getAllAnswers(String questionId) {
+		return portalHelper.getAllAnswers(questionId);
+	}	
 
 	@Override
 	public List<Question> getQuestionsByUserId(String userId) {
@@ -81,8 +91,12 @@ public class DiscussionPortalManager implements PortalManager {
 				status = portalHelper.addAnswer(dbAnswer);
 			}
 		}
+		if(status == StatusCode.SUCCESS) {
+			return "Answer Posted";
+		} else {
+			return "You have already answered the question";
+		}
 		
-		return status;
 	}
 
 	public String addUserToSession(String userId, HttpSession session) {

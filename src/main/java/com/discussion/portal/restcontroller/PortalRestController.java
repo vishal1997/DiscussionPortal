@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
@@ -105,9 +106,11 @@ public class PortalRestController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="answers/{questionId}", method = RequestMethod.GET) 
-	public Question getQuestionById(@PathVariable("questionId") final String questionId) throws Exception {
+	public QuestionResponse getQuestionById(@PathVariable("questionId") final String questionId) throws Exception {
 		try {
-			return portalManager.getQuestionById(questionId);
+			QuestionResponse response = portalManager.getAllAnswers(questionId);
+			log.info("Response Being sent is:\n" + Json.toJson(response));
+			return response;
 		} catch (Exception e) {
 			throw e;
 		}
