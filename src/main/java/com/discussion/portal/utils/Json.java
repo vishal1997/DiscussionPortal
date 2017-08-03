@@ -1,7 +1,10 @@
 package com.discussion.portal.utils;
 
+import java.lang.reflect.Type;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 
 /**
  * 
@@ -20,4 +23,9 @@ public class Json {
 	public static String toJson(Object jsonElement) {
 		return json.toJson(jsonElement);
 	}
+	
+	public static Object fromJson(String jsonEle, Type obj) {
+		return json.fromJson(jsonEle, obj);
+	}
+	
 }

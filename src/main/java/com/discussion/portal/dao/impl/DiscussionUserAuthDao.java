@@ -1,23 +1,19 @@
 package com.discussion.portal.dao.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.UserAuthDao;
-import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class DiscussionUserAuthDao implements UserAuthDao{

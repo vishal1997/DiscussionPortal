@@ -1,6 +1,5 @@
 package com.discussion.portal.restcontroller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +22,8 @@ import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
-import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.model.auth.Details_;
 import com.discussion.portal.utils.Json;
-import com.discussion.portal.utils.QuestionUtils;
 import com.discussion.portal.utils.UserUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -43,6 +41,7 @@ public class PortalRestController {
 	@Autowired
 	private DiscussionUserAuthDao authDao;
 	
+	
 	static Logger log = LoggerFactory.getLogger(PortalRestController.class);
 	
 	/**
@@ -59,6 +58,7 @@ public class PortalRestController {
 		return userIdMap;
 	}
 	
+
 	@RequestMapping("/create")
 	public Map<String, String> createUser() throws JsonProcessingException {
 		
@@ -122,14 +122,6 @@ public class PortalRestController {
 	 * @param answerId
 	 * @return
 	 */
-	/*
-	@RequestMapping(value="{username}/answer/{answerId}", method = RequestMethod.GET)
-	public Answer viewAnswer(@PathVariable("username") final String username, 
-							 @PathVariable("answerId") final String answerId) {
-		
-		return new Answer();
-	}
-	*/
 	
 	@RequestMapping(value="/userSession", method = RequestMethod.GET)
 	public String addUserToSession(HttpSession session) {
@@ -169,4 +161,8 @@ public class PortalRestController {
 		return portalManager.getAnswerByUserId(userId);
 	}
 	
+	@RequestMapping(value = "/me", method = RequestMethod.GET) 
+	public Details_ getNameIdPair() {
+		return userUtils.userNameIdPair();
+	}
 }

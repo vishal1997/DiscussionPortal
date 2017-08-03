@@ -2,10 +2,8 @@ package com.discussion.portal.dao;
 
 import java.util.List;
 
-import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
-import com.discussion.portal.mongodb.model.DbUser;
 
 public interface PortalDao {
 
@@ -17,6 +15,6 @@ public interface PortalDao {
 	
 	public DbAnswer getAnswerById(String answerId);
 	
-	public List<Answer> getAnswerByUserId(String userId);
+	public List<DbAnswer> getAnswerByUserId(String userId);
 	
 }

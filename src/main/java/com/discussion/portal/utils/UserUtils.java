@@ -1,9 +1,11 @@
 package com.discussion.portal.utils;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-
 import com.discussion.portal.model.User;
+import com.discussion.portal.model.auth.AuthenticationModel;
+import com.discussion.portal.model.auth.Details_;
 import com.discussion.portal.mongodb.model.DbUser;
 
 /**
@@ -17,6 +19,19 @@ public class UserUtils {
 	public String getCurrentUser() {
 		return SecurityContextHolder.getContext().getAuthentication().getName();
 	}
+	
+	public Authentication getCurrentUserFull() {
+		return SecurityContextHolder.getContext().getAuthentication();
+	}
+	
+	public Details_ userNameIdPair() {
+		return ((AuthenticationModel) Json.
+				fromJson(Json
+						.toJson(getCurrentUserFull()), AuthenticationModel.class))
+				.getUserAuthentication()
+				.getDetails();
+	}
+	
 	
 	public User convertDbUserToUser(DbUser dbUser) {
 		

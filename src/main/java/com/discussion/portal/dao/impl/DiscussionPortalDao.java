@@ -1,9 +1,6 @@
 package com.discussion.portal.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +9,6 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.common.Constants.MongoDbSignature;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.PortalDao;
-import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -21,7 +17,6 @@ import com.discussion.portal.mongodb.repository.AnswerRepository;
 import com.discussion.portal.mongodb.repository.QuestionsRepository;
 import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
-import com.mongodb.DuplicateKeyException;
 
 @Component
 public class DiscussionPortalDao implements PortalDao {
@@ -34,9 +29,7 @@ public class DiscussionPortalDao implements PortalDao {
 	
 	@Autowired
 	private AnswerRepository ansRepo;
-	
-	@Autowired
-	private DiscussionUserAuthDao userDao;
+
 	
 	static Logger log = LoggerFactory.getLogger(DiscussionPortalDao.class);
 	
@@ -120,9 +113,9 @@ public class DiscussionPortalDao implements PortalDao {
 	}
 
 	@Override
-	public List<Answer> getAnswerByUserId(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<DbAnswer> getAnswerByUserId(String userId) {
+		
+		return ansRepo.findByUserId(userId);
 	}
 	
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
-import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
 

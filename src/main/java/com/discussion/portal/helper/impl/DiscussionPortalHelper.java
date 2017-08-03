@@ -2,7 +2,6 @@ package com.discussion.portal.helper.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +16,6 @@ import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
-import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
@@ -145,10 +143,22 @@ public class DiscussionPortalHelper implements PortalHelper {
 		return answerUtils.convertDbAnswerToAnswer(dbAnswer);
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public List<Answer> getAnswerByUserId(String userId) {
 		Map<String, String> questionAnswerMap = getUserByUserId(userId).getUserAnswerMap();
 		log.info("\nThe Answer map for the user:" + userId + "\n" + Json.toJson(userId));
 		return getAnswersByMap(questionAnswerMap);
+	}
+
+	public List<Answer> getAnswersByUserId(String userId) {
+		List<DbAnswer> dbAnswers = portalDao.getAnswerByUserId(userId);
+		List<Answer> answers = new ArrayList<Answer>();
+		for(DbAnswer dbAnswer : dbAnswers ) {
+			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
+		}
+		return answers;
 	}
 	
 	public List<Answer> getAnswersByMap(Map<String,String> questionAnswerMap) {
@@ -159,6 +169,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		return answers;
 	}
 	
+	@Override
 	public DbUser getUserByUserId(String userId) {
 		return userAuthDao.getUserByUserId(userId);
 	}

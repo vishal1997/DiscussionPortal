@@ -14,13 +14,9 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.answer.response.model.AnswerResponse;
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
-import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
 @Component
 public class QuestionUtils {

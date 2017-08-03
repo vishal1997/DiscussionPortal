@@ -13,7 +13,6 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.context.request.RequestContextListener;
 
-import com.discussion.portal.restcontroller.PortalRestController;
 import com.discussion.portal.utils.Json;
 
 @SpringBootApplication
@@ -25,11 +24,7 @@ public class DiscussionPortalApplication extends WebSecurityConfigurerAdapter {
 	public RequestContextListener requestContextListener() {
 	    return new RequestContextListener();
 	}  
-	
-/*	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-	}*/
+
     private static final String CSRF_HEADER_NAME = "XSRF-TOKEN";
 
     @Override
