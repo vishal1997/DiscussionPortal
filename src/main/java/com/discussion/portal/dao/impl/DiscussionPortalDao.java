@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
@@ -120,12 +121,17 @@ public class DiscussionPortalDao implements PortalDao {
 	@Override
 	public List<DbAnswer> getAnswerByUserId(String userId) {
 		
-		return ansRepo.findByUserId(userId);
+		Query query = new Query().addCriteria(Criteria.where("userId")
+				.is(userId))
+				.with(new Sort(Sort.Direction.DESC,"date"));
+
+		List<DbAnswer> dbAnswer = mongoTemplate.find(query, DbAnswer.class);
+		return dbAnswer;
 	}
 
 	@Override
 	public List<DbAnswer> getFeeds() {
-		Query query = new Query().with(new Sort(Sort.Direction.ASC, "date"));
+		Query query = new Query().with(new Sort(Sort.Direction.DESC, "date"));
 		List<DbAnswer> resourceList = mongoTemplate.find(query, DbAnswer.class);
 		return resourceList;
 	}

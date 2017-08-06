@@ -3,7 +3,6 @@ package com.discussion.portal.helper.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -156,21 +155,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public List<Answer> getAnswersByUserId(String userId) {
 		
 		List<DbAnswer> dbAnswers = portalDao.getAnswerByUserId(userId);
-		List<Answer> answers = convertDbAnswerList(dbAnswers);
-	
-		/*for(DbAnswer dbAnswer : dbAnswers. ) {
-			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
-		}*/
-		return answers;
-	}
-	
-	public List<Answer> convertDbAnswerList(List<DbAnswer> dbAnswers) {
 		List<Answer> answers = new ArrayList<Answer>();
-		ListIterator<DbAnswer> iter = dbAnswers.listIterator(dbAnswers.size());
-
-		while (iter.hasPrevious()) {
-		    DbAnswer dbAnswer = iter.previous();
-		    answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
+		for(DbAnswer dbAnswer : dbAnswers ) {
+			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
 		}
 		return answers;
 	}
@@ -196,7 +183,10 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public List<Answer> getFeeds() {
 		
 		List<DbAnswer> dbAnswers=portalDao.getFeeds();
-		List<Answer> answers = convertDbAnswerList(dbAnswers);
+		List<Answer> answers = new ArrayList<Answer>();
+		for(DbAnswer dbAnswer : dbAnswers ) {
+		answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
+		}
 		return answers;
 	}
 }
