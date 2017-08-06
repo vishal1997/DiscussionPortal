@@ -4,6 +4,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.common.Constants.MongoDbSignature;
@@ -30,6 +33,8 @@ public class DiscussionPortalDao implements PortalDao {
 	@Autowired
 	private AnswerRepository ansRepo;
 
+	@Autowired
+	private MongoTemplate mongoTemplate;
 	
 	static Logger log = LoggerFactory.getLogger(DiscussionPortalDao.class);
 	
@@ -116,6 +121,13 @@ public class DiscussionPortalDao implements PortalDao {
 	public List<DbAnswer> getAnswerByUserId(String userId) {
 		
 		return ansRepo.findByUserId(userId);
+	}
+
+	@Override
+	public List<DbAnswer> getFeeds() {
+		Query query = new Query().with(new Sort(Sort.Direction.ASC, "date"));
+		List<DbAnswer> resourceList = mongoTemplate.find(query, DbAnswer.class);
+		return resourceList;
 	}
 	
 }

@@ -37,4 +37,6 @@ public interface PortalManager {
 	public Answer getAnswerById(String answerId);
 	
 	public List<Answer> getAnswerByUserId (String userId);
+	
+	public List<Answer> getFeeds();
 }

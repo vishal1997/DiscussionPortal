@@ -17,4 +17,6 @@ public interface PortalDao {
 	
 	public List<DbAnswer> getAnswerByUserId(String userId);
 	
+	public List<DbAnswer> getFeeds();
+	
 }

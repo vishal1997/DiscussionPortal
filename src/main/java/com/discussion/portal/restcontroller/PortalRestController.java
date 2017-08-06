@@ -165,4 +165,9 @@ public class PortalRestController {
 	public Details_ getNameIdPair() {
 		return userUtils.userNameIdPair();
 	}
+	
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public List<Answer> getFeeds() {
+		return portalManager.getFeeds();
+	}
 }

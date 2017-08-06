@@ -109,4 +109,10 @@ public class DiscussionPortalManager implements PortalManager {
 	public List<Answer> getAnswerByUserId(String userId) {
 		return portalHelper.getAnswersByUserId(userId);
 	}
+
+	@Override
+	public List<Answer> getFeeds() {
+		
+		return portalHelper.getFeeds();
+	}
 }

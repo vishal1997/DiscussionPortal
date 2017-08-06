@@ -41,4 +41,6 @@ public interface PortalHelper {
 
 	public DbUser getUserByUserId(String userId);
 	
+	public List<Answer> getFeeds();
+	
 }
