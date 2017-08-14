@@ -43,4 +43,6 @@ public interface PortalHelper {
 	
 	public List<Answer> getFeeds();
 	
+	public String addUserOpinion(String userId, String opinion, String answerId);
+	
 }

@@ -25,6 +25,8 @@ public class AnswerUtils {
 				.date(answer.getDate())
 				.questionId(answer.getQuestionId())
 				.userId(answer.getAnsweredBy())
+				.agree(answer.getAgree())
+				.disAgree(answer.getDisAgree())
 				.build();
 		log.info("\nDB Answer generated:\n" + Json.toJson(dbAnswer));
 		return dbAnswer;
@@ -44,6 +46,17 @@ public class AnswerUtils {
 		answer.setAnswerId(dbAnswer.getAnswerId());
 		answer.setQuestionId(dbAnswer.getQuestionId());
 		answer.setQuestion(portalDao.getQuestionById(dbAnswer.getQuestionId()).getQuestion());
+		
+		if(dbAnswer.getAgree() != null) {
+			answer.setAgree(dbAnswer.getAgree());
+		}
+		
+		if(dbAnswer.getDisAgree() != null) {
+			answer.setDisAgree(dbAnswer.getDisAgree());
+		}
+		
+		answer.setNoOfAgree(dbAnswer.getNoOfAgree());
+		answer.setNoOfDisAgree(dbAnswer.getNoOfDisagree());
 		log.info("\nAnswer Generated:\n" + Json.toJson(answer));
 		return answer;
 	}

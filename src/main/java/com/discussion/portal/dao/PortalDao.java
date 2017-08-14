@@ -19,4 +19,6 @@ public interface PortalDao {
 	
 	public List<DbAnswer> getFeeds();
 	
+	public String updateDbAnswer(DbAnswer dbAnswer);
+	
 }

@@ -170,4 +170,12 @@ public class PortalRestController {
 	public List<Answer> getFeeds() {
 		return portalManager.getFeeds();
 	}
+	
+	@RequestMapping(value ="{opinion}/{answerId}", method = RequestMethod.GET) 
+	public String addUserOpinion(@PathVariable("opinion") final String opinion,
+							   @PathVariable("answerId") final String answerId){
+		
+		return portalManager.addUserOpinion(getUser().values().toString(), opinion, answerId).toString();
+	}
+	
 }

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
+import com.discussion.portal.common.Constants.Opinion;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.manager.PortalManager;
@@ -114,5 +115,11 @@ public class DiscussionPortalManager implements PortalManager {
 	public List<Answer> getFeeds() {
 		
 		return portalHelper.getFeeds();
+	}
+
+	@Override
+	public String addUserOpinion(String userId, String opinion, String answerId) {
+		
+		return portalHelper.addUserOpinion(userId, opinion, answerId);
 	}
 }

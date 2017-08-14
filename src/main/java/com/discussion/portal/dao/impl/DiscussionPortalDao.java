@@ -135,5 +135,17 @@ public class DiscussionPortalDao implements PortalDao {
 		List<DbAnswer> resourceList = mongoTemplate.find(query, DbAnswer.class);
 		return resourceList;
 	}
+
+	@Override
+	public String updateDbAnswer(DbAnswer dbAnswer) {
+		
+		try {
+			ansRepo.save(dbAnswer);
+			log.info("\nupdated DbAnswer\n" + Json.toJson(dbAnswer));
+			return StatusCode.SUCCESS;
+		} catch(Exception e) {
+			throw new RuntimeException("Error while updating DbAnswer", e);
+		}
+	}
 	
 }

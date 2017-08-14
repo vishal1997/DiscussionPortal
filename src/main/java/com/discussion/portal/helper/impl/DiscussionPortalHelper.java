@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
+import com.discussion.portal.common.Constants.Opinion;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
@@ -119,7 +120,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 		answerObj.setAnswerId(_userId + "'s-answer-to-" + questionId);
 		answerObj.setQuestionId(questionId);
 		answerObj.setDate(new Date());
-		
+		answerObj.setNoOfAgree(0);
+		answerObj.setNoOfDisAgree(0);
 		log.info("\nThe answer object generated:\n" + Json.toJson(answerObj));
 		
 		return answerObj;
@@ -188,5 +190,18 @@ public class DiscussionPortalHelper implements PortalHelper {
 		answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
 		}
 		return answers;
+	}
+
+	@Override
+	public String addUserOpinion(String userId, String opinion, String answerId) {
+		
+		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		
+		if(opinion.equalsIgnoreCase(Opinion.AGREE)) {
+			dbAnswer.addAgree(userId);
+		} else if(opinion.equalsIgnoreCase(Opinion.DISAGREE)) {
+			dbAnswer.addDisAgree(userId);
+		}
+		return portalDao.updateDbAnswer(dbAnswer);
 	}
 }

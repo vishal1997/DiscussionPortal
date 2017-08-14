@@ -30,4 +30,9 @@ public class Constants {
 	public class MongoDbSignature {
 		public static final String DUPLICATE_CODE = "error code 11000";
 	}
+	
+	public class Opinion {
+		public static final String AGREE = "agree";
+		public static final String DISAGREE = "disagree";
+	}
 }
