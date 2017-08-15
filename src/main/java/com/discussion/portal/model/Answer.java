@@ -1,7 +1,6 @@
 package com.discussion.portal.model;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -30,5 +29,7 @@ public class Answer {
 	
 	private int noOfAgree;
 	private int noOfDisAgree;
+	
+	private boolean userAgree;
 	
 }

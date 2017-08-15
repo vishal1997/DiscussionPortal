@@ -171,11 +171,11 @@ public class PortalRestController {
 		return portalManager.getFeeds();
 	}
 	
-	@RequestMapping(value ="{opinion}/{answerId}", method = RequestMethod.GET) 
-	public String addUserOpinion(@PathVariable("opinion") final String opinion,
+	@RequestMapping(value ="/{answerId}", method = RequestMethod.PUT) 
+	public void addUserOpinion(@RequestBody final String opinion,
 							   @PathVariable("answerId") final String answerId){
 		
-		return portalManager.addUserOpinion(getUser().values().toString(), opinion, answerId).toString();
+		portalManager.addUserOpinion(getUser().values().toString(), opinion, answerId);
 	}
 	
 }

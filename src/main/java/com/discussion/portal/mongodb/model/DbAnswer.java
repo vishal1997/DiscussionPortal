@@ -1,15 +1,11 @@
 package com.discussion.portal.mongodb.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.discussion.portal.common.Constants.StatusCode;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -38,18 +34,32 @@ public class DbAnswer {
 	
 	public void addAgree(String userId) {
 		
-		if(this.agree == null) {
-			this.agree = new HashSet<String>();
+		if(!this.disAgree.contains(userId)) {
+			if(this.agree == null) {
+				this.agree = new HashSet<String>();
+			}
+			
+			if(this.agree.contains(userId)) {
+				this.agree.remove(userId);
+			} else {
+				this.agree.add(userId);
+			}
 		}
-		this.agree.add(userId);
 	}
 	
 	public void addDisAgree(String userId) {
 		
-		if(this.disAgree == null) {
-			this.disAgree =new HashSet<String>(); 
+		if(!this.agree.contains(userId)) {
+			if(this.disAgree == null) {
+				this.disAgree =new HashSet<String>(); 
+			}
+			
+			if(this.disAgree.contains(userId)) {
+				this.disAgree.remove(userId);
+			} else {
+				this.disAgree.add(userId);
+			}
 		}
-		this.disAgree.add(userId);
 	}
 	
 	public Set<String> getAgree() {
