@@ -3,6 +3,7 @@ package com.discussion.portal.dao;
 import java.util.List;
 
 import com.discussion.portal.mongodb.model.DbAnswer;
+import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 
 public interface PortalDao {
@@ -20,5 +21,6 @@ public interface PortalDao {
 	public List<DbAnswer> getFeeds();
 	
 	public String updateDbAnswer(DbAnswer dbAnswer);
+	
 	
 }

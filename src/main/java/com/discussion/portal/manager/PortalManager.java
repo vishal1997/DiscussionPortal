@@ -41,4 +41,6 @@ public interface PortalManager {
 	public List<Answer> getFeeds();
 	
 	public String addUserOpinion(String userId, String opinion, String answerId);
+	
+	public String addComments(String answerId, String comment);
 }

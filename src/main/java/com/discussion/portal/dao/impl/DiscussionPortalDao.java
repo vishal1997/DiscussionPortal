@@ -15,6 +15,7 @@ import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.PortalDao;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
+import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.mongodb.repository.AnswerRepository;
@@ -147,5 +148,4 @@ public class DiscussionPortalDao implements PortalDao {
 			throw new RuntimeException("Error while updating DbAnswer", e);
 		}
 	}
-	
 }

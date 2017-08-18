@@ -18,15 +18,18 @@ import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
 import com.discussion.portal.model.Answer;
+import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
+import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.utils.AnswerUtils;
 import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.QuestionUtils;
 import com.discussion.portal.utils.UserUtils;
+import com.discussion.portal.utils.UtilComments;
 
 /**
  * 
@@ -50,6 +53,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 	
 	@Autowired
 	private AnswerUtils answerUtils;
+	
+	@Autowired
+	private UtilComments utilComments;
 	
 	/**
 	 * {@inheritDoc}
@@ -121,7 +127,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		answerObj.setQuestionId(questionId);
 		answerObj.setDate(new Date());
 		answerObj.setNoOfAgree(0);
-		answerObj.setNoOfDisAgree(0);
+		answerObj.setNoOfDisagree(0);
 		log.info("\nThe answer object generated:\n" + Json.toJson(answerObj));
 		
 		return answerObj;
@@ -198,10 +204,31 @@ public class DiscussionPortalHelper implements PortalHelper {
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
 		
 		if(opinion.equalsIgnoreCase(Opinion.AGREE)) {
-			dbAnswer.addAgree(userId);
+			dbAnswer.updateAgree(userId);
 		} else if(opinion.equalsIgnoreCase(Opinion.DISAGREE)) {
-			dbAnswer.addDisAgree(userId);
+			dbAnswer.updateDisagree(userId);
 		}
 		return portalDao.updateDbAnswer(dbAnswer);
+	}
+
+	@Override
+	public String addComments(Comment commentObj) {
+		
+		DbComment dbComment = utilComments.convertCommentToDbComment(commentObj);
+		DbAnswer dbAnswer = portalDao.getAnswerById(commentObj.getAnswerId());
+		dbAnswer.updateComment(dbComment);
+		return portalDao.updateDbAnswer(dbAnswer);
+	}
+
+	@Override
+	public Comment generateComment(String answerId, String comment) {
+		
+		Comment commentObj = new  Comment();
+		
+		commentObj.setComment(comment);
+		commentObj.setAnswerId(answerId);
+		//commentObj.setDate(new Date());
+		commentObj.setUserId(userUtils.getCurrentUser());
+		return commentObj;
 	}
 }

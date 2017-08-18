@@ -1,6 +1,8 @@
 package com.discussion.portal.model;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -25,11 +27,9 @@ public class Answer {
 	private Date date;
 	private String answeredBy;
 	private Set<String> agree;
-	private Set<String> disAgree;
-	
+	private Set<String> disagree;
+	private List<Comment>comments;
 	private int noOfAgree;
-	private int noOfDisAgree;
-	
-	private boolean userAgree;
+	private int noOfDisagree;
 	
 }

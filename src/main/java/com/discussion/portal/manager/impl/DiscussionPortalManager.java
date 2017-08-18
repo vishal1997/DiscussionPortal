@@ -15,6 +15,7 @@ import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.manager.PortalManager;
 import com.discussion.portal.model.Answer;
+import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -120,5 +121,12 @@ public class DiscussionPortalManager implements PortalManager {
 	public String addUserOpinion(String userId, String opinion, String answerId) {
 		
 		return portalHelper.addUserOpinion(userId, opinion, answerId);
+	}
+
+	@Override
+	public String addComments(String answerId, String comment) {
+		
+		Comment commentObj = portalHelper.generateComment(answerId, comment);
+		return portalHelper.addComments(commentObj);
 	}
 }

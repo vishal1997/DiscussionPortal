@@ -89,7 +89,10 @@ public class QuestionUtils {
 			answerResponse.setAnswerBy(key);
 			answerResponse.setAnswerId(answerMap.get(key));
 			answerResponse.setDate(answer.getDate());
-			
+			answerResponse.setAgree(answer.getAgree());
+			answerResponse.setDisagree(answer.getDisagree());
+			answerResponse.setNoOfAgree(answer.getNoOfAgree());
+			answerResponse.setNoOfDisagree(answer.getNoOfDisagree());
 			answers.add(answerResponse);
 		}
 		

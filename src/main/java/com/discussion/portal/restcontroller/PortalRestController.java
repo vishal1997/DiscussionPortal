@@ -51,11 +51,11 @@ public class PortalRestController {
 	 */
 	
 	@RequestMapping("/user")
-	public Map<String, String> getUser() {
+	public String getUser() {
 		
-		Map <String, String> userIdMap = new HashMap<String, String>();
-		userIdMap.put("userId", userUtils.getCurrentUser());
-		return userIdMap;
+		/*Map <String, String> userIdMap = new HashMap<String, String>();
+		userIdMap.put("userId", userUtils.getCurrentUser());*/
+		return userUtils.getCurrentUser();
 	}
 	
 
@@ -175,7 +175,28 @@ public class PortalRestController {
 	public void addUserOpinion(@RequestBody final String opinion,
 							   @PathVariable("answerId") final String answerId){
 		
-		portalManager.addUserOpinion(getUser().values().toString(), opinion, answerId);
+		portalManager.addUserOpinion(getUser(), opinion, answerId);
 	}
 	
+	
+	@RequestMapping(value = "/comments/{answerId}", method = RequestMethod.PUT)
+	public String addComments(@RequestBody final String comment,
+							  @PathVariable("answerId") final String answerId) {
+	
+		return portalManager.addComments(answerId, comment);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
