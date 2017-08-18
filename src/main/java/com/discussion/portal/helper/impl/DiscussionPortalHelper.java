@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.common.Constants.Opinion;
+import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
@@ -215,20 +216,28 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public String addComments(Comment commentObj) {
 		
 		DbComment dbComment = utilComments.convertCommentToDbComment(commentObj);
-		DbAnswer dbAnswer = portalDao.getAnswerById(commentObj.getAnswerId());
-		dbAnswer.updateComment(dbComment);
-		return portalDao.updateDbAnswer(dbAnswer);
+		return portalDao.addComments(dbComment);
 	}
 
 	@Override
-	public Comment generateComment(String answerId, String comment) {
+	public Comment generateComment(String comment, String answerId) {
 		
 		Comment commentObj = new  Comment();
 		
 		commentObj.setComment(comment);
-		commentObj.setAnswerId(answerId);
-		//commentObj.setDate(new Date());
+		commentObj.setCommentId(userUtils.getCurrentUser() + answerId + (new Date()).toString().replace(" ", "-"));
+		commentObj.setDate(new Date());
 		commentObj.setUserId(userUtils.getCurrentUser());
+		commentObj.setNoOfAgree(0);
+		commentObj.setNoOfDisagree(0);
 		return commentObj;
+	}
+
+	@Override
+	public String addCommentIdToDbAnswer(String commentId, String answerId) {
+		
+		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		dbAnswer.addCommentId(commentId);
+		return portalDao.updateDbAnswer(dbAnswer);
 	}
 }

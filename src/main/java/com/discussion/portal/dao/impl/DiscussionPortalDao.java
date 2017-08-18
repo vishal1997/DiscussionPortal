@@ -19,6 +19,7 @@ import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.mongodb.repository.AnswerRepository;
+import com.discussion.portal.mongodb.repository.CommentRepository;
 import com.discussion.portal.mongodb.repository.QuestionsRepository;
 import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
@@ -34,6 +35,9 @@ public class DiscussionPortalDao implements PortalDao {
 	
 	@Autowired
 	private AnswerRepository ansRepo;
+	
+	@Autowired
+	private CommentRepository comRepo;
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
@@ -146,6 +150,18 @@ public class DiscussionPortalDao implements PortalDao {
 			return StatusCode.SUCCESS;
 		} catch(Exception e) {
 			throw new RuntimeException("Error while updating DbAnswer", e);
+		}
+	}
+
+	@Override
+	public String addComments(DbComment dbComment) {
+		
+		try {
+			comRepo.insert(dbComment);
+			log.info("\nComment added\n" +Json.toJson(dbComment));
+			return StatusCode.SUCCESS;
+		} catch(Exception e) {
+			throw new RuntimeException("Error while adding comment", e);
 		}
 	}
 }

@@ -22,5 +22,5 @@ public interface PortalDao {
 	
 	public String updateDbAnswer(DbAnswer dbAnswer);
 	
-	
+	public String addComments(DbComment dbComment);
 }

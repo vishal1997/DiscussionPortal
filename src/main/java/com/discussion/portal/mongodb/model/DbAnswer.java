@@ -36,19 +36,14 @@ public class DbAnswer {
 	private Set<String> agree;
 	private Set<String> disagree;
 
-	private List<DbComment> comments;
+	private List<String> commentId;
 	
-	/**
-	 * 
-	 * @param comment
-	 */
-	public void updateComment(DbComment comment) {
+	public void addCommentId(String commentId) {
 		
-		if(this.comments == null) {
-			this.comments= new ArrayList<DbComment>();
+		if(this.commentId == null) {
+			this.commentId = new ArrayList<String>();
 		}
-		
-		this.comments.add(comment);
+		this.commentId.add(commentId);
 	}
 	
 	/**

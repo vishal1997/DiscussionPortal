@@ -49,4 +49,6 @@ public interface PortalHelper {
 	public String addComments(Comment commentObj);
 	
 	public Comment generateComment(String answerId, String comment);
+	
+	public String addCommentIdToDbAnswer(String commentId, String answerId);
 }

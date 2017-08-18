@@ -15,10 +15,10 @@ public class UtilComments {
 			return null;
 		}
 		DbComment dbComment = DbComment.builder()
-							.answerId(commentObj.getAnswerId())
 							.comment(commentObj.getComment())
 							.date(commentObj.getDate())
 							.userId(commentObj.getUserId())
+							.commentId(commentObj.getCommentId())
 							.build();
 		return dbComment;
 	}

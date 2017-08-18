@@ -179,12 +179,21 @@ public class PortalRestController {
 	}
 	
 	
-	@RequestMapping(value = "/comments/{answerId}", method = RequestMethod.PUT)
-	public String addComments(@RequestBody final String comment,
+	@RequestMapping(value = "/comments/{answerId}", method = RequestMethod.GET)
+	public String addComments(/*@RequestBody final String comment,*/
 							  @PathVariable("answerId") final String answerId) {
 	
+		String comment="this is the comment";
 		return portalManager.addComments(answerId, comment);
 	}
+	
+	@RequestMapping(value = "/comments/{commentId}" , method = RequestMethod.PUT)
+	public String addCommentOpinion(@RequestBody final String opinion,
+									@PathVariable("commentId") final String commentId) {
+		
+		return null;//portalManager.addCommentOpinion(commentId, opinion);
+	}
+	
 }
 
 

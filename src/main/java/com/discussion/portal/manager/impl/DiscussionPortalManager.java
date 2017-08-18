@@ -126,7 +126,12 @@ public class DiscussionPortalManager implements PortalManager {
 	@Override
 	public String addComments(String answerId, String comment) {
 		
-		Comment commentObj = portalHelper.generateComment(answerId, comment);
-		return portalHelper.addComments(commentObj);
+		Comment commentObj = portalHelper.generateComment(comment, answerId);
+		String status = portalHelper.addComments(commentObj);
+		
+		if(status.equals(StatusCode.SUCCESS)) {
+			return portalHelper.addCommentIdToDbAnswer(commentObj.getCommentId(), answerId);
+		}
+		return StatusCode.DUPLICATE;
 	}
 }

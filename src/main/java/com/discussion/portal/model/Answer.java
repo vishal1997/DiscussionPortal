@@ -28,7 +28,7 @@ public class Answer {
 	private String answeredBy;
 	private Set<String> agree;
 	private Set<String> disagree;
-	private List<Comment>comments;
+	private List<String>commentId;
 	private int noOfAgree;
 	private int noOfDisagree;
 	
