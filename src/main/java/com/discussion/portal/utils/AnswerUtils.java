@@ -19,6 +19,7 @@ public class AnswerUtils {
 	static Logger log = LoggerFactory.getLogger(AnswerUtils.class);
 	
 	public DbAnswer convertAnswerToDbAnswer(Answer answer) {
+		/*
 		DbAnswer dbAnswer = DbAnswer.builder()
 				.answer(answer.getAnswer())
 				.answerId(answer.getAnswerId())
@@ -27,7 +28,16 @@ public class AnswerUtils {
 				.userId(answer.getAnsweredBy())
 				.agree(answer.getAgree())
 				.disagree(answer.getDisagree())
-				.build();
+				.build();*/
+		DbAnswer dbAnswer = new DbAnswer();
+		dbAnswer.setAnswer(answer.getAnswer());
+		dbAnswer.setAnswerId(answer.getAnswerId());
+		dbAnswer.setUserId(answer.getAnsweredBy());
+		dbAnswer.setQuestionId(answer.getQuestionId());
+		dbAnswer.setAgree(answer.getAgree());
+		dbAnswer.setDisagree(answer.getDisagree());
+		dbAnswer.setDate(answer.getDate());
+		
 		log.info("\nDB Answer generated:\n" + Json.toJson(dbAnswer));
 		return dbAnswer;
 	}

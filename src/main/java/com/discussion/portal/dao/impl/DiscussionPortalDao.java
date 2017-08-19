@@ -164,4 +164,25 @@ public class DiscussionPortalDao implements PortalDao {
 			throw new RuntimeException("Error while adding comment", e);
 		}
 	}
+
+	@Override
+	public DbComment getCommentById(String commentId) {
+		
+		try {
+			return comRepo.findOne(commentId);
+		} catch(Exception e) {
+			throw new RuntimeException("Error while getting dbComment Object", e);
+		}
+	}
+
+	@Override
+	public String updateDbComment(DbComment dbComment) {
+		
+		try {
+			comRepo.save(dbComment);
+			return StatusCode.SUCCESS;
+		} catch(Exception e) {
+			throw new RuntimeException("Error while adding dbComment Object", e);
+		}
+	}
 }

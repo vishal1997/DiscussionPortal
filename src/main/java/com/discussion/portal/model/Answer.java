@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Component
-public class Answer {
+public class Answer extends AgreeDisagree{
 	
 	private String answerId;
 	private String questionId;
@@ -26,10 +26,7 @@ public class Answer {
 	private String question;
 	private Date date;
 	private String answeredBy;
-	private Set<String> agree;
-	private Set<String> disagree;
 	private List<String>commentId;
-	private int noOfAgree;
-	private int noOfDisagree;
+
 	
 }

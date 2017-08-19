@@ -15,13 +15,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Document(collection="comments")
-public class DbComment {
+public class DbComment extends AgreeDisagree{
 	
 	@Id
 	private String commentId;
 	private String userId;
 	private String comment;
 	private Date date;
-	private List<String> Agree;
-	private List<String> Disagree;
 }

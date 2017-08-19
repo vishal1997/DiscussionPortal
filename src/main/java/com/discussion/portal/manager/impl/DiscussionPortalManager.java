@@ -134,4 +134,9 @@ public class DiscussionPortalManager implements PortalManager {
 		}
 		return StatusCode.DUPLICATE;
 	}
+
+	@Override
+	public String addCommentOpinion(String commentId, String opinion) {
+		return portalHelper.addCommentOpinion(commentId, opinion);
+	}
 }
