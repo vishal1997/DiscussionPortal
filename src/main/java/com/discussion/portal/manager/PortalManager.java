@@ -43,4 +43,6 @@ public interface PortalManager {
 	public String addUserOpinion(String userId, String opinion, String answerId);
 	
 	public String addComments(String answerId, String comment);
+	
+	public String addCommentOpinion(String commentId, String opinion);
 }

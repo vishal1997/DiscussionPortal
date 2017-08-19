@@ -225,7 +225,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		Comment commentObj = new  Comment();
 		
 		commentObj.setComment(comment);
-		commentObj.setCommentId(userUtils.getCurrentUser() + answerId + (new Date()).toString().replace(" ", "-"));
+		commentObj.setCommentId(userUtils.getCurrentUser() + answerId + (new Date()).toString().replace(" ", "-").replace(":","-"));
 		commentObj.setDate(new Date());
 		commentObj.setUserId(userUtils.getCurrentUser());
 		commentObj.setNoOfAgree(0);
@@ -239,5 +239,18 @@ public class DiscussionPortalHelper implements PortalHelper {
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
 		dbAnswer.addCommentId(commentId);
 		return portalDao.updateDbAnswer(dbAnswer);
+	}
+
+	@Override
+	public String addCommentOpinion(String commentId, String opinion) {
+		DbComment dbComment = portalDao.getCommentById(commentId);
+		
+		if(opinion.equalsIgnoreCase(Opinion.AGREE)) {
+			dbComment.updateAgree(userUtils.getCurrentUser());
+		} else if(opinion.equalsIgnoreCase(Opinion.DISAGREE)) {
+			dbComment.updateDisagree(userUtils.getCurrentUser());
+		}
+		
+		return portalDao.updateDbComment(dbComment);
 	}
 }
