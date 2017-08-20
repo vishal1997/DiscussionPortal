@@ -232,6 +232,15 @@ public class PortalRestController {
 			throw e;
 		}
 	}
+	
+	@RequestMapping(value = "comment/{answerId}",method = RequestMethod.GET)
+	public List<Comment> getCommentByAnswerId(@PathVariable("answerId")final String answerId) {
+		try {
+			return portalManager.getCommentsByAnswerId(answerId);
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 }
 
 

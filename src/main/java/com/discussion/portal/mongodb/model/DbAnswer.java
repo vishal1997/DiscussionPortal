@@ -47,4 +47,8 @@ public class DbAnswer extends AgreeDisagree{
 		}
 	}
 	
+	public List<String> getCommentId() {
+		
+		return this.commentId;
+	}
 }

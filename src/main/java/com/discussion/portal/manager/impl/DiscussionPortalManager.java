@@ -1,5 +1,6 @@
 package com.discussion.portal.manager.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
+import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 
@@ -31,6 +33,7 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Autowired
 	private DiscussionPortalHelper portalHelper;
+
 	
 	static Logger log = LoggerFactory.getLogger(DiscussionPortalManager.class);
 	/**
@@ -163,5 +166,14 @@ public class DiscussionPortalManager implements PortalManager {
 			return portalHelper.deleteCommentIdFromDbAnswer(answerId, commentId);
 		}
 		return StatusCode.ERROR;
+	}
+
+	@Override
+	public List<Comment> getCommentsByAnswerId(String answerId) {
+		
+		List<DbComment> dbComments = portalHelper.getCommentByAnswerId(answerId);
+		
+		List<Comment> comment = portalHelper.convertDbCommentToComment(dbComments);
+		return comment;
 	}
 }
