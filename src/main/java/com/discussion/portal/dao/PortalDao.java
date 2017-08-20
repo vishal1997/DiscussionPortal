@@ -27,4 +27,8 @@ public interface PortalDao {
 	public DbComment getCommentById(String commentId);
 	
 	public String updateDbComment(DbComment dbComment);
+	
+	public String deleteAnswer(DbAnswer dbAnswer);
+	
+	public String deleteComment(DbComment commentId);
 }

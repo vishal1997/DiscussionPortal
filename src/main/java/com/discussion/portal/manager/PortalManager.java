@@ -45,4 +45,8 @@ public interface PortalManager {
 	public String addComments(String answerId, String comment);
 	
 	public String addCommentOpinion(String commentId, String opinion);
+	
+	public String deleteAnswer(String answerId);
+	
+	public String deleteComment(String commentId);
 }
