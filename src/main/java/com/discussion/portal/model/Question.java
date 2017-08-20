@@ -21,7 +21,6 @@ public class Question {
 
 	private String questionId;
 	private String question;
-	//private List<Answer> answers;
 	private String owner;
 	private Date creationDate;
 	private List<String> tags;

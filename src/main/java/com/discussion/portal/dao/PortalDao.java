@@ -5,6 +5,7 @@ import java.util.List;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
+import com.discussion.portal.mongodb.model.DbUser;
 
 public interface PortalDao {
 
@@ -31,4 +32,6 @@ public interface PortalDao {
 	public String deleteAnswer(DbAnswer dbAnswer);
 	
 	public String deleteComment(DbComment commentId);
+	
+	public String updateDbUser(DbUser dbUser);
 }

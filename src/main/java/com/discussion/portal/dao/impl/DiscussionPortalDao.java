@@ -208,4 +208,15 @@ public class DiscussionPortalDao implements PortalDao {
 		}
 	
 	}
+
+	@Override
+	public String updateDbUser(DbUser dbUser) {
+		
+		try {
+			userRepo.save(dbUser);
+			return StatusCode.SUCCESS;
+		} catch (Exception e) {
+			throw new RuntimeException("Error while updating DbUser Object", e);
+		}
+	}
 }

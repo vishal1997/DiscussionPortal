@@ -20,6 +20,7 @@ import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
+import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
 import com.discussion.portal.model.auth.Details_;
@@ -27,6 +28,12 @@ import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.UserUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+
+/**
+ * 
+ * @author vishalpc
+ *
+ */
 @RestController
 @EnableWebMvc
 @RequestMapping("/api/v1/")
@@ -180,10 +187,17 @@ public class PortalRestController {
 	
 	
 	@RequestMapping(value = "/comments/{answerId}", method = RequestMethod.PUT)
-	public String addComments(@RequestBody final String comment,
+	public Map<String, String> addComments(@RequestBody final Comment comment,
 							  @PathVariable("answerId") final String answerId) {
-	
-		return portalManager.addComments(answerId, comment);
+		try {
+			Map<String, String> commentStatus = new HashMap<String, String>();
+			String status = portalManager.addComments(answerId, comment.getComment());
+			commentStatus.put("status", status);
+			return commentStatus;
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 	
 	@RequestMapping(value = "/comments/opinion/{commentId}" , method = RequestMethod.PUT)
@@ -193,12 +207,13 @@ public class PortalRestController {
 		return portalManager.addCommentOpinion(commentId, opinion);
 	}
 	
+
 	@RequestMapping(value = "/delete/answer/{answerId}", method = RequestMethod.GET)
 	public Map<String, String> deleteAnswer(@PathVariable("answerId") final String answerId) {
 		
 		try {
 			Map<String, String> deleteStatus = new HashMap<String, String>();
-			String status = portalManager.deleteAnswer(answerId);
+			String status = portalManager.deleteAnswer(answerId, userUtils.getCurrentUser());
 			deleteStatus.put("status", status);
 			return deleteStatus;
 		} catch(Exception e) {
@@ -206,11 +221,11 @@ public class PortalRestController {
 		}
 	}
 	
-	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.GET)
+	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.PUT)
 	public Map<String, String> deleteComment(@PathVariable("commentId") final String commentId) {
 		try {
 			Map<String,String> deleteStatus = new HashMap<String, String>();
-			String status = portalManager.deleteComment(commentId);
+			String status = portalManager.deleteComment(commentId, userUtils.getCurrentUser());
 			deleteStatus.put("status",  status);
 			return deleteStatus;
 		} catch(Exception e) {

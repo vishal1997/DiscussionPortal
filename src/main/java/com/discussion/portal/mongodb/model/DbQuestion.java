@@ -35,4 +35,10 @@ public class DbQuestion {
 		}
 		answersMap.put(answer.getAnsweredBy(), answer.getAnswerId());
 	}
+	
+	public void removeAnswerMap(DbAnswer dbAnswer) {
+		if(this.answersMap.containsValue(dbAnswer.getAnswerId())) {
+			this.answersMap.remove(dbAnswer.getUserId(), dbAnswer.getAnswerId());
+		}
+	}
 }
