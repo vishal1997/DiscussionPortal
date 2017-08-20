@@ -7,6 +7,7 @@ import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
+import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 
@@ -61,4 +62,8 @@ public interface PortalHelper {
 	public String deleteCommentIdFromDbAnswer(String answerId, String commentId);
 	
 	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser);
+	
+	public List<DbComment> getCommentByAnswerId(String answerId);
+	
+	public List<Comment> convertDbCommentToComment(List<DbComment> dbComments);
 }

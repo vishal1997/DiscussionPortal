@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import com.discussion.portal.model.Answer;
+import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 
 /**
@@ -49,4 +50,6 @@ public interface PortalManager {
 	public String deleteAnswer(String answerId, String userId);
 	
 	public String deleteComment(String commentId, String userId);
+	
+	public List<Comment> getCommentsByAnswerId(String answerId);
 }
