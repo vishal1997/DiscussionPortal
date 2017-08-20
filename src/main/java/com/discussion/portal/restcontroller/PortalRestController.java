@@ -213,7 +213,7 @@ public class PortalRestController {
 		
 		try {
 			Map<String, String> deleteStatus = new HashMap<String, String>();
-			String status = portalManager.deleteAnswer(answerId);
+			String status = portalManager.deleteAnswer(answerId, userUtils.getCurrentUser());
 			deleteStatus.put("status", status);
 			return deleteStatus;
 		} catch(Exception e) {
@@ -225,7 +225,7 @@ public class PortalRestController {
 	public Map<String, String> deleteComment(@PathVariable("commentId") final String commentId) {
 		try {
 			Map<String,String> deleteStatus = new HashMap<String, String>();
-			String status = portalManager.deleteComment(commentId);
+			String status = portalManager.deleteComment(commentId, userUtils.getCurrentUser());
 			deleteStatus.put("status",  status);
 			return deleteStatus;
 		} catch(Exception e) {

@@ -142,15 +142,13 @@ public class DiscussionPortalManager implements PortalManager {
 	}
 
 	@Override
-	public String deleteAnswer(String answerId) {
-		return portalHelper.deleteAnswer(answerId);
-		
-		
+	public String deleteAnswer(String answerId, String userId) {
+		return portalHelper.deleteAnswer(answerId, userId);
 	}
 
 	@Override
-	public String deleteComment(String commentId) {
-        return portalHelper.deleteComment(commentId);
+	public String deleteComment(String commentId, String userId) {
+        return portalHelper.deleteComment(commentId, userId);
 		
 	}
 }

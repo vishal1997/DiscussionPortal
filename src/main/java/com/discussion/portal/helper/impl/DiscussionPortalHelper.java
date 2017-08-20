@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.common.Constants.Opinion;
+import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
@@ -254,18 +255,24 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public String deleteAnswer(String answerId) {
+	public String deleteAnswer(String answerId, String userId) {
 	    
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
-		return portalDao.deleteAnswer(dbAnswer);
+		if(userId.equalsIgnoreCase(dbAnswer.getUserId())) {
+			return portalDao.deleteAnswer(dbAnswer);
+		}
 		
+		return StatusCode.ERROR;
 	}
 
 	@Override
-	public String deleteComment(String commentId) {
+	public String deleteComment(String commentId, String userId) {
 		
 		DbComment dbComment = portalDao.getCommentById(commentId);
-		return portalDao.deleteComment(dbComment);
+		if(userId.equalsIgnoreCase(dbComment.getUserId())) {
+			return portalDao.deleteComment(dbComment);
+		}
+		return StatusCode.ERROR;
 	
 	}
 }
