@@ -25,6 +25,7 @@ public class Constants {
 	public class StatusCode {
 		public static final String SUCCESS = "success";
 		public static final String DUPLICATE = "duplicate";
+		public static final String ERROR = "delete";
 	}
 	
 	public class MongoDbSignature {

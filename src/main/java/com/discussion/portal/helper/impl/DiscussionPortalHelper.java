@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.common.Constants.Opinion;
-import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;

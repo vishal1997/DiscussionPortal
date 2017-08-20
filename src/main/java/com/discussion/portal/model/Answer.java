@@ -2,9 +2,6 @@ package com.discussion.portal.model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;

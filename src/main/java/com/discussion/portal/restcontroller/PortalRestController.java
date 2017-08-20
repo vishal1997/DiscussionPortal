@@ -20,6 +20,7 @@ import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
+import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
 import com.discussion.portal.model.auth.Details_;
@@ -27,6 +28,12 @@ import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.UserUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+
+/**
+ * 
+ * @author vishalpc
+ *
+ */
 @RestController
 @EnableWebMvc
 @RequestMapping("/api/v1/")
@@ -180,10 +187,17 @@ public class PortalRestController {
 	
 	
 	@RequestMapping(value = "/comments/{answerId}", method = RequestMethod.PUT)
-	public String addComments(@RequestBody final String comment,
+	public Map<String, String> addComments(@RequestBody final Comment comment,
 							  @PathVariable("answerId") final String answerId) {
-	
-		return portalManager.addComments(answerId, comment);
+		try {
+			Map<String, String> commentStatus = new HashMap<String, String>();
+			String status = portalManager.addComments(answerId, comment.getComment());
+			commentStatus.put("status", status);
+			return commentStatus;
+		} catch (Exception e) {
+			return null;
+		}
+		
 	}
 	
 	@RequestMapping(value = "/comments/opinion/{commentId}" , method = RequestMethod.PUT)
@@ -192,6 +206,7 @@ public class PortalRestController {
 
 		return portalManager.addCommentOpinion(commentId, opinion);
 	}
+	
 	
 }
 

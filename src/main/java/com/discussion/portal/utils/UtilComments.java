@@ -3,7 +3,6 @@ package com.discussion.portal.utils;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.model.Comment;
-import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 
 @Component

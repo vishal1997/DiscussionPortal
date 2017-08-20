@@ -130,9 +130,10 @@ public class DiscussionPortalManager implements PortalManager {
 		String status = portalHelper.addComments(commentObj);
 		
 		if(status.equals(StatusCode.SUCCESS)) {
-			return portalHelper.addCommentIdToDbAnswer(commentObj.getCommentId(), answerId);
+			portalHelper.addCommentIdToDbAnswer(commentObj.getCommentId(), answerId);
+			return "Comment Posted";
 		}
-		return StatusCode.DUPLICATE;
+		return StatusCode.ERROR;
 	}
 
 	@Override
