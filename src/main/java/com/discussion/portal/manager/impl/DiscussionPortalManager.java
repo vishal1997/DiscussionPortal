@@ -19,6 +19,7 @@ import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
+import com.discussion.portal.mongodb.model.DbUser;
 
 /**
  * 
@@ -130,9 +131,10 @@ public class DiscussionPortalManager implements PortalManager {
 		String status = portalHelper.addComments(commentObj);
 		
 		if(status.equals(StatusCode.SUCCESS)) {
-			return portalHelper.addCommentIdToDbAnswer(commentObj.getCommentId(), answerId);
+			portalHelper.addCommentIdToDbAnswer(commentObj.getCommentId(), answerId);
+			return "Comment Posted";
 		}
-		return StatusCode.DUPLICATE;
+		return StatusCode.ERROR;
 	}
 
 	@Override
@@ -141,15 +143,25 @@ public class DiscussionPortalManager implements PortalManager {
 	}
 
 	@Override
-	public String deleteAnswer(String answerId) {
-		return portalHelper.deleteAnswer(answerId);
+	public String deleteAnswer(String answerId, String userId) {
 		
-		
+		String status = portalHelper.deleteAnswer(answerId, userId);
+		if(status.equalsIgnoreCase(StatusCode.SUCCESS)) {
+			DbUser dbUser = portalHelper.getUserByUserId(userId);
+			return portalHelper.deleteAnswerIdFromUser(answerId, dbUser);
+		}
+		return StatusCode.ERROR;
 	}
 
 	@Override
-	public String deleteComment(String commentId) {
-        return portalHelper.deleteComment(commentId);
+	public String deleteComment(String commentId, String userId) {
+        
+		String answerId = portalHelper.getAnswerIdByCommentId(commentId);
+		String status = portalHelper.deleteComment(commentId, userId);
 		
+		if(status.equalsIgnoreCase(StatusCode.SUCCESS)) {
+			return portalHelper.deleteCommentIdFromDbAnswer(answerId, commentId);
+		}
+		return StatusCode.ERROR;
 	}
 }

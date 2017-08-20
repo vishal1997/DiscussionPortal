@@ -46,6 +46,12 @@ public class DbUser {
 		userAnswerMap.put(questionId, answerId);
 	}
 	
+	public void removeAnswerFromMap(String answerId) {
+		if(this.userAnswerMap.containsValue(answerId)) {
+			this.userAnswerMap.remove(answerId);
+		}
+	}
+	
 	public List<String> getQuestionId() {
 		return this.questionId;
 	}

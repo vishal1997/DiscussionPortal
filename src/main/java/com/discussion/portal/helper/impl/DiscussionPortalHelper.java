@@ -230,6 +230,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		commentObj.setUserId(userUtils.getCurrentUser());
 		commentObj.setNoOfAgree(0);
 		commentObj.setNoOfDisagree(0);
+		commentObj.setAnswerId(answerId);
 		return commentObj;
 	}
 
@@ -255,18 +256,45 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public String deleteAnswer(String answerId) {
+	public String deleteAnswer(String answerId, String userId) {
 	    
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
-		return portalDao.deleteAnswer(dbAnswer);
+		if(userId.equalsIgnoreCase(dbAnswer.getUserId())) {
+			return portalDao.deleteAnswer(dbAnswer);
+		}
 		
+		return StatusCode.ERROR;
+	}
+	
+	public String getAnswerIdByCommentId(String commentId) {
+		
+		DbComment dbComment = portalDao.getCommentById(commentId);
+		return dbComment.getAnswerId();
 	}
 
 	@Override
-	public String deleteComment(String commentId) {
+	public String deleteComment(String commentId, String userId) {
 		
 		DbComment dbComment = portalDao.getCommentById(commentId);
-		return portalDao.deleteComment(dbComment);
+		if(userId.equalsIgnoreCase(dbComment.getUserId())) {
+			return portalDao.deleteComment(dbComment);
+		}
+		return StatusCode.ERROR;
 	
+	}
+
+	@Override
+	public String deleteCommentIdFromDbAnswer(String answerId, String commentId) {
+		
+		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		dbAnswer.removeCommentId(commentId);
+		return portalDao.updateDbAnswer(dbAnswer);
+	}
+
+	@Override
+	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser) {
+		
+		dbUser.removeAnswerFromMap(answerId);
+		return portalDao.updateDbUser(dbUser);
 	}
 }
