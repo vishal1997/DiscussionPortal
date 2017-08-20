@@ -221,7 +221,7 @@ public class PortalRestController {
 		}
 	}
 	
-	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.GET)
+	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.PUT)
 	public Map<String, String> deleteComment(@PathVariable("commentId") final String commentId) {
 		try {
 			Map<String,String> deleteStatus = new HashMap<String, String>();

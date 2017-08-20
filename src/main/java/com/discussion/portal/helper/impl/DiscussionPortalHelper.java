@@ -230,6 +230,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		commentObj.setUserId(userUtils.getCurrentUser());
 		commentObj.setNoOfAgree(0);
 		commentObj.setNoOfDisagree(0);
+		commentObj.setAnswerId(answerId);
 		return commentObj;
 	}
 
@@ -264,6 +265,12 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		return StatusCode.ERROR;
 	}
+	
+	public String getAnswerIdByCommentId(String commentId) {
+		
+		DbComment dbComment = portalDao.getCommentById(commentId);
+		return dbComment.getAnswerId();
+	}
 
 	@Override
 	public String deleteComment(String commentId, String userId) {
@@ -274,5 +281,20 @@ public class DiscussionPortalHelper implements PortalHelper {
 		}
 		return StatusCode.ERROR;
 	
+	}
+
+	@Override
+	public String deleteCommentIdFromDbAnswer(String answerId, String commentId) {
+		
+		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		dbAnswer.removeCommentId(commentId);
+		return portalDao.updateDbAnswer(dbAnswer);
+	}
+
+	@Override
+	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser) {
+		
+		dbUser.removeAnswerFromMap(answerId);
+		return portalDao.updateDbUser(dbUser);
 	}
 }

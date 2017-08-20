@@ -2,16 +2,10 @@ package com.discussion.portal.mongodb.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,6 +38,13 @@ public class DbAnswer extends AgreeDisagree{
 			this.commentId = new ArrayList<String>();
 		}
 		this.commentId.add(commentId);
+	}
+	
+	public void removeCommentId(String commentId) {
+		
+		if(this.commentId.contains(commentId)) {
+			this.commentId.remove(commentId);
+		}
 	}
 	
 }

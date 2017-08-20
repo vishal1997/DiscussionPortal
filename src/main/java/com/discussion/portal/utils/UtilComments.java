@@ -18,6 +18,7 @@ public class UtilComments {
 							.date(commentObj.getDate())
 							.userId(commentObj.getUserId())
 							.commentId(commentObj.getCommentId())
+							.answerId(commentObj.getAnswerId())
 							.build();
 		return dbComment;
 	}

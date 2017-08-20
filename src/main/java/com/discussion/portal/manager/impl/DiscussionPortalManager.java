@@ -19,6 +19,7 @@ import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
+import com.discussion.portal.mongodb.model.DbUser;
 
 /**
  * 
@@ -143,12 +144,24 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Override
 	public String deleteAnswer(String answerId, String userId) {
-		return portalHelper.deleteAnswer(answerId, userId);
+		
+		String status = portalHelper.deleteAnswer(answerId, userId);
+		if(status.equalsIgnoreCase(StatusCode.SUCCESS)) {
+			DbUser dbUser = portalHelper.getUserByUserId(userId);
+			return portalHelper.deleteAnswerIdFromUser(answerId, dbUser);
+		}
+		return StatusCode.ERROR;
 	}
 
 	@Override
 	public String deleteComment(String commentId, String userId) {
-        return portalHelper.deleteComment(commentId, userId);
+        
+		String answerId = portalHelper.getAnswerIdByCommentId(commentId);
+		String status = portalHelper.deleteComment(commentId, userId);
 		
+		if(status.equalsIgnoreCase(StatusCode.SUCCESS)) {
+			return portalHelper.deleteCommentIdFromDbAnswer(answerId, commentId);
+		}
+		return StatusCode.ERROR;
 	}
 }

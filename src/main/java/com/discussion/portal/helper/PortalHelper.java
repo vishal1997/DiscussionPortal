@@ -57,4 +57,8 @@ public interface PortalHelper {
 	public String deleteAnswer(String answerId, String userId);
 	
 	public String deleteComment(String commentId, String userId);
+	
+	public String deleteCommentIdFromDbAnswer(String answerId, String commentId);
+	
+	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser);
 }
