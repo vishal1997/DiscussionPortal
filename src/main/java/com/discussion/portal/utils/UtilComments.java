@@ -22,4 +22,22 @@ public class UtilComments {
 							.build();
 		return dbComment;
 	}
+	
+	public Comment convertDbCommentToComment(DbComment dbComment) {
+		
+		if(dbComment == null) {
+			return null;
+		}
+		Comment comment = new Comment();
+		comment.setAgree(dbComment.getAgree());
+		comment.setAnswerId(dbComment.getAnswerId());
+		comment.setComment(dbComment.getComment());
+		comment.setCommentId(dbComment.getCommentId());
+		comment.setDate(dbComment.getDate());
+		comment.setDisagree(dbComment.getDisagree());
+		comment.setNoOfAgree(dbComment.getNoOfAgree());
+		comment.setNoOfDisagree(dbComment.getNoOfDisagree());
+		comment.setUserId(dbComment.getUserId());
+		return comment;
+	}
 }

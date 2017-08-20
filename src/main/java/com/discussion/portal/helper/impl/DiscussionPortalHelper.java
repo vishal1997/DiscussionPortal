@@ -297,4 +297,27 @@ public class DiscussionPortalHelper implements PortalHelper {
 		dbUser.removeAnswerFromMap(answerId);
 		return portalDao.updateDbUser(dbUser);
 	}
+
+	@Override
+	public List<DbComment> getCommentByAnswerId(String answerId) {
+		
+		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		List<String> commentIds = dbAnswer.getCommentId();
+		List<DbComment> dbComment =new ArrayList<DbComment>();
+		
+		for(String commentId:commentIds) {
+			dbComment.add(portalDao.getCommentById(commentId));
+		}
+		return dbComment;
+	}
+
+	@Override
+	public List<Comment> convertDbCommentToComment(List<DbComment> dbComments) {
+		
+		List<Comment> comment = new ArrayList<Comment>();
+		for(DbComment dbComment : dbComments) {
+			comment.add(utilComments.convertDbCommentToComment(dbComment));
+		}
+		return comment;
+	}
 }

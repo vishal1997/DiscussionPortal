@@ -34,4 +34,5 @@ public interface PortalDao {
 	public String deleteComment(DbComment commentId);
 	
 	public String updateDbUser(DbUser dbUser);
+	
 }
