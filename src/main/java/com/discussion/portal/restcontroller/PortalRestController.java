@@ -207,7 +207,31 @@ public class PortalRestController {
 		return portalManager.addCommentOpinion(commentId, opinion);
 	}
 	
+
+	@RequestMapping(value = "/delete/answer/{answerId}", method = RequestMethod.GET)
+	public Map<String, String> deleteAnswer(@PathVariable("answerId") final String answerId) {
+		
+		try {
+			Map<String, String> deleteStatus = new HashMap<String, String>();
+			String status = portalManager.deleteAnswer(answerId);
+			deleteStatus.put("status", status);
+			return deleteStatus;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
 	
+	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.GET)
+	public Map<String, String> deleteComment(@PathVariable("commentId") final String commentId) {
+		try {
+			Map<String,String> deleteStatus = new HashMap<String, String>();
+			String status = portalManager.deleteComment(commentId);
+			deleteStatus.put("status",  status);
+			return deleteStatus;
+		} catch(Exception e) {
+			throw e;
+		}
+	}
 }
 
 

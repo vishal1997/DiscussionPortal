@@ -140,4 +140,17 @@ public class DiscussionPortalManager implements PortalManager {
 	public String addCommentOpinion(String commentId, String opinion) {
 		return portalHelper.addCommentOpinion(commentId, opinion);
 	}
+
+	@Override
+	public String deleteAnswer(String answerId) {
+		return portalHelper.deleteAnswer(answerId);
+		
+		
+	}
+
+	@Override
+	public String deleteComment(String commentId) {
+        return portalHelper.deleteComment(commentId);
+		
+	}
 }
