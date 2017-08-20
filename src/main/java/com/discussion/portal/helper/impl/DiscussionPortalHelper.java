@@ -253,4 +253,20 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		return portalDao.updateDbComment(dbComment);
 	}
+
+	@Override
+	public String deleteAnswer(String answerId) {
+	    
+		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		return portalDao.deleteAnswer(dbAnswer);
+		
+	}
+
+	@Override
+	public String deleteComment(String commentId) {
+		
+		DbComment dbComment = portalDao.getCommentById(commentId);
+		return portalDao.deleteComment(dbComment);
+	
+	}
 }

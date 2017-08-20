@@ -185,4 +185,27 @@ public class DiscussionPortalDao implements PortalDao {
 			throw new RuntimeException("Error while adding dbComment Object", e);
 		}
 	}
+
+	@Override
+	public String deleteAnswer(DbAnswer dbAnswer) {
+        
+		try {
+			ansRepo.delete(dbAnswer);
+			return StatusCode.SUCCESS;
+		} catch(Exception e) {
+			throw new RuntimeException("Error while deleting dbAnswer Object", e);
+		}
+	}
+
+	@Override
+	public String deleteComment(DbComment dbComment) {
+		
+		try {
+			comRepo.delete(dbComment);
+			return StatusCode.SUCCESS;
+		} catch (Exception e) {
+			throw new RuntimeException("Error while deleting dbComment Object", e);
+		}
+	
+	}
 }
