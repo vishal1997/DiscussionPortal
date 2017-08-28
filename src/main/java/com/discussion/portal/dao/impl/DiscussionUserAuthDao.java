@@ -35,7 +35,7 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 
 		DbUser user = new DbUser();
 		user.setUsername(userId);
-		user.setPassword(1212);
+		user.setPassword("1212");
 		
 		userRepository.insert(user);
 		

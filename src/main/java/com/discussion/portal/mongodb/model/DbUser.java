@@ -19,7 +19,7 @@ public class DbUser {
 	@Id
 	private String username;
 	
-	private int password;
+	private String password;
 	
 	private List<String> questionId;
 	
