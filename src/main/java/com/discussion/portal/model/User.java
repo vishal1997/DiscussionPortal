@@ -20,5 +20,5 @@ public class User {
 	private String branch;
 	private List<String> questionId;
 	private Map<String, String> userAnswerMap;
-	
+	private String password;
 }

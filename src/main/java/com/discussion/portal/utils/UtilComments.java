@@ -20,6 +20,8 @@ public class UtilComments {
 							.commentId(commentObj.getCommentId())
 							.answerId(commentObj.getAnswerId())
 							.build();
+		dbComment.setAgree(commentObj.getAgree());
+		dbComment.setDisagree(commentObj.getDisagree());
 		return dbComment;
 	}
 	

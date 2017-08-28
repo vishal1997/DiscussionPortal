@@ -48,7 +48,10 @@ public class DbAnswer extends AgreeDisagree{
 	}
 	
 	public List<String> getCommentId() {
-		
 		return this.commentId;
+	}
+	
+	public int getNoOfComment() {
+		return this.commentId == null ? 0 : this.commentId.size();
 	}
 }

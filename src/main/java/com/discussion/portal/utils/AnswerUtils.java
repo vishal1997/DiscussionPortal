@@ -37,6 +37,7 @@ public class AnswerUtils {
 		dbAnswer.setAgree(answer.getAgree());
 		dbAnswer.setDisagree(answer.getDisagree());
 		dbAnswer.setDate(answer.getDate());
+		dbAnswer.setCommentId(answer.getCommentId());
 		
 		log.info("\nDB Answer generated:\n" + Json.toJson(dbAnswer));
 		return dbAnswer;
@@ -67,6 +68,7 @@ public class AnswerUtils {
 		
 		answer.setNoOfAgree(dbAnswer.getNoOfAgree());
 		answer.setNoOfDisagree(dbAnswer.getNoOfDisagree());
+		answer.setNoOfComment(dbAnswer.getNoOfComment());
 		log.info("\nAnswer Generated:\n" + Json.toJson(answer));
 		return answer;
 	}

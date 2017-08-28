@@ -3,9 +3,7 @@ package com.discussion.portal.restcontroller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
+import com.discussion.portal.iter.HttpUrlConnectionExample;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
@@ -233,7 +231,7 @@ public class PortalRestController {
 		}
 	}
 	
-	@RequestMapping(value = "comment/{answerId}",method = RequestMethod.GET)
+	@RequestMapping(value = "allcomments/{answerId}",method = RequestMethod.GET)
 	public List<Comment> getCommentByAnswerId(@PathVariable("answerId")final String answerId) {
 		try {
 			return portalManager.getCommentsByAnswerId(answerId);
@@ -241,6 +239,31 @@ public class PortalRestController {
 			throw e;
 		}
 	}
+
+	@Autowired
+	private HttpUrlConnectionExample iter;
+	
+	
+	@RequestMapping(value = "iter", method =RequestMethod.GET) 
+	public void iterConnect(/*@PathVariable("username") final String username,
+								@RequestBody final String password*/) throws Exception {
+		
+		String username="1541012426";
+		String password="vishal2489";
+		try {
+			System.out.println(username);
+			iter.fetchStudentId(username, password);
+		} catch(Exception e) {
+			throw e;
+		}
+	}
+	
+	@RequestMapping(value="register", method = RequestMethod.POST)
+	public void registerUser(@RequestBody final User user) {
+		
+		
+	}
+	
 }
 
 

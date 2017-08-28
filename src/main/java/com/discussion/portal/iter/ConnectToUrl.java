@@ -1,4 +1,10 @@
-package com.discussion.portal;
+package com.discussion.portal.iter;
+
+
+/*
+ *
+ * https://github.com/abhijitparida/bunk/blob/develop/app/src/main/java/app/abhijit/iter/data
+ */
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -6,7 +12,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ConnectToURL{
+import org.springframework.stereotype.Component;
+
+@Component
+public class ConnectToUrl{
 
     private static final int TIMEOUT = 5000;
     private static final String USER_AGENT = System.getProperty("http.agent");
@@ -31,6 +40,7 @@ public class ConnectToURL{
             response.append(inStreamLine);
         }
         inStream.close();
+        System.out.println(response.toString());
         return response.toString();
     }
 
@@ -49,6 +59,7 @@ public class ConnectToURL{
             response.append(inStreamLine);
         }
         inStream.close();
+        System.out.println(response.toString());
         return response.toString();
     }
 }

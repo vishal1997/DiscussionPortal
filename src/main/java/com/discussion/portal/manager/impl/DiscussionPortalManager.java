@@ -1,6 +1,5 @@
 package com.discussion.portal.manager.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
