@@ -6,7 +6,7 @@ import com.discussion.portal.model.Comment;
 import com.discussion.portal.mongodb.model.DbComment;
 
 @Component
-public class UtilComments {
+public class CommentUtils {
 
 	public DbComment convertCommentToDbComment(Comment commentObj) {
 		

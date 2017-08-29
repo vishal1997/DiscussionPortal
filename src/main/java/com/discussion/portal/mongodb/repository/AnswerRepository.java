@@ -9,7 +9,6 @@ import com.discussion.portal.mongodb.model.DbAnswer;
 
 @Repository
 public interface AnswerRepository extends MongoRepository<DbAnswer, String> {
-
+	
 	List<DbAnswer> findByUserId(String userId);
-
 }

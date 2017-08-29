@@ -30,7 +30,7 @@ import com.discussion.portal.utils.AnswerUtils;
 import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.QuestionUtils;
 import com.discussion.portal.utils.UserUtils;
-import com.discussion.portal.utils.UtilComments;
+import com.discussion.portal.utils.CommentUtils;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 	private AnswerUtils answerUtils;
 	
 	@Autowired
-	private UtilComments utilComments;
+	private CommentUtils commentUtils;
 	
 	/**
 	 * {@inheritDoc}
@@ -215,7 +215,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 	@Override
 	public String addComments(Comment commentObj) {
 		
-		DbComment dbComment = utilComments.convertCommentToDbComment(commentObj);
+		DbComment dbComment = commentUtils.convertCommentToDbComment(commentObj);
 		return portalDao.addComments(dbComment);
 	}
 
@@ -316,8 +316,24 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		List<Comment> comment = new ArrayList<Comment>();
 		for(DbComment dbComment : dbComments) {
-			comment.add(utilComments.convertDbCommentToComment(dbComment));
+			comment.add(commentUtils.convertDbCommentToComment(dbComment));
 		}
 		return comment;
+	}
+
+	@Override
+	public String registerUser(User user) {
+		
+		DbUser dbUser = convertUserToDbUser(user);
+		return userAuthDao.registerUser(dbUser);
+	}
+
+	@Override
+	public DbUser convertUserToDbUser(User user) {
+		
+		DbUser dbUser = new DbUser();
+		dbUser.setUsername(user.getUsername());
+		dbUser.setPassword(user.getPassword());
+		return dbUser;
 	}
 }

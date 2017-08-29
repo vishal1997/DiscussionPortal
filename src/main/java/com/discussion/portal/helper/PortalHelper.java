@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -66,4 +67,8 @@ public interface PortalHelper {
 	public List<DbComment> getCommentByAnswerId(String answerId);
 	
 	public List<Comment> convertDbCommentToComment(List<DbComment> dbComments);
+	
+	public String registerUser(User user);
+	
+	public DbUser convertUserToDbUser(User user);
 }

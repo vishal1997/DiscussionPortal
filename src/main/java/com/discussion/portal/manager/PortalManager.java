@@ -6,6 +6,7 @@ import java.util.List;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.model.User;
 
 /**
  * 
@@ -52,4 +53,6 @@ public interface PortalManager {
 	public String deleteComment(String commentId, String userId);
 	
 	public List<Comment> getCommentsByAnswerId(String answerId);
+	
+	public String registerUser(User user);
 }

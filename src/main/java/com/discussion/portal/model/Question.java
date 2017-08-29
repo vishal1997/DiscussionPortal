@@ -26,5 +26,4 @@ public class Question {
 	private List<String> tags;
 	private List<Integer> year;
 	private Map<String, String> answersMap;
-	
 }

@@ -57,9 +57,6 @@ public class PortalRestController {
 	
 	@RequestMapping("/user")
 	public String getUser() {
-		
-		/*Map <String, String> userIdMap = new HashMap<String, String>();
-		userIdMap.put("userId", userUtils.getCurrentUser());*/
 		return userUtils.getCurrentUser();
 	}
 	
@@ -195,7 +192,6 @@ public class PortalRestController {
 		} catch (Exception e) {
 			return null;
 		}
-		
 	}
 	
 	@RequestMapping(value = "/comments/opinion/{commentId}" , method = RequestMethod.PUT)
@@ -258,24 +254,16 @@ public class PortalRestController {
 		}
 	}
 	
-	@RequestMapping(value="register", method = RequestMethod.POST)
-	public void registerUser(@RequestBody final User user) {
+	@RequestMapping(value="/register", method = RequestMethod.POST)
+	public Map<String,String> registerUser(@RequestBody final User user) {
 		
-		
+		String status = portalManager.registerUser(user);
+		Map<String, String> registerStatus = new HashMap<String, String>();
+		registerStatus.put("status", status);
+		return registerStatus;
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

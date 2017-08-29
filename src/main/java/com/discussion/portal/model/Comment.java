@@ -15,5 +15,4 @@ public class Comment extends AgreeDisagree {
 	private String userId;
 	private String comment;
 	private Date date;
-
 }

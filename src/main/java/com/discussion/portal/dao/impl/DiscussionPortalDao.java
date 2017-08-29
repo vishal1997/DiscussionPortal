@@ -206,7 +206,6 @@ public class DiscussionPortalDao implements PortalDao {
 		} catch (Exception e) {
 			throw new RuntimeException("Error while deleting dbComment Object", e);
 		}
-	
 	}
 
 	@Override

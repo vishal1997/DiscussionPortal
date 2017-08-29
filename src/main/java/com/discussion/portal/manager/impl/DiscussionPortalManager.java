@@ -17,6 +17,7 @@ import com.discussion.portal.manager.PortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -95,8 +96,7 @@ public class DiscussionPortalManager implements PortalManager {
 			return "Answer Posted";
 		} else {
 			return "You have already answered the question";
-		}
-		
+		}	
 	}
 
 	public String addUserToSession(String userId, HttpSession session) {
@@ -105,7 +105,6 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Override
 	public Answer getAnswerById(String answerId) {
-		
 		return portalHelper.getAnswerById(answerId);
 	}
 
@@ -116,13 +115,11 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Override
 	public List<Answer> getFeeds() {
-		
 		return portalHelper.getFeeds();
 	}
 
 	@Override
 	public String addUserOpinion(String userId, String opinion, String answerId) {
-		
 		return portalHelper.addUserOpinion(userId, opinion, answerId);
 	}
 
@@ -174,5 +171,10 @@ public class DiscussionPortalManager implements PortalManager {
 		
 		List<Comment> comment = portalHelper.convertDbCommentToComment(dbComments);
 		return comment;
+	}
+
+	@Override
+	public String registerUser(User user) {
+		return portalHelper.registerUser(user);
 	}
 }
