@@ -14,6 +14,12 @@ import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class DiscussionUserAuthDao implements UserAuthDao{
 

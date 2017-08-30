@@ -9,6 +9,11 @@ import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class AnswerUtils {
 

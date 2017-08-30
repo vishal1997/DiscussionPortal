@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
-import com.discussion.portal.iter.HttpUrlConnectionExample;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
@@ -29,7 +28,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * 
- * @author vishalpc
+ * @author Vishal
  *
  */
 @RestController
@@ -234,25 +233,7 @@ public class PortalRestController {
 		} catch (Exception e) {
 			throw e;
 		}
-	}
-
-	@Autowired
-	private HttpUrlConnectionExample iter;
-	
-	
-	@RequestMapping(value = "iter", method =RequestMethod.GET) 
-	public void iterConnect(/*@PathVariable("username") final String username,
-								@RequestBody final String password*/) throws Exception {
-		
-		String username="1541012426";
-		String password="vishal2489";
-		try {
-			System.out.println(username);
-			iter.fetchStudentId(username, password);
-		} catch(Exception e) {
-			throw e;
-		}
-	}
+	}	
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public Map<String,String> registerUser(@RequestBody final User user) {

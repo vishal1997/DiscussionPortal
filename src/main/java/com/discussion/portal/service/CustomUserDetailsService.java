@@ -11,6 +11,11 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.mongodb.repository.UserRepository;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 

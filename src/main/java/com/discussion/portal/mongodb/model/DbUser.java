@@ -11,6 +11,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Getter
 @Setter
 @Document(collection="profiles")
@@ -18,10 +23,15 @@ public class DbUser {
 	
 	@Id
 	private String username;
-	
 	private String password;
-	
 	private List<String> questionId;
+	private String name;
+	private String Branch;
+	private String addmissionYear;
+	private String gender;
+	private String dob;
+	private String emailId;
+	
 	
 	/**
 	 * Key: QuestionId

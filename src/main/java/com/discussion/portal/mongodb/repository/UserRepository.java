@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.discussion.portal.mongodb.model.DbUser;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Repository
 public interface UserRepository extends MongoRepository<DbUser, String> {
 

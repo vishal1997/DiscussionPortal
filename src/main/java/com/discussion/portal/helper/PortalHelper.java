@@ -70,5 +70,5 @@ public interface PortalHelper {
 	
 	public String registerUser(User user);
 	
-	public DbUser convertUserToDbUser(User user);
+	public boolean userAlreadyPresent(String userId);
 }

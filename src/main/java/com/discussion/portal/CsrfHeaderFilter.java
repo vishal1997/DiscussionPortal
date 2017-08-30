@@ -16,6 +16,11 @@ import org.springframework.web.util.WebUtils;
 
 import com.discussion.portal.utils.Json;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 public class CsrfHeaderFilter extends OncePerRequestFilter {
 
     private static final String CSRF_COOKIE_NAME = "XSRF-TOKEN";

@@ -18,6 +18,11 @@ import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class QuestionUtils {
 	

@@ -7,7 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.discussion.portal.mongodb.model.DbUser;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 public class CustomUserDetails extends DbUser implements UserDetails {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

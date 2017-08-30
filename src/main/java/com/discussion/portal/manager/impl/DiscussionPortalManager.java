@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.helper.impl.DiscussionPortalHelper;
@@ -33,6 +32,8 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Autowired
 	private DiscussionPortalHelper portalHelper;
+	
+
 
 	
 	static Logger log = LoggerFactory.getLogger(DiscussionPortalManager.class);
@@ -173,8 +174,15 @@ public class DiscussionPortalManager implements PortalManager {
 		return comment;
 	}
 
+	
 	@Override
 	public String registerUser(User user) {
+		
+		boolean userStatus = portalHelper.userAlreadyPresent(user.getUsername());
+		if(userStatus) {
+			log.error("\nUser already present" + user.getUsername());
+			return StatusCode.DUPLICATE;
+		}
 		return portalHelper.registerUser(user);
 	}
 }

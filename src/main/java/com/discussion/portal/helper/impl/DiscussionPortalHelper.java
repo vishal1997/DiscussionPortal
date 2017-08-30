@@ -18,6 +18,8 @@ import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
+import com.discussion.portal.iter.ConnectIter;
+import com.discussion.portal.iter.StudentInfo;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
@@ -57,6 +59,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 	
 	@Autowired
 	private CommentUtils commentUtils;
+	
+	@Autowired
+	private ConnectIter iter;
 	
 	/**
 	 * {@inheritDoc}
@@ -324,16 +329,25 @@ public class DiscussionPortalHelper implements PortalHelper {
 	@Override
 	public String registerUser(User user) {
 		
-		DbUser dbUser = convertUserToDbUser(user);
+		String studentDetails = iter.connect(user.getUsername(), user.getPassword());
+		
+		log.info("\nUser details=" + studentDetails);
+		
+		if(studentDetails == StatusCode.INVALID) {
+			return StatusCode.INVALID;
+		}
+		
+		StudentInfo studentInfo = (StudentInfo) Json.fromJson(studentDetails,StudentInfo.class);
+		DbUser dbUser = userUtils.convertStudentInfoToDbUser(studentInfo, user);
 		return userAuthDao.registerUser(dbUser);
 	}
 
 	@Override
-	public DbUser convertUserToDbUser(User user) {
-		
-		DbUser dbUser = new DbUser();
-		dbUser.setUsername(user.getUsername());
-		dbUser.setPassword(user.getPassword());
-		return dbUser;
+	public boolean userAlreadyPresent(String userId) {
+		DbUser dbUser = userAuthDao.getUserByUserId(userId);
+		if(dbUser==null) {
+			return false;
+		}
+		return true;
 	}
 }

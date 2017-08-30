@@ -7,6 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.discussion.portal.mongodb.model.DbAnswer;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Repository
 public interface AnswerRepository extends MongoRepository<DbAnswer, String> {
 	

@@ -7,6 +7,11 @@ import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 public interface PortalDao {
 
 	public String insertQuestion(DbQuestion question);

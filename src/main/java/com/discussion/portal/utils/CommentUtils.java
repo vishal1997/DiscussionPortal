@@ -5,6 +5,11 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.mongodb.model.DbComment;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class CommentUtils {
 

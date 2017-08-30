@@ -19,6 +19,12 @@ import org.springframework.web.context.request.RequestContextListener;
 
 import com.discussion.portal.utils.Json;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
+
 @SpringBootApplication
 @EnableWebSecurity
 @Configuration
