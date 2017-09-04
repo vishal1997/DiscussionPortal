@@ -1,12 +1,6 @@
 package com.discussion.portal;
 
-import java.io.IOException;
-
 import javax.servlet.Filter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +10,12 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.context.request.RequestContextListener;
@@ -74,9 +61,6 @@ public class DiscussionPortalApplication extends WebSecurityConfigurerAdapter {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
     
-    @Autowired
-    private CsrfHeaderFilter csrfFilter;
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	
@@ -95,9 +79,7 @@ public class DiscussionPortalApplication extends WebSecurityConfigurerAdapter {
             .accessDeniedHandler(authHandler.accessDeniedHandler())
             .authenticationEntryPoint(authHandler.authenticationEntryPoint());
     }
-    
-    
-   
+     
     @Bean
     public FilterRegistrationBean someFilterRegistration() {
 

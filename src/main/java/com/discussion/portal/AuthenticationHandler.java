@@ -19,45 +19,42 @@ import org.springframework.stereotype.Component;
 public class AuthenticationHandler {
 	
 	 protected AuthenticationSuccessHandler successHandler() {
-	        return new AuthenticationSuccessHandler() {
-	          @Override
-	          public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-	            httpServletResponse.getWriter().append("OK");
-	            httpServletResponse.setStatus(200);
-	          }
-	        };
-	      }
+		 return new AuthenticationSuccessHandler() {
+			 @Override
+			 public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+				 httpServletResponse.getWriter().append("OK");
+				 httpServletResponse.setStatus(200);
+			 }
+		 };
+	 }
 	    
+	protected AuthenticationFailureHandler failureHandler() {
+		return new AuthenticationFailureHandler() {
+			@Override
+			public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+				httpServletResponse.getWriter().append("Authentication failure");
+				httpServletResponse.setStatus(401);
+			}
+		};
+	}
 
-	    protected AuthenticationFailureHandler failureHandler() {
-	      return new AuthenticationFailureHandler() {
-	        @Override
-	        public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-	          httpServletResponse.getWriter().append("Authentication failure");
-	          httpServletResponse.setStatus(401);
-	        }
-	      };
-	    }
+	protected AccessDeniedHandler accessDeniedHandler() {
+		return new AccessDeniedHandler() {
+			@Override
+			public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
+				httpServletResponse.getWriter().append("Access denied");
+				httpServletResponse.setStatus(403);
+			}
+		};
+	}
 
-	    protected AccessDeniedHandler accessDeniedHandler() {
-	      return new AccessDeniedHandler() {
-	        @Override
-	        public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-	          httpServletResponse.getWriter().append("Access denied");
-	          httpServletResponse.setStatus(403);
-	        }
-	      };
-	    }
-
-	    protected AuthenticationEntryPoint authenticationEntryPoint() {
-	      return new AuthenticationEntryPoint() {
-	        @Override
-	        public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-	          httpServletResponse.getWriter().append("Not authenticated");
-	          httpServletResponse.setStatus(401);
-	        }
-	      };
-	    }
-
-
+    protected AuthenticationEntryPoint authenticationEntryPoint() {
+    	return new AuthenticationEntryPoint() {
+    		@Override
+    		public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+    			httpServletResponse.getWriter().append("Not authenticated");
+    			httpServletResponse.setStatus(401);
+    		}
+    	};
+    }
 }
