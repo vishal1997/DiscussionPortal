@@ -350,4 +350,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 		}
 		return true;
 	}
+
+	@Override
+	public User getUserProfileDetails(DbUser dbUser) {
+		return userUtils.convertDbUserToUserDetails(dbUser);
+	}
 }

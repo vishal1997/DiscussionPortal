@@ -71,4 +71,6 @@ public interface PortalHelper {
 	public String registerUser(User user);
 	
 	public boolean userAlreadyPresent(String userId);
+	
+	public User getUserProfileDetails(DbUser dbUser);
 }

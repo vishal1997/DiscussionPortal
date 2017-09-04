@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -244,6 +245,10 @@ public class PortalRestController {
 		return registerStatus;
 	}
 	
+	@RequestMapping(value="/profile/{username}", method = RequestMethod.GET) 
+	public User getUserProfileDetails(@PathVariable("username") final String username) {
+		return portalManager.getUserProfileDetails(username);
+	}
 }
 
 

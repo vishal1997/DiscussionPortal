@@ -55,4 +55,6 @@ public interface PortalManager {
 	public List<Comment> getCommentsByAnswerId(String answerId);
 	
 	public String registerUser(User user);
+	
+	public User getUserProfileDetails(String username);
 }

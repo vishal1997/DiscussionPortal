@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
@@ -21,6 +22,7 @@ import com.discussion.portal.utils.Json;
  * @author Vishal
  *
  */
+@Component
 public class CsrfHeaderFilter extends OncePerRequestFilter {
 
     private static final String CSRF_COOKIE_NAME = "XSRF-TOKEN";

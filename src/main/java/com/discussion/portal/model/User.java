@@ -18,12 +18,18 @@ import lombok.Setter;
 @Component
 public class User {
 	
-	private String firstName;
-	private String lastName;
+	private String name;
 	private String username;
-	private int year;
+	private String admissionYear;
 	private String branch;
 	private List<String> questionId;
 	private Map<String, String> userAnswerMap;
 	private String password;
+	private String sec;
+	private String phone;
+	private String emailId;
+	private String state;
+	private String city;
+	private String dob;
+	private String gender;
 }

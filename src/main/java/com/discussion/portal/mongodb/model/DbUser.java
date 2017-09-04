@@ -27,10 +27,14 @@ public class DbUser {
 	private List<String> questionId;
 	private String name;
 	private String Branch;
-	private String addmissionYear;
+	private String admissionYear;
 	private String gender;
 	private String dob;
 	private String emailId;
+	private String sec;
+	private String phone;
+	private String state;
+	private String city;
 	
 	
 	/**

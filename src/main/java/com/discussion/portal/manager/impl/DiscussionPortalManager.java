@@ -185,4 +185,11 @@ public class DiscussionPortalManager implements PortalManager {
 		}
 		return portalHelper.registerUser(user);
 	}
+
+	@Override
+	public User getUserProfileDetails(String username) {
+		
+		DbUser dbUser = portalHelper.getUserByUserId(username);
+		return portalHelper.getUserProfileDetails(dbUser);
+	}
 }
