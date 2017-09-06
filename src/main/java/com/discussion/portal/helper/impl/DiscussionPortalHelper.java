@@ -2,6 +2,7 @@ package com.discussion.portal.helper.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -354,5 +355,15 @@ public class DiscussionPortalHelper implements PortalHelper {
 	@Override
 	public User getUserProfileDetails(DbUser dbUser) {
 		return userUtils.convertDbUserToUserDetails(dbUser);
+	}
+
+	@Override
+	public Map<String, String> userNameIdPair() {
+		
+		DbUser dbUser = getUserByUserId(userUtils.getCurrentUser());
+		Map<String , String> nameIdPair = new HashMap<String,String>();
+		nameIdPair.put("user_id", dbUser.getUsername());
+		nameIdPair.put("name", dbUser.getName());
+		return nameIdPair;
 	}
 }

@@ -34,7 +34,7 @@ public class QuestionUtils {
 	public DbQuestion convertToDbQuestion(Question question, String userId) {
 
 		DbQuestion dbQuestion = DbQuestion.builder().owner(userId)
-				.questionId(question.getQuestion().replace(" ", "-").replace("?", "").toLowerCase()).answersMap(new HashMap<String, String>())
+				.questionId(question.getQuestion().replace(" ", "-").replace("?", "q").toLowerCase()).answersMap(new HashMap<String, String>())
 				.creationDate(new Date()).question(question.getQuestion()).year(question.getYear())
 				.build();
 		

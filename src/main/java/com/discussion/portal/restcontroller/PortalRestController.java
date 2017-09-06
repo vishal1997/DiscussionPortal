@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -164,8 +165,8 @@ public class PortalRestController {
 	}
 	
 	@RequestMapping(value = "/me", method = RequestMethod.GET) 
-	public Details_ getNameIdPair() {
-		return userUtils.userNameIdPair();
+	public Map<String, String> getNameIdPair() {
+		return portalManager.userNameIdPair();
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -249,6 +250,7 @@ public class PortalRestController {
 	public User getUserProfileDetails(@PathVariable("username") final String username) {
 		return portalManager.getUserProfileDetails(username);
 	}
+	
 }
 
 

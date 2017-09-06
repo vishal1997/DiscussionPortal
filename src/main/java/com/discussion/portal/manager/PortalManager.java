@@ -2,6 +2,7 @@ package com.discussion.portal.manager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Map;
 
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
@@ -57,4 +58,6 @@ public interface PortalManager {
 	public String registerUser(User user);
 	
 	public User getUserProfileDetails(String username);
+	
+	public Map<String, String> userNameIdPair();
 }

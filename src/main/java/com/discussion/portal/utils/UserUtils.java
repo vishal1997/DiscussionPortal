@@ -1,11 +1,16 @@
 package com.discussion.portal.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.discussion.portal.dao.PortalDao;
+import com.discussion.portal.helper.PortalHelper;
 import com.discussion.portal.iter.StudentInfo;
 import com.discussion.portal.model.User;
 import com.discussion.portal.model.auth.AuthenticationModel;
@@ -29,16 +34,7 @@ public class UserUtils {
 	
 	public Authentication getCurrentUserFull() {
 		return SecurityContextHolder.getContext().getAuthentication();
-	}
-	
-	public Details_ userNameIdPair() {
-		return ((AuthenticationModel) Json.
-				fromJson(Json
-						.toJson(getCurrentUserFull()), AuthenticationModel.class))
-				.getUserAuthentication()
-				.getDetails();
-	}
-	
+	}	
 	
 	public User convertDbUserToUser(DbUser dbUser) {
 		

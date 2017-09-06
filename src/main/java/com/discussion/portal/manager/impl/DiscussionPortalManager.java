@@ -1,6 +1,7 @@
 package com.discussion.portal.manager.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -32,8 +33,6 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Autowired
 	private DiscussionPortalHelper portalHelper;
-	
-
 
 	
 	static Logger log = LoggerFactory.getLogger(DiscussionPortalManager.class);
@@ -191,5 +190,10 @@ public class DiscussionPortalManager implements PortalManager {
 		
 		DbUser dbUser = portalHelper.getUserByUserId(username);
 		return portalHelper.getUserProfileDetails(dbUser);
+	}
+
+	@Override
+	public Map<String, String> userNameIdPair() {
+		return portalHelper.userNameIdPair();
 	}
 }

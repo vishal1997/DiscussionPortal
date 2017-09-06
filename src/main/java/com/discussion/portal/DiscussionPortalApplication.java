@@ -68,16 +68,23 @@ public class DiscussionPortalApplication extends WebSecurityConfigurerAdapter {
     	http.authorizeRequests()
     		.antMatchers("/api/v1/register/**").permitAll()
     		.anyRequest().authenticated()
+    		
     		.and()
     		.formLogin()
     		.loginPage("/userloginpage").passwordParameter("password").usernameParameter("username")
     		.successHandler(authHandler.successHandler())
             .failureHandler(authHandler.failureHandler())
     		.permitAll()
+    		
             .and()
             .exceptionHandling()
             .accessDeniedHandler(authHandler.accessDeniedHandler())
-            .authenticationEntryPoint(authHandler.authenticationEntryPoint());
+            .authenticationEntryPoint(authHandler.authenticationEntryPoint())
+            
+            .and()
+            .logout().logoutUrl("/userlogoutpage")
+            .logoutSuccessHandler(authHandler.logoutSuccessHandler())
+            .permitAll();
     }
      
     @Bean
