@@ -2,6 +2,11 @@ package com.discussion.portal.validate;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class Validate {
 

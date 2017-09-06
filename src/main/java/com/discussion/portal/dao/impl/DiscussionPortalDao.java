@@ -24,6 +24,11 @@ import com.discussion.portal.mongodb.repository.QuestionsRepository;
 import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class DiscussionPortalDao implements PortalDao {
 
@@ -206,7 +211,6 @@ public class DiscussionPortalDao implements PortalDao {
 		} catch (Exception e) {
 			throw new RuntimeException("Error while deleting dbComment Object", e);
 		}
-	
 	}
 
 	@Override

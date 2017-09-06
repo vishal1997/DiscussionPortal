@@ -28,8 +28,6 @@ public class DbAnswer extends AgreeDisagree{
 	private String answer;
 	private Date date;
 	
-
-
 	private List<String> commentId;
 	
 	public void addCommentId(String commentId) {
@@ -48,7 +46,10 @@ public class DbAnswer extends AgreeDisagree{
 	}
 	
 	public List<String> getCommentId() {
-		
 		return this.commentId;
+	}
+	
+	public int getNoOfComment() {
+		return this.commentId == null ? 0 : this.commentId.size();
 	}
 }

@@ -6,6 +6,11 @@ import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Builder
 @Getter
 public class QuestionResponse {

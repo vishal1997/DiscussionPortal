@@ -1,7 +1,7 @@
 package com.discussion.portal.manager.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.helper.impl.DiscussionPortalHelper;
@@ -18,6 +17,7 @@ import com.discussion.portal.manager.PortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
+import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -96,8 +96,7 @@ public class DiscussionPortalManager implements PortalManager {
 			return "Answer Posted";
 		} else {
 			return "You have already answered the question";
-		}
-		
+		}	
 	}
 
 	public String addUserToSession(String userId, HttpSession session) {
@@ -106,7 +105,6 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Override
 	public Answer getAnswerById(String answerId) {
-		
 		return portalHelper.getAnswerById(answerId);
 	}
 
@@ -117,13 +115,11 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Override
 	public List<Answer> getFeeds() {
-		
 		return portalHelper.getFeeds();
 	}
 
 	@Override
 	public String addUserOpinion(String userId, String opinion, String answerId) {
-		
 		return portalHelper.addUserOpinion(userId, opinion, answerId);
 	}
 
@@ -175,5 +171,29 @@ public class DiscussionPortalManager implements PortalManager {
 		
 		List<Comment> comment = portalHelper.convertDbCommentToComment(dbComments);
 		return comment;
+	}
+
+	
+	@Override
+	public String registerUser(User user) {
+		
+		boolean userStatus = portalHelper.userAlreadyPresent(user.getUsername());
+		if(userStatus) {
+			log.error("\nUser already present" + user.getUsername());
+			return StatusCode.DUPLICATE;
+		}
+		return portalHelper.registerUser(user);
+	}
+
+	@Override
+	public User getUserProfileDetails(String username) {
+		
+		DbUser dbUser = portalHelper.getUserByUserId(username);
+		return portalHelper.getUserProfileDetails(dbUser);
+	}
+
+	@Override
+	public Map<String, String> userNameIdPair() {
+		return portalHelper.userNameIdPair();
 	}
 }

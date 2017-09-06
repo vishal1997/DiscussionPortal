@@ -5,8 +5,13 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.mongodb.model.DbComment;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
-public class UtilComments {
+public class CommentUtils {
 
 	public DbComment convertCommentToDbComment(Comment commentObj) {
 		
@@ -20,6 +25,8 @@ public class UtilComments {
 							.commentId(commentObj.getCommentId())
 							.answerId(commentObj.getAnswerId())
 							.build();
+		dbComment.setAgree(commentObj.getAgree());
+		dbComment.setDisagree(commentObj.getDisagree());
 		return dbComment;
 	}
 	

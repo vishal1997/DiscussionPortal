@@ -3,10 +3,14 @@ package com.discussion.portal.model;
 
 import java.util.Date;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Getter
 @Setter
 public class Comment extends AgreeDisagree {
@@ -16,5 +20,4 @@ public class Comment extends AgreeDisagree {
 	private String userId;
 	private String comment;
 	private Date date;
-
 }

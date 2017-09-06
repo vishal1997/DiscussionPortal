@@ -1,13 +1,16 @@
 package com.discussion.portal.answer.response.model;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
 
-
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Getter
 @Setter
 public class AnswerResponse {
@@ -18,7 +21,6 @@ public class AnswerResponse {
 	private String answer;
 	private Set<String> agree;
 	private Set<String> disagree;
-	private Map<String, String> comments;
 	private int noOfAgree;
 	private int noOfDisagree;
 }

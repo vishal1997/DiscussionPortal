@@ -5,6 +5,11 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Setter
 @Getter
 public class AgreeDisagree {

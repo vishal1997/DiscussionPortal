@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.UserAuthDao;
 import com.discussion.portal.model.Answer;
@@ -15,6 +14,12 @@ import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class DiscussionUserAuthDao implements UserAuthDao{
 
@@ -24,10 +29,8 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 	
 	@Override
 	public String createUser(String userId) throws JsonProcessingException {
-/*		ObjectMapper mapper = new ObjectMapper();*/
+
 		DbUser currentUser = userRepository.findOne(userId);
-/*		
-		System.out.print(mapper.writeValueAsString(currentUser));*/
 		
 		if(currentUser!=null) {
 			return "Already Present";
@@ -35,7 +38,7 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 
 		DbUser user = new DbUser();
 		user.setUsername(userId);
-		user.setPassword(1212);
+		user.setPassword("1212");
 		
 		userRepository.insert(user);
 		
@@ -56,14 +59,6 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 	public DbUser getUserByUserId(String userId) {
 		
 		return userRepository.findOne(userId);
-		
-/*		List<DbUser> dbUsers = userRepository.findByUsername(userId);
-		DbUser dbUser = null;
-		if(dbUsers!= null && dbUsers.size()!=0) {
-			dbUser = dbUsers.get(0);
-		}
-		
-		return dbUser;*/
 	}
 	
 	public String addAnswerToMap(Answer answer) {
@@ -84,4 +79,14 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 		return StatusCode.SUCCESS;
 	}
 
+	@Override
+	public String registerUser(DbUser dbUser) {
+		
+		try {
+			userRepository.insert(dbUser);
+			return StatusCode.SUCCESS;
+		} catch (Exception er) {
+			return StatusCode.ERROR;
+		}
+	}
 }

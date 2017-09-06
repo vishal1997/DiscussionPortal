@@ -2,6 +2,7 @@ package com.discussion.portal.helper.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
+import com.discussion.portal.iter.ConnectIter;
+import com.discussion.portal.iter.StudentInfo;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
@@ -30,7 +33,7 @@ import com.discussion.portal.utils.AnswerUtils;
 import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.QuestionUtils;
 import com.discussion.portal.utils.UserUtils;
-import com.discussion.portal.utils.UtilComments;
+import com.discussion.portal.utils.CommentUtils;
 
 /**
  * 
@@ -56,7 +59,10 @@ public class DiscussionPortalHelper implements PortalHelper {
 	private AnswerUtils answerUtils;
 	
 	@Autowired
-	private UtilComments utilComments;
+	private CommentUtils commentUtils;
+	
+	@Autowired
+	private ConnectIter iter;
 	
 	/**
 	 * {@inheritDoc}
@@ -215,7 +221,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 	@Override
 	public String addComments(Comment commentObj) {
 		
-		DbComment dbComment = utilComments.convertCommentToDbComment(commentObj);
+		DbComment dbComment = commentUtils.convertCommentToDbComment(commentObj);
 		return portalDao.addComments(dbComment);
 	}
 
@@ -316,8 +322,48 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		List<Comment> comment = new ArrayList<Comment>();
 		for(DbComment dbComment : dbComments) {
-			comment.add(utilComments.convertDbCommentToComment(dbComment));
+			comment.add(commentUtils.convertDbCommentToComment(dbComment));
 		}
 		return comment;
+	}
+
+	@Override
+	public String registerUser(User user) {
+		
+		String studentDetails = iter.connect(user.getUsername(), user.getPassword());
+		
+		log.info("\nUser details=" + studentDetails);
+		
+		if(studentDetails == StatusCode.INVALID) {
+			return StatusCode.INVALID;
+		}
+		
+		StudentInfo studentInfo = (StudentInfo) Json.fromJson(studentDetails,StudentInfo.class);
+		DbUser dbUser = userUtils.convertStudentInfoToDbUser(studentInfo, user);
+		return userAuthDao.registerUser(dbUser);
+	}
+
+	@Override
+	public boolean userAlreadyPresent(String userId) {
+		DbUser dbUser = userAuthDao.getUserByUserId(userId);
+		if(dbUser==null) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public User getUserProfileDetails(DbUser dbUser) {
+		return userUtils.convertDbUserToUserDetails(dbUser);
+	}
+
+	@Override
+	public Map<String, String> userNameIdPair() {
+		
+		DbUser dbUser = getUserByUserId(userUtils.getCurrentUser());
+		Map<String , String> nameIdPair = new HashMap<String,String>();
+		nameIdPair.put("user_id", dbUser.getUsername());
+		nameIdPair.put("name", dbUser.getName());
+		return nameIdPair;
 	}
 }

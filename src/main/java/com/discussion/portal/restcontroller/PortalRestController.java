@@ -3,19 +3,18 @@ package com.discussion.portal.restcontroller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
@@ -31,7 +30,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * 
- * @author vishalpc
+ * @author Vishal
  *
  */
 @RestController
@@ -59,9 +58,6 @@ public class PortalRestController {
 	
 	@RequestMapping("/user")
 	public String getUser() {
-		
-		/*Map <String, String> userIdMap = new HashMap<String, String>();
-		userIdMap.put("userId", userUtils.getCurrentUser());*/
 		return userUtils.getCurrentUser();
 	}
 	
@@ -169,8 +165,8 @@ public class PortalRestController {
 	}
 	
 	@RequestMapping(value = "/me", method = RequestMethod.GET) 
-	public Details_ getNameIdPair() {
-		return userUtils.userNameIdPair();
+	public Map<String, String> getNameIdPair() {
+		return portalManager.userNameIdPair();
 	}
 	
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
@@ -197,7 +193,6 @@ public class PortalRestController {
 		} catch (Exception e) {
 			return null;
 		}
-		
 	}
 	
 	@RequestMapping(value = "/comments/opinion/{commentId}" , method = RequestMethod.PUT)
@@ -233,26 +228,30 @@ public class PortalRestController {
 		}
 	}
 	
-	@RequestMapping(value = "comment/{answerId}",method = RequestMethod.GET)
+	@RequestMapping(value = "allcomments/{answerId}",method = RequestMethod.GET)
 	public List<Comment> getCommentByAnswerId(@PathVariable("answerId")final String answerId) {
 		try {
 			return portalManager.getCommentsByAnswerId(answerId);
 		} catch (Exception e) {
 			throw e;
 		}
+	}	
+	
+	@RequestMapping(value="/register", method = RequestMethod.POST)
+	public Map<String,String> registerUser(@RequestBody final User user) {
+		
+		String status = portalManager.registerUser(user);
+		Map<String, String> registerStatus = new HashMap<String, String>();
+		registerStatus.put("status", status);
+		return registerStatus;
 	}
+	
+	@RequestMapping(value="/profile/{username}", method = RequestMethod.GET) 
+	public User getUserProfileDetails(@PathVariable("username") final String username) {
+		return portalManager.getUserProfileDetails(username);
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

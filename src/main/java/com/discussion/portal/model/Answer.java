@@ -24,6 +24,5 @@ public class Answer extends AgreeDisagree{
 	private Date date;
 	private String answeredBy;
 	private List<String>commentId;
-
-	
+	private int noOfComment;	
 }

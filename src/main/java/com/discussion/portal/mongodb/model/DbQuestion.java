@@ -12,6 +12,11 @@ import com.discussion.portal.model.Answer;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Builder
 @Getter
 @Document(collection="questions")

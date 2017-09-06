@@ -9,6 +9,11 @@ import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
 
+/**
+ * 
+ * @author Vishal
+ *
+ */
 @Component
 public class AnswerUtils {
 
@@ -19,16 +24,7 @@ public class AnswerUtils {
 	static Logger log = LoggerFactory.getLogger(AnswerUtils.class);
 	
 	public DbAnswer convertAnswerToDbAnswer(Answer answer) {
-		/*
-		DbAnswer dbAnswer = DbAnswer.builder()
-				.answer(answer.getAnswer())
-				.answerId(answer.getAnswerId())
-				.date(answer.getDate())
-				.questionId(answer.getQuestionId())
-				.userId(answer.getAnsweredBy())
-				.agree(answer.getAgree())
-				.disagree(answer.getDisagree())
-				.build();*/
+
 		DbAnswer dbAnswer = new DbAnswer();
 		dbAnswer.setAnswer(answer.getAnswer());
 		dbAnswer.setAnswerId(answer.getAnswerId());
@@ -37,6 +33,7 @@ public class AnswerUtils {
 		dbAnswer.setAgree(answer.getAgree());
 		dbAnswer.setDisagree(answer.getDisagree());
 		dbAnswer.setDate(answer.getDate());
+		dbAnswer.setCommentId(answer.getCommentId());
 		
 		log.info("\nDB Answer generated:\n" + Json.toJson(dbAnswer));
 		return dbAnswer;
@@ -67,6 +64,7 @@ public class AnswerUtils {
 		
 		answer.setNoOfAgree(dbAnswer.getNoOfAgree());
 		answer.setNoOfDisagree(dbAnswer.getNoOfDisagree());
+		answer.setNoOfComment(dbAnswer.getNoOfComment());
 		log.info("\nAnswer Generated:\n" + Json.toJson(answer));
 		return answer;
 	}
