@@ -16,7 +16,8 @@ import lombok.Setter;
 public class AnswerResponse {
 	
 	private String answerId;
-	private String answerBy;
+	private String userId;
+	private String name;
 	private Date date;
 	private String answer;
 	private Set<String> agree;

@@ -15,11 +15,12 @@ import lombok.Getter;
 @Getter
 public class QuestionResponse {
 	
-	String questionId;
-	String question;
-	String owner;
-	Date creationDate;
-	List<String> tags;
-	List<Integer> year;
-	List<AnswerResponse> answerResponse;
+	private String questionId;
+	private String question;
+	private String owner;
+	private String ownerName;
+	private Date creationDate;
+	private List<String> tags;
+	private List<Integer> year;
+	private List<AnswerResponse> answerResponse;
 }

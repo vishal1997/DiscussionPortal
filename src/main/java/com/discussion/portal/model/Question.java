@@ -22,6 +22,7 @@ public class Question {
 	private String questionId;
 	private String question;
 	private String owner;
+	private String ownerName;
 	private Date creationDate;
 	private List<String> tags;
 	private List<Integer> year;

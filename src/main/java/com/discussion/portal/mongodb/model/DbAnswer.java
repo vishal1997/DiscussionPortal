@@ -24,7 +24,7 @@ public class DbAnswer extends AgreeDisagree{
 	
 	private String userId;
 	private String questionId;
-	
+
 	private String answer;
 	private Date date;
 	

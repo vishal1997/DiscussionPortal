@@ -20,7 +20,6 @@ public class AnswerUtils {
 	@Autowired
 	private DiscussionPortalDao portalDao;
 	
-
 	static Logger log = LoggerFactory.getLogger(AnswerUtils.class);
 	
 	public DbAnswer convertAnswerToDbAnswer(Answer answer) {
@@ -39,7 +38,7 @@ public class AnswerUtils {
 		return dbAnswer;
 	}
 	
-	public Answer convertDbAnswerToAnswer(DbAnswer dbAnswer) {
+	public Answer convertDbAnswerToAnswer(DbAnswer dbAnswer, String name) {
 
 		Answer answer = new Answer();
 		
@@ -53,7 +52,7 @@ public class AnswerUtils {
 		answer.setAnswerId(dbAnswer.getAnswerId());
 		answer.setQuestionId(dbAnswer.getQuestionId());
 		answer.setQuestion(portalDao.getQuestionById(dbAnswer.getQuestionId()).getQuestion());
-		
+		answer.setAnsweredByName(name);
 		if(dbAnswer.getAgree() != null) {
 			answer.setAgree(dbAnswer.getAgree());
 		}

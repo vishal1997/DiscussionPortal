@@ -23,6 +23,7 @@ public class Answer extends AgreeDisagree{
 	private String question;
 	private Date date;
 	private String answeredBy;
+	private String answeredByName;
 	private List<String>commentId;
 	private int noOfComment;	
 }

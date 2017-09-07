@@ -13,6 +13,7 @@ import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.user.response.UserResponse;
 
 /**
  * 
@@ -74,7 +75,7 @@ public interface PortalHelper {
 	
 	public boolean userAlreadyPresent(String userId);
 	
-	public User getUserProfileDetails(DbUser dbUser);
+	public UserResponse getUserProfileDetails(DbUser dbUser);
 	
 	public Map<String, String> userNameIdPair();
 }

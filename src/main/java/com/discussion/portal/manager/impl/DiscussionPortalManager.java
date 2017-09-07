@@ -22,6 +22,7 @@ import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.user.response.UserResponse;
 
 /**
  * 
@@ -186,7 +187,7 @@ public class DiscussionPortalManager implements PortalManager {
 	}
 
 	@Override
-	public User getUserProfileDetails(String username) {
+	public UserResponse getUserProfileDetails(String username) {
 		
 		DbUser dbUser = portalHelper.getUserByUserId(username);
 		return portalHelper.getUserProfileDetails(dbUser);

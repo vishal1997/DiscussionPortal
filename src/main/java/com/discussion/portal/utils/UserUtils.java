@@ -16,6 +16,7 @@ import com.discussion.portal.model.User;
 import com.discussion.portal.model.auth.AuthenticationModel;
 import com.discussion.portal.model.auth.Details_;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.user.response.UserResponse;
 
 /**
  * 
@@ -47,9 +48,9 @@ public class UserUtils {
 	}
 	
 	
-	public User convertDbUserToUserDetails(DbUser dbUser) {
+	public UserResponse convertDbUserToUserDetails(DbUser dbUser) {
 		
-		User user = new User();
+		UserResponse user = new UserResponse();
 		user.setAdmissionYear(dbUser.getAdmissionYear());
 		user.setBranch(dbUser.getBranch());
 		user.setCity(dbUser.getCity());
@@ -59,7 +60,7 @@ public class UserUtils {
 		user.setName(dbUser.getName());
 		user.setSec(dbUser.getSec());
 		user.setState(dbUser.getState());
-		user.setUsername(dbUser.getUsername());
+		user.setUserId(dbUser.getUsername());
 		return user;
 		
 	}

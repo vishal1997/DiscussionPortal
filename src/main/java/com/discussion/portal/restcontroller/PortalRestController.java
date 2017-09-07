@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,7 @@ import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
-import com.discussion.portal.model.auth.Details_;
+import com.discussion.portal.user.response.UserResponse;
 import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.UserUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -246,9 +245,9 @@ public class PortalRestController {
 		return registerStatus;
 	}
 	
-	@RequestMapping(value="/profile/{username}", method = RequestMethod.GET) 
-	public User getUserProfileDetails(@PathVariable("username") final String username) {
-		return portalManager.getUserProfileDetails(username);
+	@RequestMapping(value="/userdetails", method = RequestMethod.GET) 
+	public UserResponse getUserProfileDetails() {
+		return portalManager.getUserProfileDetails(userUtils.getCurrentUser());
 	}
 	
 }
