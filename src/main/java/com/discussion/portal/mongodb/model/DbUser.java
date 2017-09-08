@@ -8,6 +8,8 @@ import java.util.Map;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.discussion.portal.common.Constants.StatusCode;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -60,13 +62,16 @@ public class DbUser {
 		userAnswerMap.put(questionId, answerId);
 	}
 	
-	public void removeAnswerFromMap(String answerId) {
-		if(this.userAnswerMap.containsValue(answerId)) {
-			this.userAnswerMap.remove(answerId);
-		}
-	}
 	
 	public List<String> getQuestionId() {
 		return this.questionId;
+	}
+	
+	public void deleteQuestionId(String questionId) {
+		this.questionId.remove(questionId);
+	}
+	
+	public void deleteAnswerToMap(String questionId) {
+		this.userAnswerMap.remove(questionId);
 	}
 }

@@ -269,10 +269,18 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public String deleteAnswer(String answerId, String userId) {
 	    
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		List<DbComment>dbComments = getCommentByAnswerId(dbAnswer.getAnswerId());
 		if(userId.equalsIgnoreCase(dbAnswer.getUserId())) {
-			return portalDao.deleteAnswer(dbAnswer);
+			
+			portalDao.deleteAnswer(dbAnswer);
+			userAuthDao.deleteAnswerToMap(dbAnswer.getQuestionId(), userId);
+			portalDao.deleteAnswerToMap(dbAnswer.getQuestionId(), userId);
+			
+			for(DbComment dbComment : dbComments) {
+				portalDao.deleteComment(dbComment);
+			}
+			return StatusCode.SUCCESS;
 		}
-		
 		return StatusCode.ERROR;
 	}
 	
@@ -301,12 +309,6 @@ public class DiscussionPortalHelper implements PortalHelper {
 		return portalDao.updateDbAnswer(dbAnswer);
 	}
 
-	@Override
-	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser) {
-		
-		dbUser.removeAnswerFromMap(answerId);
-		return portalDao.updateDbUser(dbUser);
-	}
 
 	@Override
 	public List<DbComment> getCommentByAnswerId(String answerId) {

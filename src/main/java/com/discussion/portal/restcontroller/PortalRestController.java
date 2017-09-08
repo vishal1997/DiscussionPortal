@@ -215,7 +215,7 @@ public class PortalRestController {
 		}
 	}
 	
-	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.PUT)
+	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.GET)
 	public Map<String, String> deleteComment(@PathVariable("commentId") final String commentId) {
 		try {
 			Map<String,String> deleteStatus = new HashMap<String, String>();
@@ -248,6 +248,11 @@ public class PortalRestController {
 	@RequestMapping(value="/userdetails", method = RequestMethod.GET) 
 	public UserResponse getUserProfileDetails() {
 		return portalManager.getUserProfileDetails(userUtils.getCurrentUser());
+	}
+	
+	@RequestMapping(value="/{userId}/userprofile", method = RequestMethod.GET)
+	public UserResponse getOtherUserProfileDetails(@PathVariable("userId") final String userId) {
+		return portalManager.getUserProfileDetails(userId);
 	}
 	
 }

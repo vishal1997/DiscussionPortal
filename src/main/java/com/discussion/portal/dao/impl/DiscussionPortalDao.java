@@ -196,6 +196,7 @@ public class DiscussionPortalDao implements PortalDao {
         
 		try {
 			ansRepo.delete(dbAnswer);
+			log.info("\nAnswer deleted from ansRepo");
 			return StatusCode.SUCCESS;
 		} catch(Exception e) {
 			throw new RuntimeException("Error while deleting dbAnswer Object", e);
@@ -221,6 +222,20 @@ public class DiscussionPortalDao implements PortalDao {
 			return StatusCode.SUCCESS;
 		} catch (Exception e) {
 			throw new RuntimeException("Error while updating DbUser Object", e);
+		}
+	}
+
+	@Override
+	public String deleteAnswerToMap(String questionId, String userId) {
+		
+		try {
+			DbQuestion dbQuestion = getQuestionById(questionId);
+			dbQuestion.deleteAnswerToMap(userId);
+			quesRepo.save(dbQuestion);
+			log.info("\nAnswer map deleted from quesRepo" + Json.toJson(dbQuestion));
+			return StatusCode.SUCCESS;
+		} catch (Exception e) {
+			return StatusCode.ERROR;
 		}
 	}
 }

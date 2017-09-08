@@ -65,8 +65,6 @@ public interface PortalHelper {
 	
 	public String deleteCommentIdFromDbAnswer(String answerId, String commentId);
 	
-	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser);
-	
 	public List<DbComment> getCommentByAnswerId(String answerId);
 	
 	public List<Comment> convertDbCommentToComment(List<DbComment> dbComments);

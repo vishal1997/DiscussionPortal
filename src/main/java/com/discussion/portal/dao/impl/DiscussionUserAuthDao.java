@@ -89,4 +89,18 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 			return StatusCode.ERROR;
 		}
 	}
+
+	@Override
+	public String deleteAnswerToMap(String questionId, String userId) {
+		
+		try {
+			DbUser dbUser= getUserByUserId(userId);
+			dbUser.deleteAnswerToMap(questionId);
+			userRepository.save(dbUser);
+			log.info("\nAnswer Map deleted from userRepo"+ Json.toJson(dbUser));
+			return StatusCode.SUCCESS;
+		} catch(Exception e) {
+			return StatusCode.ERROR;
+		}
+	}
 }

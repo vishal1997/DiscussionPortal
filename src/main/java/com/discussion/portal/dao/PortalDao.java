@@ -40,4 +40,6 @@ public interface PortalDao {
 	
 	public String updateDbUser(DbUser dbUser);
 	
+	public String deleteAnswerToMap(String questionId, String userId);
+	
 }

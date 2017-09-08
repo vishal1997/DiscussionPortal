@@ -144,13 +144,7 @@ public class DiscussionPortalManager implements PortalManager {
 
 	@Override
 	public String deleteAnswer(String answerId, String userId) {
-		
-		String status = portalHelper.deleteAnswer(answerId, userId);
-		if(status.equalsIgnoreCase(StatusCode.SUCCESS)) {
-			DbUser dbUser = portalHelper.getUserByUserId(userId);
-			return portalHelper.deleteAnswerIdFromUser(answerId, dbUser);
-		}
-		return StatusCode.ERROR;
+		return portalHelper.deleteAnswer(answerId, userId);
 	}
 
 	@Override
