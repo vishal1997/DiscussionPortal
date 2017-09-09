@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
@@ -157,7 +158,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public Answer getAnswerById(String answerId) {
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
 		DbUser dbUser = getUserByUserId(dbAnswer.getUserId());
-		return answerUtils.convertDbAnswerToAnswer(dbAnswer, dbUser.getName());
+		return answerUtils.convertDbAnswerToAnswer(dbAnswer, dbUser);
 	}
 	
 	/**
@@ -175,7 +176,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		List<Answer> answers = new ArrayList<Answer>();
 		DbUser dbUser = getUserByUserId(userId);
 		for(DbAnswer dbAnswer : dbAnswers ) {
-			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer,dbUser.getName()));
+			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer,dbUser));
 		}
 		return answers;
 	}
@@ -198,13 +199,13 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public List<Answer> getFeeds() {
+	public List<Answer> getFeeds(int pageNo) {
 		
-		List<DbAnswer> dbAnswers=portalDao.getFeeds();
+		Page<DbAnswer> dbAnswers=portalDao.getFeeds(pageNo);
 		List<Answer> answers = new ArrayList<Answer>();
 		for(DbAnswer dbAnswer : dbAnswers ) {
 			DbUser dbUser = getUserByUserId(dbAnswer.getUserId());
-			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer, dbUser.getName()));
+			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer, dbUser));
 		}
 		return answers;
 	}
@@ -276,8 +277,10 @@ public class DiscussionPortalHelper implements PortalHelper {
 			userAuthDao.deleteAnswerToMap(dbAnswer.getQuestionId(), userId);
 			portalDao.deleteAnswerToMap(dbAnswer.getQuestionId(), userId);
 			
-			for(DbComment dbComment : dbComments) {
-				portalDao.deleteComment(dbComment);
+			if(dbComments!=null) {
+				for(DbComment dbComment : dbComments) {
+					portalDao.deleteComment(dbComment);
+				}
 			}
 			return StatusCode.SUCCESS;
 		}
@@ -317,8 +320,10 @@ public class DiscussionPortalHelper implements PortalHelper {
 		List<String> commentIds = dbAnswer.getCommentId();
 		List<DbComment> dbComment =new ArrayList<DbComment>();
 		
-		for(String commentId:commentIds) {
-			dbComment.add(portalDao.getCommentById(commentId));
+		if(commentIds!=null) {
+			for(String commentId:commentIds) {
+				dbComment.add(portalDao.getCommentById(commentId));
+			}
 		}
 		return dbComment;
 	}

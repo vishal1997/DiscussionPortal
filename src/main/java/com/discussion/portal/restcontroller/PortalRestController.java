@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.discussion.portal.answer.response.model.QuestionResponse;
+import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
@@ -168,9 +169,11 @@ public class PortalRestController {
 		return portalManager.userNameIdPair();
 	}
 	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public List<Answer> getFeeds() {
-		return portalManager.getFeeds();
+	@RequestMapping(value = "/home", method = RequestMethod.PUT)
+	public List<Answer> getFeeds(@RequestBody String pageNo_) {
+		int pageNo= Integer.parseInt(pageNo_);
+		System.out.println(pageNo);
+		return portalManager.getFeeds(pageNo);
 	}
 	
 	@RequestMapping(value ="/{answerId}", method = RequestMethod.PUT) 
@@ -195,10 +198,12 @@ public class PortalRestController {
 	}
 	
 	@RequestMapping(value = "/comments/opinion/{commentId}" , method = RequestMethod.PUT)
-	public String addCommentOpinion(@RequestBody final String opinion,
+	public Map<String,String> addCommentOpinion(@RequestBody final String opinion,
 									@PathVariable("commentId") final String commentId) {
 
-		return portalManager.addCommentOpinion(commentId, opinion);
+		Map<String,String> status=new HashMap<String, String>();
+		status.put("status", portalManager.addCommentOpinion(commentId, opinion));
+		return status;
 	}
 	
 

@@ -115,8 +115,8 @@ public class DiscussionPortalManager implements PortalManager {
 	}
 
 	@Override
-	public List<Answer> getFeeds() {
-		return portalHelper.getFeeds();
+	public List<Answer> getFeeds(int pageNo) {
+		return portalHelper.getFeeds(pageNo);
 	}
 
 	@Override

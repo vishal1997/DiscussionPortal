@@ -23,10 +23,10 @@ public class Constants {
 	}
 	
 	public class StatusCode {
-		public static final String SUCCESS = "success";
-		public static final String DUPLICATE = "duplicate";
-		public static final String ERROR = "delete";
-		public static final String INVALID = "invalid";
+		public static final String SUCCESS = "Success";
+		public static final String DUPLICATE = "Duplicate";
+		public static final String ERROR = "Delete";
+		public static final String INVALID = "Invalid";
 	}
 	
 	public class MongoDbSignature {
@@ -34,7 +34,7 @@ public class Constants {
 	}
 	
 	public class Opinion {
-		public static final String AGREE = "agree";
-		public static final String DISAGREE = "disagree";
+		public static final String AGREE = "Agree";
+		public static final String DISAGREE = "Disagree";
 	}
 }

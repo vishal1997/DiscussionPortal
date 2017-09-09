@@ -42,7 +42,7 @@ public interface PortalManager {
 	
 	public List<Answer> getAnswerByUserId (String userId);
 	
-	public List<Answer> getFeeds();
+	public List<Answer> getFeeds(int pageNo);
 	
 	public String addUserOpinion(String userId, String opinion, String answerId);
 	

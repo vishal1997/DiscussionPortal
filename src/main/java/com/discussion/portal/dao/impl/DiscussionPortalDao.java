@@ -4,6 +4,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -46,6 +48,8 @@ public class DiscussionPortalDao implements PortalDao {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
+	
+	public final static int SIZE=5;
 	
 	static Logger log = LoggerFactory.getLogger(DiscussionPortalDao.class);
 	
@@ -140,10 +144,9 @@ public class DiscussionPortalDao implements PortalDao {
 	}
 
 	@Override
-	public List<DbAnswer> getFeeds() {
-		Query query = new Query().with(new Sort(Sort.Direction.DESC, "date"));
-		List<DbAnswer> resourceList = mongoTemplate.find(query, DbAnswer.class);
-		return resourceList;
+	public Page<DbAnswer> getFeeds(int pageNo) {
+		PageRequest request = new PageRequest(pageNo, SIZE, Sort.Direction.DESC, "date");
+		return ansRepo.findAll(request);
 	}
 
 	@Override
