@@ -133,12 +133,11 @@ public class DiscussionPortalDao implements PortalDao {
 	}
 
 	@Override
-	public List<DbAnswer> getAnswerByUserId(String userId) {
+	public List<DbAnswer> getAnswerByUserId(String userId, int pageNo) {
 		
 		Query query = new Query().addCriteria(Criteria.where("userId")
 				.is(userId))
-				.with(new Sort(Sort.Direction.DESC,"date"));
-
+				.with(new PageRequest(pageNo, SIZE, Sort.Direction.DESC, "date"));
 		List<DbAnswer> dbAnswer = mongoTemplate.find(query, DbAnswer.class);
 		return dbAnswer;
 	}

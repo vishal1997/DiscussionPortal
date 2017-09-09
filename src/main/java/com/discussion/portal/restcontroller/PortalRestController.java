@@ -152,16 +152,19 @@ public class PortalRestController {
 		return portalManager.getAnswerById(answerId);
 	}
 	
-	@RequestMapping(value = "/myanswers", method = RequestMethod.GET) 
-	public List<Answer> getAnswerByUserId() {
-		List<Answer> answers = portalManager.getAnswerByUserId(userUtils.getCurrentUser());
+	@RequestMapping(value = "/myanswers", method = RequestMethod.POST) 
+	public List<Answer> getAnswerByUserId(@RequestBody final String pageno) {
+		int pageNo = Integer.parseInt(pageno);
+		List<Answer> answers = portalManager.getAnswerByUserId(userUtils.getCurrentUser(),pageNo);
 		log.info("\nResponse for getAnswerByUserId\n" + Json.toJson(answers));
 		return answers;
 	}
 	
-	@RequestMapping(value = "/{userId}/answers", method = RequestMethod.GET) 
-	public List<Answer> getAnswerByOtherUserId(@PathVariable("userId") final String userId) {
-		return portalManager.getAnswerByUserId(userId);
+	@RequestMapping(value = "/{userId}/answers", method = RequestMethod.POST) 
+	public List<Answer> getAnswerByOtherUserId(@PathVariable("userId") final String userId,
+												@RequestBody final String pageno) {
+		int pageNo=Integer.parseInt(pageno);
+		return portalManager.getAnswerByUserId(userId, pageNo);
 	}
 	
 	@RequestMapping(value = "/me", method = RequestMethod.GET) 

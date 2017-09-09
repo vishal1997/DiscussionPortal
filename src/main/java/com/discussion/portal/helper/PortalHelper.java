@@ -43,10 +43,10 @@ public interface PortalHelper {
 	
 	public Answer getAnswerById(String answerId);
 	
-	public List<Answer> getAnswerByUserId(String questionAnswerMap);
+	public List<Answer> getAnswerByUserId(String questionAnswerMap, int pageNo);
 
 	public DbUser getUserByUserId(String userId);
-	
+
 	public List<Answer> getFeeds(int pageNo);
 	
 	public String addUserOpinion(String userId, String opinion, String answerId);

@@ -170,9 +170,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 		return getAnswersByMap(questionAnswerMap);
 	}
 
-	public List<Answer> getAnswersByUserId(String userId) {
+	public List<Answer> getAnswersByUserId(String userId, int pageNo) {
 		
-		List<DbAnswer> dbAnswers = portalDao.getAnswerByUserId(userId);
+		List<DbAnswer> dbAnswers = portalDao.getAnswerByUserId(userId, pageNo);
 		List<Answer> answers = new ArrayList<Answer>();
 		DbUser dbUser = getUserByUserId(userId);
 		for(DbAnswer dbAnswer : dbAnswers ) {
@@ -378,5 +378,11 @@ public class DiscussionPortalHelper implements PortalHelper {
 		nameIdPair.put("user_id", dbUser.getUsername());
 		nameIdPair.put("name", dbUser.getName());
 		return nameIdPair;
+	}
+
+	@Override
+	public List<Answer> getAnswerByUserId(String questionAnswerMap, int pageNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
