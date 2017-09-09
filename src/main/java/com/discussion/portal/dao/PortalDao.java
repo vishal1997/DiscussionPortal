@@ -24,7 +24,7 @@ public interface PortalDao {
 	
 	public DbAnswer getAnswerById(String answerId);
 	
-	public List<DbAnswer> getAnswerByUserId(String userId);
+	public List<DbAnswer> getAnswerByUserId(String userId, int pageNo);
 	
 	public Page<DbAnswer> getFeeds(int pageNo);
 	
