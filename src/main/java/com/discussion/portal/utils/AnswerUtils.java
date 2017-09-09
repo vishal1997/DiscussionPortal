@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.mongodb.model.DbAnswer;
+import com.discussion.portal.mongodb.model.DbUser;
 
 /**
  * 
@@ -20,7 +21,6 @@ public class AnswerUtils {
 	@Autowired
 	private DiscussionPortalDao portalDao;
 	
-
 	static Logger log = LoggerFactory.getLogger(AnswerUtils.class);
 	
 	public DbAnswer convertAnswerToDbAnswer(Answer answer) {
@@ -39,7 +39,7 @@ public class AnswerUtils {
 		return dbAnswer;
 	}
 	
-	public Answer convertDbAnswerToAnswer(DbAnswer dbAnswer) {
+	public Answer convertDbAnswerToAnswer(DbAnswer dbAnswer, DbUser dbUser) {
 
 		Answer answer = new Answer();
 		
@@ -53,7 +53,8 @@ public class AnswerUtils {
 		answer.setAnswerId(dbAnswer.getAnswerId());
 		answer.setQuestionId(dbAnswer.getQuestionId());
 		answer.setQuestion(portalDao.getQuestionById(dbAnswer.getQuestionId()).getQuestion());
-		
+		answer.setAnsweredByName(dbUser.getName());
+		answer.setSec(dbUser.getSec());
 		if(dbAnswer.getAgree() != null) {
 			answer.setAgree(dbAnswer.getAgree());
 		}

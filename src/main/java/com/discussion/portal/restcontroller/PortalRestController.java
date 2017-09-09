@@ -8,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.discussion.portal.answer.response.model.QuestionResponse;
+import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
-import com.discussion.portal.model.auth.Details_;
+import com.discussion.portal.user.response.UserResponse;
 import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.UserUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -169,9 +169,11 @@ public class PortalRestController {
 		return portalManager.userNameIdPair();
 	}
 	
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public List<Answer> getFeeds() {
-		return portalManager.getFeeds();
+	@RequestMapping(value = "/home", method = RequestMethod.PUT)
+	public List<Answer> getFeeds(@RequestBody String pageNo_) {
+		int pageNo= Integer.parseInt(pageNo_);
+		System.out.println(pageNo);
+		return portalManager.getFeeds(pageNo);
 	}
 	
 	@RequestMapping(value ="/{answerId}", method = RequestMethod.PUT) 
@@ -196,10 +198,12 @@ public class PortalRestController {
 	}
 	
 	@RequestMapping(value = "/comments/opinion/{commentId}" , method = RequestMethod.PUT)
-	public String addCommentOpinion(@RequestBody final String opinion,
+	public Map<String,String> addCommentOpinion(@RequestBody final String opinion,
 									@PathVariable("commentId") final String commentId) {
 
-		return portalManager.addCommentOpinion(commentId, opinion);
+		Map<String,String> status=new HashMap<String, String>();
+		status.put("status", portalManager.addCommentOpinion(commentId, opinion));
+		return status;
 	}
 	
 
@@ -216,7 +220,7 @@ public class PortalRestController {
 		}
 	}
 	
-	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.PUT)
+	@RequestMapping(value = "delete/comment/{commentId}",method = RequestMethod.GET)
 	public Map<String, String> deleteComment(@PathVariable("commentId") final String commentId) {
 		try {
 			Map<String,String> deleteStatus = new HashMap<String, String>();
@@ -246,9 +250,14 @@ public class PortalRestController {
 		return registerStatus;
 	}
 	
-	@RequestMapping(value="/profile/{username}", method = RequestMethod.GET) 
-	public User getUserProfileDetails(@PathVariable("username") final String username) {
-		return portalManager.getUserProfileDetails(username);
+	@RequestMapping(value="/userdetails", method = RequestMethod.GET) 
+	public UserResponse getUserProfileDetails() {
+		return portalManager.getUserProfileDetails(userUtils.getCurrentUser());
+	}
+	
+	@RequestMapping(value="/{userId}/userprofile", method = RequestMethod.GET)
+	public UserResponse getOtherUserProfileDetails(@PathVariable("userId") final String userId) {
+		return portalManager.getUserProfileDetails(userId);
 	}
 	
 }

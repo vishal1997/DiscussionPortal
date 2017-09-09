@@ -13,6 +13,7 @@ import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.user.response.UserResponse;
 
 /**
  * 
@@ -46,7 +47,7 @@ public interface PortalHelper {
 
 	public DbUser getUserByUserId(String userId);
 	
-	public List<Answer> getFeeds();
+	public List<Answer> getFeeds(int pageNo);
 	
 	public String addUserOpinion(String userId, String opinion, String answerId);
 	
@@ -64,8 +65,6 @@ public interface PortalHelper {
 	
 	public String deleteCommentIdFromDbAnswer(String answerId, String commentId);
 	
-	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser);
-	
 	public List<DbComment> getCommentByAnswerId(String answerId);
 	
 	public List<Comment> convertDbCommentToComment(List<DbComment> dbComments);
@@ -74,7 +73,7 @@ public interface PortalHelper {
 	
 	public boolean userAlreadyPresent(String userId);
 	
-	public User getUserProfileDetails(DbUser dbUser);
+	public UserResponse getUserProfileDetails(DbUser dbUser);
 	
 	public Map<String, String> userNameIdPair();
 }

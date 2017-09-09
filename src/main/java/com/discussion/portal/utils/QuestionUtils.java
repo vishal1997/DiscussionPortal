@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.answer.response.model.AnswerResponse;
 import com.discussion.portal.answer.response.model.QuestionResponse;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
+import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -28,6 +29,9 @@ public class QuestionUtils {
 	
 	@Autowired
 	private DiscussionPortalDao portalDao;
+	
+	@Autowired
+	private DiscussionUserAuthDao userAuthDao;
 	
 	static Logger log = LoggerFactory.getLogger(QuestionUtils.class);
 	
@@ -58,6 +62,7 @@ public class QuestionUtils {
 		question.setYear(dbQuestion.getYear());
 		question.setQuestion(dbQuestion.getQuestion());
 		question.setQuestionId(dbQuestion.getQuestionId());
+		question.setOwnerName(userAuthDao.getUserByUserId(dbQuestion.getOwner()).getName());
 		return question;
 	}
 	
@@ -74,6 +79,7 @@ public class QuestionUtils {
 			.questionId(dbQuestion.getQuestionId())
 			.tags(dbQuestion.getTags())
 			.year(dbQuestion.getYear())
+			.ownerName(userAuthDao.getUserByUserId(dbQuestion.getOwner()).getName())
 			.answerResponse(buildAnswerResponse(dbQuestion.getAnswersMap()))
 			.build();
 		
@@ -91,13 +97,14 @@ public class QuestionUtils {
 			DbAnswer answer = portalDao.getAnswerById(answerMap.get(key));
 			answerResponse = new AnswerResponse();
 			answerResponse.setAnswer(answer.getAnswer());
-			answerResponse.setAnswerBy(key);
+			answerResponse.setUserId(key);
 			answerResponse.setAnswerId(answerMap.get(key));
 			answerResponse.setDate(answer.getDate());
 			answerResponse.setAgree(answer.getAgree());
 			answerResponse.setDisagree(answer.getDisagree());
 			answerResponse.setNoOfAgree(answer.getNoOfAgree());
 			answerResponse.setNoOfDisagree(answer.getNoOfDisagree());
+			answerResponse.setName(userAuthDao.getUserByUserId(key).getName());
 			answers.add(answerResponse);
 		}
 		

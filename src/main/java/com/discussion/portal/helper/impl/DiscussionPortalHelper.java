@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
@@ -29,6 +30,7 @@ import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.user.response.UserResponse;
 import com.discussion.portal.utils.AnswerUtils;
 import com.discussion.portal.utils.Json;
 import com.discussion.portal.utils.QuestionUtils;
@@ -155,7 +157,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 	@Override
 	public Answer getAnswerById(String answerId) {
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
-		return answerUtils.convertDbAnswerToAnswer(dbAnswer);
+		DbUser dbUser = getUserByUserId(dbAnswer.getUserId());
+		return answerUtils.convertDbAnswerToAnswer(dbAnswer, dbUser);
 	}
 	
 	/**
@@ -171,8 +174,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		List<DbAnswer> dbAnswers = portalDao.getAnswerByUserId(userId);
 		List<Answer> answers = new ArrayList<Answer>();
+		DbUser dbUser = getUserByUserId(userId);
 		for(DbAnswer dbAnswer : dbAnswers ) {
-			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
+			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer,dbUser));
 		}
 		return answers;
 	}
@@ -195,12 +199,13 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public List<Answer> getFeeds() {
+	public List<Answer> getFeeds(int pageNo) {
 		
-		List<DbAnswer> dbAnswers=portalDao.getFeeds();
+		Page<DbAnswer> dbAnswers=portalDao.getFeeds(pageNo);
 		List<Answer> answers = new ArrayList<Answer>();
 		for(DbAnswer dbAnswer : dbAnswers ) {
-		answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer));
+			DbUser dbUser = getUserByUserId(dbAnswer.getUserId());
+			answers.add(answerUtils.convertDbAnswerToAnswer(dbAnswer, dbUser));
 		}
 		return answers;
 	}
@@ -265,10 +270,20 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public String deleteAnswer(String answerId, String userId) {
 	    
 		DbAnswer dbAnswer = portalDao.getAnswerById(answerId);
+		List<DbComment>dbComments = getCommentByAnswerId(dbAnswer.getAnswerId());
 		if(userId.equalsIgnoreCase(dbAnswer.getUserId())) {
-			return portalDao.deleteAnswer(dbAnswer);
+			
+			portalDao.deleteAnswer(dbAnswer);
+			userAuthDao.deleteAnswerToMap(dbAnswer.getQuestionId(), userId);
+			portalDao.deleteAnswerToMap(dbAnswer.getQuestionId(), userId);
+			
+			if(dbComments!=null) {
+				for(DbComment dbComment : dbComments) {
+					portalDao.deleteComment(dbComment);
+				}
+			}
+			return StatusCode.SUCCESS;
 		}
-		
 		return StatusCode.ERROR;
 	}
 	
@@ -297,12 +312,6 @@ public class DiscussionPortalHelper implements PortalHelper {
 		return portalDao.updateDbAnswer(dbAnswer);
 	}
 
-	@Override
-	public String deleteAnswerIdFromUser(String answerId, DbUser dbUser) {
-		
-		dbUser.removeAnswerFromMap(answerId);
-		return portalDao.updateDbUser(dbUser);
-	}
 
 	@Override
 	public List<DbComment> getCommentByAnswerId(String answerId) {
@@ -311,8 +320,10 @@ public class DiscussionPortalHelper implements PortalHelper {
 		List<String> commentIds = dbAnswer.getCommentId();
 		List<DbComment> dbComment =new ArrayList<DbComment>();
 		
-		for(String commentId:commentIds) {
-			dbComment.add(portalDao.getCommentById(commentId));
+		if(commentIds!=null) {
+			for(String commentId:commentIds) {
+				dbComment.add(portalDao.getCommentById(commentId));
+			}
 		}
 		return dbComment;
 	}
@@ -322,7 +333,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 		
 		List<Comment> comment = new ArrayList<Comment>();
 		for(DbComment dbComment : dbComments) {
-			comment.add(commentUtils.convertDbCommentToComment(dbComment));
+			
+			DbUser dbUser = getUserByUserId(dbComment.getUserId());
+			comment.add(commentUtils.convertDbCommentToComment(dbComment, dbUser.getName()));
 		}
 		return comment;
 	}
@@ -353,7 +366,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public User getUserProfileDetails(DbUser dbUser) {
+	public UserResponse getUserProfileDetails(DbUser dbUser) {
 		return userUtils.convertDbUserToUserDetails(dbUser);
 	}
 

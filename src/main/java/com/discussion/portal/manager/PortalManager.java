@@ -8,6 +8,7 @@ import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
+import com.discussion.portal.user.response.UserResponse;
 
 /**
  * 
@@ -41,7 +42,7 @@ public interface PortalManager {
 	
 	public List<Answer> getAnswerByUserId (String userId);
 	
-	public List<Answer> getFeeds();
+	public List<Answer> getFeeds(int pageNo);
 	
 	public String addUserOpinion(String userId, String opinion, String answerId);
 	
@@ -57,7 +58,7 @@ public interface PortalManager {
 	
 	public String registerUser(User user);
 	
-	public User getUserProfileDetails(String username);
+	public UserResponse getUserProfileDetails(String username);
 	
 	public Map<String, String> userNameIdPair();
 }

@@ -30,7 +30,7 @@ public class CommentUtils {
 		return dbComment;
 	}
 	
-	public Comment convertDbCommentToComment(DbComment dbComment) {
+	public Comment convertDbCommentToComment(DbComment dbComment, String name) {
 		
 		if(dbComment == null) {
 			return null;
@@ -45,6 +45,7 @@ public class CommentUtils {
 		comment.setNoOfAgree(dbComment.getNoOfAgree());
 		comment.setNoOfDisagree(dbComment.getNoOfDisagree());
 		comment.setUserId(dbComment.getUserId());
+		comment.setName(name);
 		return comment;
 	}
 }
