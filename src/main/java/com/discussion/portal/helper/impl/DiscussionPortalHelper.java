@@ -390,6 +390,12 @@ public class DiscussionPortalHelper implements PortalHelper {
 	@Override
 	public String resetpassword(String userId, String password) {
 		String encyptPassword = passwordEncoder.encode(password);
+		log.info("\nNew password encrypted"+encyptPassword);
 		return userAuthDao.resetPassword(userId, encyptPassword);
+	}
+	
+	@Override
+	public String resetEmailId(String userId, String emailId) {
+		return userAuthDao.resetEmailId(userId, emailId);
 	}
 }

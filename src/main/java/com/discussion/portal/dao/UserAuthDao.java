@@ -20,5 +20,7 @@ public interface UserAuthDao {
 	public String deleteAnswerToMap(String questionId, String userId);
 	
 	public String resetPassword(String userId, String password);
+	
+	public String resetEmailId(String userId, String emailId);
 
 }

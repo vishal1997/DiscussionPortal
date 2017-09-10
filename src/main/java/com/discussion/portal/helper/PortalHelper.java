@@ -78,4 +78,6 @@ public interface PortalHelper {
 	public UserResponse getUserProfileDetails(DbUser dbUser);
 	
 	public Map<String, String> userNameIdPair();
+	
+	public String resetEmailId(String userId, String emailId);
 }

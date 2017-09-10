@@ -156,7 +156,7 @@ public class DiscussionPortalDao implements PortalDao {
 			log.info("\nupdated DbAnswer\n" + Json.toJson(dbAnswer));
 			return StatusCode.SUCCESS;
 		} catch(Exception e) {
-			throw new RuntimeException("Error while updating DbAnswer", e);
+			throw new RuntimeException("\nError while updating DbAnswer", e);
 		}
 	}
 

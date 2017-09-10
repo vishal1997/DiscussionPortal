@@ -271,6 +271,15 @@ public class PortalRestController {
 		statusMap.put("status", status);
 		return statusMap;
 	}
+	
+	@RequestMapping(value="/resetemail", method = RequestMethod.PUT) 
+	public Map<String, String> resetEmailId(@RequestBody final String emailId) {
+		
+		String status = portalManager.resetEmailId(userUtils.getCurrentUser(), emailId);
+		Map<String, String> resetStatus = new HashMap<String, String>();
+		resetStatus.put("status", status);
+		return resetStatus;
+	}
 }
 
 

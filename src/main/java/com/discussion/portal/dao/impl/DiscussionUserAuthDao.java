@@ -110,9 +110,27 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 	   try {
 			DbUser dbUser = getUserByUserId(userId);
 			dbUser.setPassword(password);
+			userRepository.save(dbUser);
+			log.info("\nPassword changed"+ Json.toJson(dbUser));
 			return StatusCode.SUCCESS;
 	   } catch (Exception e) {
-		   return StatusCode.ERROR;
+		   log.error("\nError while changing password, UserId:" + userId );
+		   return StatusCode.FAILED;
 	   }
+	}
+	
+	@Override
+	public String resetEmailId(String userId, String emailId) {
+		
+		try {
+			DbUser dbUser = getUserByUserId(userId);
+			dbUser.setEmailId(emailId);
+			userRepository.save(dbUser);
+			log.info("\nEmailId Changed"+ Json.toJson(dbUser));
+			return StatusCode.SUCCESS;
+		} catch(Exception e) {
+			log.error("\nError while changing emailId, userId="+ userId);
+			return StatusCode.FAILED;
+		}
 	}
 }

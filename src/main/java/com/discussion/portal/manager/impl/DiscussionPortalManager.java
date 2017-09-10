@@ -196,4 +196,9 @@ public class DiscussionPortalManager implements PortalManager {
 	public String resetPassword(String userId, String password) {
 		return portalHelper.resetpassword(userId, password);
 	}
+	
+	@Override
+	public String resetEmailId(String userId, String emailId) {
+		return portalHelper.resetEmailId(userId, emailId);
+	}
 }

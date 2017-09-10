@@ -63,4 +63,6 @@ public interface PortalManager {
 	public Map<String, String> userNameIdPair();
 	
 	public String resetPassword(String userId, String password);
+	
+	public String resetEmailId(String userId, String emailId);
 }
