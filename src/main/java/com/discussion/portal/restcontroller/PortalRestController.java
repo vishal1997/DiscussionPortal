@@ -263,6 +263,14 @@ public class PortalRestController {
 		return portalManager.getUserProfileDetails(userId);
 	}
 	
+	@RequestMapping(value="/resetpassword/", method = RequestMethod.PUT)
+	public Map<String, String> resetPassword(@RequestBody final String password) {
+		
+		String status = portalManager.resetPassword(userUtils.getCurrentUser(),password);
+		Map<String, String> statusMap = new HashMap<String, String>();
+		statusMap.put("status", status);
+		return statusMap;
+	}
 }
 
 

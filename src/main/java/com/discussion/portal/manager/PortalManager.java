@@ -61,4 +61,6 @@ public interface PortalManager {
 	public UserResponse getUserProfileDetails(String username);
 	
 	public Map<String, String> userNameIdPair();
+	
+	public String resetPassword(String userId, String password);
 }

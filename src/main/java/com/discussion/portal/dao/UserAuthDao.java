@@ -18,5 +18,7 @@ public interface UserAuthDao {
 	public String registerUser(DbUser dbUser);
 	
 	public String deleteAnswerToMap(String questionId, String userId);
+	
+	public String resetPassword(String userId, String password);
 
 }

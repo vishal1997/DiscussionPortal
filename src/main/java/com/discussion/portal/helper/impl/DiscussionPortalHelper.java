@@ -12,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.discussion.portal.answer.response.model.QuestionResponse;
@@ -65,6 +68,9 @@ public class DiscussionPortalHelper implements PortalHelper {
 	
 	@Autowired
 	private ConnectIter iter;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	/**
 	 * {@inheritDoc}
@@ -170,6 +176,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		return getAnswersByMap(questionAnswerMap);
 	}
 
+	@Override
 	public List<Answer> getAnswersByUserId(String userId, int pageNo) {
 		
 		List<DbAnswer> dbAnswers = portalDao.getAnswerByUserId(userId, pageNo);
@@ -381,8 +388,8 @@ public class DiscussionPortalHelper implements PortalHelper {
 	}
 
 	@Override
-	public List<Answer> getAnswerByUserId(String questionAnswerMap, int pageNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public String resetpassword(String userId, String password) {
+		String encyptPassword = passwordEncoder.encode(password);
+		return userAuthDao.resetPassword(userId, encyptPassword);
 	}
 }
