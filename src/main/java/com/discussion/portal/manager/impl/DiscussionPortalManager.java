@@ -191,4 +191,9 @@ public class DiscussionPortalManager implements PortalManager {
 	public Map<String, String> userNameIdPair() {
 		return portalHelper.userNameIdPair();
 	}
+
+	@Override
+	public String resetPassword(String userId, String password) {
+		return portalHelper.resetpassword(userId, password);
+	}
 }

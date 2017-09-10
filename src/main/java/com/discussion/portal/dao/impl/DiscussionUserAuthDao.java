@@ -103,4 +103,16 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 			return StatusCode.ERROR;
 		}
 	}
+
+	@Override
+	public String resetPassword(String userId, String password) {
+		
+	   try {
+			DbUser dbUser = getUserByUserId(userId);
+			dbUser.setPassword(password);
+			return StatusCode.SUCCESS;
+	   } catch (Exception e) {
+		   return StatusCode.ERROR;
+	   }
+	}
 }

@@ -43,7 +43,7 @@ public interface PortalHelper {
 	
 	public Answer getAnswerById(String answerId);
 	
-	public List<Answer> getAnswerByUserId(String questionAnswerMap, int pageNo);
+	public List<Answer> getAnswersByUserId(String userId, int pageNo);
 
 	public DbUser getUserByUserId(String userId);
 
@@ -70,6 +70,8 @@ public interface PortalHelper {
 	public List<Comment> convertDbCommentToComment(List<DbComment> dbComments);
 	
 	public String registerUser(User user);
+	
+	public String resetpassword(String userId, String password);
 	
 	public boolean userAlreadyPresent(String userId);
 	
