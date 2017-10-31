@@ -16,8 +16,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
@@ -32,6 +34,7 @@ import com.discussion.portal.utils.Json;
 @SpringBootApplication
 @EnableWebSecurity
 @Configuration
+@CrossOrigin(origins = "http://localhost:3410", maxAge = 3600)
 public class DiscussionPortalApplication extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -65,10 +68,14 @@ public class DiscussionPortalApplication extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	
     	http.csrf().disable();
-    	http.authorizeRequests()
+    	http.addFilterBefore(simpleCORSFilter(), ChannelProcessingFilter.class);
+    	http.cors().and()
+    		.authorizeRequests()
+    	
     		.antMatchers("/api/v1/register/**").permitAll()
-    		.anyRequest().authenticated()
-    		
+    		.antMatchers("/api/v1/**").authenticated()
+    		.anyRequest().permitAll()
+    		    		
     		.and()
     		.formLogin()
     		.loginPage("/userloginpage").passwordParameter("password").usernameParameter("username")

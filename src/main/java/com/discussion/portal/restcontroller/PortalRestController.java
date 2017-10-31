@@ -188,11 +188,11 @@ public class PortalRestController {
 	
 	
 	@RequestMapping(value = "/comments/{answerId}", method = RequestMethod.PUT)
-	public Map<String, String> addComments(@RequestBody final Comment comment,
+	public Map<String, String> addComments(@RequestBody final String comment,
 							  @PathVariable("answerId") final String answerId) {
 		try {
 			Map<String, String> commentStatus = new HashMap<String, String>();
-			String status = portalManager.addComments(answerId, comment.getComment());
+			String status = portalManager.addComments(answerId, comment);
 			commentStatus.put("status", status);
 			return commentStatus;
 		} catch (Exception e) {
