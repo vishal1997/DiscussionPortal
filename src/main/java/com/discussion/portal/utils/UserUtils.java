@@ -47,6 +47,17 @@ public class UserUtils {
 		return user;
 	}
 	
+	public User convertDbUserToUserSearch(DbUser dbuser) {
+		
+		User user = new User();
+		user.setBranch(dbuser.getBranch());
+		user.setAdmissionYear(dbuser.getAdmissionYear());
+		user.setName(dbuser.getName());
+		user.setSec(dbuser.getSec());
+		user.setUsername(dbuser.getUsername());
+		return user;
+	}
+	
 	
 	public UserResponse convertDbUserToUserDetails(DbUser dbUser) {
 		

@@ -206,4 +206,10 @@ public class DiscussionPortalManager implements PortalManager {
 	public List<Question> getAllQuestions(int pageNo) {
 		return portalHelper.getAllQuestions(pageNo);
 	}
+	
+	@Override
+	public List<User> search(String name) {
+		name = name.replaceAll("%20", " ").toUpperCase();
+		return portalHelper.search(name);
+	}
 }

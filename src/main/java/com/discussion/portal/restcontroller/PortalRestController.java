@@ -285,6 +285,11 @@ public class PortalRestController {
 		int pageNo = Integer.parseInt(pageNo_);
 		return portalManager.getAllQuestions(pageNo);
 	}
+	
+	@RequestMapping(value="search/{userName}", method = RequestMethod.GET) 
+	public List<User> search(@PathVariable("userName") final String userName) {
+		return portalManager.search(userName);
+	}
 }
 
 

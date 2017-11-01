@@ -409,4 +409,15 @@ public class DiscussionPortalHelper implements PortalHelper {
 		}
 		return question;
 	}
+	
+	@Override
+	public List<User> search(String name) {
+		
+		List<DbUser> dbUser = userAuthDao.getUserByName(name);
+		List<User> user = new ArrayList<User>();
+		for(DbUser dbuser : dbUser) {
+			user.add(userUtils.convertDbUserToUserSearch(dbuser));
+		}
+		return user;
+	}
 }

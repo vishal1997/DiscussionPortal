@@ -1,6 +1,9 @@
 package com.discussion.portal.dao.impl;
 
+import java.util.List;
 import java.util.Map;
+
+import javax.management.RuntimeErrorException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,6 +134,17 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 		} catch(Exception e) {
 			log.error("\nError while changing emailId, userId="+ userId);
 			return StatusCode.FAILED;
+		}
+	}
+
+	@Override
+	public List<DbUser> getUserByName(String name) {
+		
+		try {
+			List<DbUser> dbUser = userRepository.findByName(name);
+			return dbUser;
+		} catch(Exception e) {
+			throw new RuntimeException("Error while loading users", e);
 		}
 	}
 }

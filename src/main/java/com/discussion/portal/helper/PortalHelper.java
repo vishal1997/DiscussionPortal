@@ -82,4 +82,6 @@ public interface PortalHelper {
 	public String resetEmailId(String userId, String emailId);
 	
 	public List<Question> getAllQuestions(int pageNo);
+	
+	public List<User> search(String name);
 }
