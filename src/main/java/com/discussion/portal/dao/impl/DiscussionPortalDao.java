@@ -240,5 +240,16 @@ public class DiscussionPortalDao implements PortalDao {
 			return StatusCode.ERROR;
 		}
 	}
+
+	@Override
+	public Page<DbQuestion> getAllQuestions(int pageNo) {
+		
+		try {
+			PageRequest request = new PageRequest(pageNo, SIZE+SIZE, Sort.Direction.DESC, "creationDate");
+			return quesRepo.findAll(request);
+		} catch(Exception ex) {
+			throw new RuntimeException("Error while accessing all questions", ex);
+		}
+	}
 }
 

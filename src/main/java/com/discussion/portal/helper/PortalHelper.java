@@ -80,4 +80,6 @@ public interface PortalHelper {
 	public Map<String, String> userNameIdPair();
 	
 	public String resetEmailId(String userId, String emailId);
+	
+	public List<Question> getAllQuestions(int pageNo);
 }

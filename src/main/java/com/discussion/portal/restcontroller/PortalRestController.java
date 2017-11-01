@@ -175,7 +175,6 @@ public class PortalRestController {
 	@RequestMapping(value = "/home", method = RequestMethod.PUT)
 	public List<Answer> getFeeds(@RequestBody String pageNo_) {
 		int pageNo= Integer.parseInt(pageNo_);
-		System.out.println(pageNo);
 		return portalManager.getFeeds(pageNo);
 	}
 	
@@ -279,6 +278,12 @@ public class PortalRestController {
 		Map<String, String> resetStatus = new HashMap<String, String>();
 		resetStatus.put("status", status);
 		return resetStatus;
+	}
+	
+	@RequestMapping(value="allquestions", method = RequestMethod.PUT)
+	public List<Question> getAllQuestion(@RequestBody String pageNo_) {
+		int pageNo = Integer.parseInt(pageNo_);
+		return portalManager.getAllQuestions(pageNo);
 	}
 }
 

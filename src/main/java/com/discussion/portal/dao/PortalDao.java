@@ -44,4 +44,6 @@ public interface PortalDao {
 	
 	public String deleteAnswerToMap(String questionId, String userId);
 	
+	public Page<DbQuestion> getAllQuestions(int pageNo);
+	
 }

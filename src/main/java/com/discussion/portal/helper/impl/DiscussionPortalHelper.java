@@ -398,4 +398,15 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public String resetEmailId(String userId, String emailId) {
 		return userAuthDao.resetEmailId(userId, emailId);
 	}
+
+	@Override
+	public List<Question> getAllQuestions(int pageNo) {
+		
+		Page<DbQuestion> dbQuestion = portalDao.getAllQuestions(pageNo);
+		List<Question> question = new ArrayList<Question>();
+		for(DbQuestion dbquestion : dbQuestion) {
+			question.add(questionUtils.convertToQuestion(dbquestion));
+		}
+		return question;
+	}
 }

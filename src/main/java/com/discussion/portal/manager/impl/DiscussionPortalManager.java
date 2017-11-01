@@ -201,4 +201,9 @@ public class DiscussionPortalManager implements PortalManager {
 	public String resetEmailId(String userId, String emailId) {
 		return portalHelper.resetEmailId(userId, emailId);
 	}
+
+	@Override
+	public List<Question> getAllQuestions(int pageNo) {
+		return portalHelper.getAllQuestions(pageNo);
+	}
 }
