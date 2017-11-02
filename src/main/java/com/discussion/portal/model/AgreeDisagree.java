@@ -18,4 +18,6 @@ public class AgreeDisagree {
 	private int noOfDisagree;
 	private Set<String> agree;
 	private Set<String> disagree;
+	private boolean agreeStatus;
+	private boolean disagreeStatus;
 }

@@ -21,6 +21,9 @@ public class AnswerUtils {
 	@Autowired
 	private DiscussionPortalDao portalDao;
 	
+	@Autowired
+	private UserUtils userUtils;
+	
 	static Logger log = LoggerFactory.getLogger(AnswerUtils.class);
 	
 	public DbAnswer convertAnswerToDbAnswer(Answer answer) {
@@ -55,6 +58,18 @@ public class AnswerUtils {
 		answer.setQuestion(portalDao.getQuestionById(dbAnswer.getQuestionId()).getQuestion());
 		answer.setAnsweredByName(dbUser.getName());
 		answer.setSec(dbUser.getSec());
+		if(dbAnswer.getAgree()!=null) {
+			answer.setAgreeStatus(dbAnswer.getAgree().contains(userUtils.getCurrentUser()));
+		} else {
+			answer.setAgreeStatus(false);
+		}
+		
+		if(dbAnswer.getDisagree()!=null) {
+			answer.setDisagreeStatus(dbAnswer.getDisagree().contains(userUtils.getCurrentUser()));
+		} else {
+			answer.setDisagreeStatus(false);
+		}
+		
 		if(dbAnswer.getAgree() != null) {
 			answer.setAgree(dbAnswer.getAgree());
 		}

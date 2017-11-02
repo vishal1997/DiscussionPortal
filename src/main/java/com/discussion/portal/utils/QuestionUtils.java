@@ -33,6 +33,9 @@ public class QuestionUtils {
 	@Autowired
 	private DiscussionUserAuthDao userAuthDao;
 	
+	@Autowired
+	private UserUtils userUtils;
+	
 	static Logger log = LoggerFactory.getLogger(QuestionUtils.class);
 	
 	public DbQuestion convertToDbQuestion(Question question, String userId) {
@@ -105,6 +108,16 @@ public class QuestionUtils {
 			answerResponse.setNoOfAgree(answer.getNoOfAgree());
 			answerResponse.setNoOfDisagree(answer.getNoOfDisagree());
 			answerResponse.setName(userAuthDao.getUserByUserId(key).getName());
+			if(answer.getAgree() != null ) {
+				answerResponse.setAgreeStatus(answer.getAgree().contains(userUtils.getCurrentUser()));
+			} else {
+				answerResponse.setAgreeStatus(false);
+			}
+			if(answer.getDisagree() != null ) {
+				answerResponse.setDisagreeStatus(answer.getDisagree().contains(userUtils.getCurrentUser()));
+			} else {
+				answerResponse.setDisagreeStatus(false);
+			}
 			answers.add(answerResponse);
 		}
 		

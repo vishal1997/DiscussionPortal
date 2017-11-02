@@ -25,4 +25,6 @@ public class AnswerResponse {
 	private Set<String> disagree;
 	private int noOfAgree;
 	private int noOfDisagree;
+	private boolean agreeStatus;
+	private boolean disagreeStatus;
 }
