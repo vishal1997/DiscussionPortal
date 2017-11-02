@@ -41,8 +41,8 @@ public class QuestionUtils {
 	public DbQuestion convertToDbQuestion(Question question, String userId) {
 
 		DbQuestion dbQuestion = DbQuestion.builder().owner(userId)
-				.questionId(question.getQuestion().replace(" ", "-").replace("?", "q").toLowerCase()).answersMap(new HashMap<String, String>())
-				.creationDate(new Date()).question(question.getQuestion()).year(question.getYear())
+				.questionId(question.getQuestion().replace(" ", "-").replace("?", "q").replaceAll("\n","q").toLowerCase()).answersMap(new HashMap<String, String>())
+				.creationDate(new Date()).question(question.getQuestion().replaceAll("\n", " ")).year(question.getYear())
 				.build();
 		
 		log.info("\nConverted Question to dbQuestion as: \n" + Json.toJson(dbQuestion));
