@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.discussion.portal.answer.response.model.QuestionResponse;
-import com.discussion.portal.common.Constants.Mailer;
 import com.discussion.portal.common.Constants.Opinion;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
