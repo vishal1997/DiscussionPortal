@@ -1,6 +1,9 @@
 package com.discussion.portal.dao.impl;
 
 import java.util.List;
+
+import javax.management.RuntimeErrorException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,14 @@ import com.discussion.portal.common.Constants.MongoDbSignature;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.PortalDao;
 import com.discussion.portal.model.Answer;
+import com.discussion.portal.mongodb.model.PasswordResetToken;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.mongodb.repository.AnswerRepository;
 import com.discussion.portal.mongodb.repository.CommentRepository;
+import com.discussion.portal.mongodb.repository.PasswordResetRepository;
 import com.discussion.portal.mongodb.repository.QuestionsRepository;
 import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
@@ -48,6 +53,9 @@ public class DiscussionPortalDao implements PortalDao {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
+	
+	@Autowired
+	private PasswordResetRepository passRepo;
 	
 	public final static int SIZE=5;
 	
@@ -249,6 +257,17 @@ public class DiscussionPortalDao implements PortalDao {
 			return quesRepo.findAll(request);
 		} catch(Exception ex) {
 			throw new RuntimeException("Error while accessing all questions", ex);
+		}
+	}
+
+	@Override
+	public String saveResetToken(PasswordResetToken token) {
+		
+		try {
+			passRepo.save(token);
+			return StatusCode.SUCCESS;
+		} catch(Exception ex) {
+			throw new RuntimeException("Error while saving new password reset token");
 		}
 	}
 }

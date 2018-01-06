@@ -84,4 +84,8 @@ public interface PortalHelper {
 	public List<Question> getAllQuestions(int pageNo);
 	
 	public List<User> search(String name);
+	
+	public String generateResetToken(String userId);
+	
+	public String sendMail(String emailId, String subject, String message);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.discussion.portal.mongodb.model.PasswordResetToken;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
 import com.discussion.portal.mongodb.model.DbQuestion;
@@ -45,5 +46,7 @@ public interface PortalDao {
 	public String deleteAnswerToMap(String questionId, String userId);
 	
 	public Page<DbQuestion> getAllQuestions(int pageNo);
+	
+	public String saveResetToken(PasswordResetToken token);
 	
 }

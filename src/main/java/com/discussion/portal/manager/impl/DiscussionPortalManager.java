@@ -2,15 +2,14 @@ package com.discussion.portal.manager.impl;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.discussion.portal.answer.response.model.QuestionResponse;
+import com.discussion.portal.common.Constants.Mailer;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.helper.impl.DiscussionPortalHelper;
 import com.discussion.portal.manager.PortalManager;
@@ -199,7 +198,11 @@ public class DiscussionPortalManager implements PortalManager {
 	
 	@Override
 	public String resetEmailId(String userId, String emailId) {
-		return portalHelper.resetEmailId(userId, emailId);
+		String status = portalHelper.resetEmailId(userId, emailId);
+		if(status == StatusCode.SUCCESS) {
+			portalHelper.sendMail(emailId, "Anque.in: Email Id Reset", "user id =" +  userId +"\nEmail-id reset successfull");
+		}
+		return status;
 	}
 
 	@Override
@@ -211,5 +214,16 @@ public class DiscussionPortalManager implements PortalManager {
 	public List<User> search(String name) {
 		name = name.replaceAll("%20", " ").toUpperCase();
 		return portalHelper.search(name);
+	}
+
+	@Override
+	public String resetUserPassword(String userId) {
+		
+		String emailId =  portalHelper.generateResetToken(userId);
+		if(emailId == null) {
+			return StatusCode.ERROR;
+		}
+		String status = portalHelper.sendMail(emailId, Mailer.RESETSUBJECT, Mailer.MAILSENT);
+		return status;
 	}
 }

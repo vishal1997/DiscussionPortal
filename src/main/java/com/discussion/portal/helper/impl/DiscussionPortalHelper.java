@@ -5,19 +5,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.UUID;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
 import com.discussion.portal.answer.response.model.QuestionResponse;
+import com.discussion.portal.common.Constants.Mailer;
 import com.discussion.portal.common.Constants.Opinion;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionPortalDao;
@@ -25,8 +22,11 @@ import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.helper.PortalHelper;
 import com.discussion.portal.iter.ConnectIter;
 import com.discussion.portal.iter.StudentInfo;
+import com.discussion.portal.mail.Mail;
+import com.discussion.portal.mail.SendMail;
 import com.discussion.portal.model.Answer;
 import com.discussion.portal.model.Comment;
+import com.discussion.portal.mongodb.model.PasswordResetToken;
 import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
@@ -71,6 +71,12 @@ public class DiscussionPortalHelper implements PortalHelper {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private SendMail sendMail;
+	
+	@Autowired
+	private Mail mail;
 	
 	/**
 	 * {@inheritDoc}
@@ -419,5 +425,29 @@ public class DiscussionPortalHelper implements PortalHelper {
 			user.add(userUtils.convertDbUserToUserSearch(dbuser));
 		}
 		return user;
+	}
+
+	@Override
+	public String generateResetToken(String userId) {
+		
+		DbUser dbUser = getUserByUserId(userId);
+		if(dbUser == null) {
+			return StatusCode.ERROR;
+		}
+		PasswordResetToken token = new PasswordResetToken();
+		token.setToken(UUID.randomUUID().toString());
+		token.setUser(dbUser);
+		token.setExpiryDate(30);
+		portalDao.saveResetToken(token);
+		return dbUser.getEmailId();
+	}
+	
+	@Override 
+	public String sendMail(String emailId, String subject, String message) {
+		mail.setEmailId(emailId);
+		mail.setMessage(message);
+		mail.setSubject(subject);
+		sendMail.sendMail();
+		return StatusCode.SUCCESS;
 	}
 }

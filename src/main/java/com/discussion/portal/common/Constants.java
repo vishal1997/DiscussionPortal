@@ -38,4 +38,12 @@ public class Constants {
 		public static final String AGREE = "Agree";
 		public static final String DISAGREE = "Disagree";
 	}
+	
+	public class Mailer {
+		public static final String HOST = "smtp.gmail.com";
+		public static final String SENDER = "vishalgupta7991@gmail.com";
+		public static final String RESETSUBJECT = "Anque Reset Password";
+		public static final String MAILSENT = " Mail sent";
+		public static final String PA = "vishal+4317514050###$$";
+	}
 }

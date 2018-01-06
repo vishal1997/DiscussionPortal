@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.discussion.portal.answer.response.model.QuestionResponse;
-import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.impl.DiscussionUserAuthDao;
 import com.discussion.portal.manager.impl.DiscussionPortalManager;
 import com.discussion.portal.model.Answer;
@@ -289,6 +288,15 @@ public class PortalRestController {
 	@RequestMapping(value="search/{userName}", method = RequestMethod.GET) 
 	public List<User> search(@PathVariable("userName") final String userName) {
 		return portalManager.search(userName);
+	}
+	
+	@RequestMapping(value="/reset{userId}", method = RequestMethod.PUT)
+	public Map<String, String> sendResetPasswordLink(@PathVariable("userId") final String userId) {
+		
+		Map<String, String> resetStatus = new HashMap<String, String>();
+		String status = portalManager.resetUserPassword(userId);
+		resetStatus.put("Status", status);
+		return resetStatus;
 	}
 }
 

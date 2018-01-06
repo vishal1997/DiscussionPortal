@@ -69,4 +69,6 @@ public interface PortalManager {
 	public List<Question> getAllQuestions(int pageNo);
 	
 	public List<User> search(String name);
+	
+	public String resetUserPassword(String userId);
 }
