@@ -88,4 +88,8 @@ public interface PortalHelper {
 	public String generateResetToken(String userId);
 	
 	public String sendMail(String emailId, String subject, String message);
+	
+	public Map<String, String> generateOtp(String userId);
+	
+	public String verifyOtp(String userId, String otp);
 }

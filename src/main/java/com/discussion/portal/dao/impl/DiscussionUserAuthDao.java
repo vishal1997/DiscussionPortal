@@ -2,9 +2,6 @@ package com.discussion.portal.dao.impl;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.management.RuntimeErrorException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +9,12 @@ import org.springframework.stereotype.Component;
 import com.discussion.portal.common.Constants.StatusCode;
 import com.discussion.portal.dao.UserAuthDao;
 import com.discussion.portal.model.Answer;
+import com.discussion.portal.mongodb.model.DbOtp;
 import com.discussion.portal.mongodb.model.DbUser;
+import com.discussion.portal.mongodb.repository.OtpRepository;
 import com.discussion.portal.mongodb.repository.UserRepository;
 import com.discussion.portal.utils.Json;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 
 /**
  * 
@@ -28,6 +26,9 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private OtpRepository otpRepo;
 	static Logger log = LoggerFactory.getLogger(DiscussionUserAuthDao.class);
 	
 	@Override
@@ -145,6 +146,27 @@ public class DiscussionUserAuthDao implements UserAuthDao{
 			return dbUser;
 		} catch(Exception e) {
 			throw new RuntimeException("Error while loading users", e);
+		}
+	}
+
+	@Override
+	public String saveOtp(DbOtp dbOtp) {
+
+		try {
+			otpRepo.save(dbOtp);	
+			return StatusCode.SUCCESS;
+		} catch(Exception ex) {
+			throw new RuntimeException("Error while saving opt", ex);
+		}
+	}
+
+	@Override
+	public DbOtp getOtpByUserId(String userId) {
+
+		try {
+			return otpRepo.findOne(userId);
+		} catch(Exception ex) {
+			throw new RuntimeException("User Not Found", ex);
 		}
 	}
 }

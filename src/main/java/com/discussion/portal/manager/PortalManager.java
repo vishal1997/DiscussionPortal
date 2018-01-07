@@ -71,4 +71,6 @@ public interface PortalManager {
 	public List<User> search(String name);
 	
 	public String resetUserPassword(String userId);
+	
+	public String verifyOtpUpdatePassword(String userId, String otp, String password);
 }

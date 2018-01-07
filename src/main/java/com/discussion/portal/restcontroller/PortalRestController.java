@@ -290,13 +290,23 @@ public class PortalRestController {
 		return portalManager.search(userName);
 	}
 	
-	@RequestMapping(value="/reset{userId}", method = RequestMethod.PUT)
-	public Map<String, String> sendResetPasswordLink(@PathVariable("userId") final String userId) {
+	@RequestMapping(value="/reset", method = RequestMethod.PUT)
+	public Map<String, String> sendResetPasswordLink(@RequestBody String userId) {
 		
 		Map<String, String> resetStatus = new HashMap<String, String>();
 		String status = portalManager.resetUserPassword(userId);
-		resetStatus.put("Status", status);
+		resetStatus.put("status", status);
 		return resetStatus;
+	}
+	
+	@RequestMapping(value="/reset/{userId}/{otp}", method = RequestMethod.PUT)
+	public Map<String, String> acceptOtp(@PathVariable("userId") final String userId, 
+										@PathVariable("otp") final String otp, @RequestBody String password) {
+		
+		Map<String, String> status = new HashMap<String, String>();
+		String otpStatus = portalManager.verifyOtpUpdatePassword(userId, otp, password);
+		status.put("status", otpStatus);
+		return status;
 	}
 }
 

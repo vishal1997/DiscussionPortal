@@ -1,5 +1,8 @@
 package com.discussion.portal.mongodb.model;
-
+/*
+ * Currently not used.
+ * Used this collection to generate reset token.
+ */
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Calendar;

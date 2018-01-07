@@ -216,14 +216,34 @@ public class DiscussionPortalManager implements PortalManager {
 		return portalHelper.search(name);
 	}
 
+	/*
+	 * 
+	 * Use this method to send reset password link to user. 
+	 * Partially implemented.
+	 * 
+	 * (non-Javadoc)
+	 * @see com.discussion.portal.manager.PortalManager#resetUserPassword(java.lang.String)
+	 */
 	@Override
 	public String resetUserPassword(String userId) {
 		
-		String emailId =  portalHelper.generateResetToken(userId);
-		if(emailId == null) {
+		//String emailId =  portalHelper.generateResetToken(userId);
+		Map<String, String> user = portalHelper.generateOtp(userId);
+		if(user.containsKey("status")) {
 			return StatusCode.ERROR;
 		}
-		String status = portalHelper.sendMail(emailId, Mailer.RESETSUBJECT, Mailer.MAILSENT);
+		String status = portalHelper.sendMail(user.get("emailId"), Mailer.RESETSUBJECT, Mailer.RESETPASSWORDBODY +user.get("otp"));
+		return status;
+	}
+
+	@Override
+	public String verifyOtpUpdatePassword(String userId, String otp, String password) {
+		
+		String status = portalHelper.verifyOtp(userId, otp);
+		if(!status.equals(StatusCode.SUCCESS)) {
+			return "Invalid OTP";
+		}
+		resetPassword(userId, password);
 		return status;
 	}
 }

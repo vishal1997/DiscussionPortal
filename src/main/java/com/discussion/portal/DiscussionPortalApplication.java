@@ -73,6 +73,7 @@ public class DiscussionPortalApplication extends WebSecurityConfigurerAdapter {
     		.authorizeRequests()
     	
     		.antMatchers("/api/v1/register/**").permitAll()
+    		.antMatchers("/api/v1/reset/**").permitAll()
     		.antMatchers("/api/v1/**").authenticated()
     		.anyRequest().permitAll()
     		    		

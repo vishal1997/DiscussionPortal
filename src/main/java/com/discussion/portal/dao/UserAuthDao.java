@@ -2,6 +2,7 @@ package com.discussion.portal.dao;
 
 import java.util.List;
 
+import com.discussion.portal.mongodb.model.DbOtp;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -26,4 +27,8 @@ public interface UserAuthDao {
 	public String resetEmailId(String userId, String emailId);
 
 	public List<DbUser> getUserByName(String name);
+	
+	public String saveOtp(DbOtp dbOtp);
+	
+	public DbOtp getOtpByUserId(String userId);
 }

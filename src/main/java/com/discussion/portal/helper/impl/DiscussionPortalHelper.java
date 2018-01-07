@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import com.discussion.portal.model.Question;
 import com.discussion.portal.model.User;
 import com.discussion.portal.mongodb.model.DbAnswer;
 import com.discussion.portal.mongodb.model.DbComment;
+import com.discussion.portal.mongodb.model.DbOtp;
 import com.discussion.portal.mongodb.model.DbQuestion;
 import com.discussion.portal.mongodb.model.DbUser;
 import com.discussion.portal.user.response.UserResponse;
@@ -447,6 +449,41 @@ public class DiscussionPortalHelper implements PortalHelper {
 		mail.setMessage(message);
 		mail.setSubject(subject);
 		sendMail.sendMail();
+		return StatusCode.SUCCESS;
+	}
+
+	@Override
+	public Map<String, String> generateOtp(String userId) {
+		
+		Map<String, String> user = new HashMap<String, String>();
+		DbUser dbUser = getUserByUserId(userId);
+		if(dbUser == null) {
+			user.put("status", StatusCode.ERROR);
+			return user;
+		}
+		String otp = String.format("%04d", new Random().nextInt(10000));
+		user.put("emailId",dbUser.getEmailId());
+		user.put("otp", otp);
+		DbOtp dbOtp = getOtpObject(userId, otp);
+		userAuthDao.saveOtp(dbOtp);
+		return user;
+	}
+	
+	private DbOtp getOtpObject(String userId, String otp) {
+		
+		DbOtp dbOtp = new DbOtp();
+		dbOtp.setUserId(userId);
+		dbOtp.setOtp(otp);
+		return dbOtp;
+	}
+
+	@Override
+	public String verifyOtp(String userId, String otp) {
+		
+		DbOtp dbOtp = userAuthDao.getOtpByUserId(userId);
+		if(!dbOtp.getOtp().equals(otp)) {
+			return StatusCode.ERROR;
+		}
 		return StatusCode.SUCCESS;
 	}
 }

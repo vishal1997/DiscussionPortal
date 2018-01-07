@@ -44,6 +44,7 @@ public class Constants {
 		public static final String SENDER = "anque.in@gmail.com";
 		public static final String RESETSUBJECT = "Anque Reset Password";
 		public static final String MAILSENT = " Mail sent";
+		public static final String RESETPASSWORDBODY = "Your OTP for reset password : ";
 		public static final String PA = "anquebyvishal";
 	}
 }
