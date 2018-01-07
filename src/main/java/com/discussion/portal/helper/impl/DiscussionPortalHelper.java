@@ -474,6 +474,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 		DbOtp dbOtp = new DbOtp();
 		dbOtp.setUserId(userId);
 		dbOtp.setOtp(otp);
+		dbOtp.setExpiryDate(30);
 		return dbOtp;
 	}
 
@@ -481,7 +482,7 @@ public class DiscussionPortalHelper implements PortalHelper {
 	public String verifyOtp(String userId, String otp) {
 		
 		DbOtp dbOtp = userAuthDao.getOtpByUserId(userId);
-		if(!dbOtp.getOtp().equals(otp)) {
+		if(!dbOtp.getOtp().equals(otp) || dbOtp.isExpired()) {
 			return StatusCode.ERROR;
 		}
 		return StatusCode.SUCCESS;
